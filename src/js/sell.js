@@ -24,7 +24,7 @@ ws.onmessage = function (e) {
             <td class="cell">${escapeHtml(row.item_name)}</td>
             <td class="cell">¥${escapeHtml(row.sell_price)}</td>
             <td class="cell" id="stockrow-${row.item_id}">${escapeHtml(row.stock - item.amount)}</td>
-            <td class="cell"><button class="btn-sm app-btn-secondary" href="#" onclick="addToOrder(${row.item_id})"  ${(row.stock - item.amount < 1) ? 'disabled' : ''}>Add</button></td>
+            <td class="cell"><button class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="addToOrder(${row.item_id})"  ${(row.stock - item.amount < 1) ? 'disabled' : ''}>Add</button></td>
             </tr>`
         }
         a+=`</tbody>`
@@ -148,7 +148,7 @@ $('#order-error-text').text('')
         <td>${escapeHtml(item.amount)}</td>
         <td>${escapeHtml(b.menu_item)}</td>
         <td>${escapeHtml(price)}</td>
-        <td><a class="btn-sm app-btn-secondary" href="#"
+        <td><a class="btn-sm app-btn-secondary" href="javascript:void(0)"
                 onclick="removeFromOrder(${item.id})">Remove</a></td>
     </tr>`
     }

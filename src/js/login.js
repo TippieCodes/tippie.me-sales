@@ -1,19 +1,29 @@
-function login() {
-    let token = document.getElementById('signin-token').value
-    setCookie('log_in', token, 1)
-    var ws = new WebSocket('wss://tippie.me/lcn')
+async function login() {
+    const username = document.getElementById('signin-username').value
+    const password = document.getElementById('signin-password').value
+    const hashedPassword = await sha256(password);
+    if (document.getElementById("RememberPassword").checked){
+        setCookie('log_in_c', "true", 0.01)
+    } else {
+        setCookie('log_in_c', "false", 0.01)
+    }
+    setCookie('log_in_a', username, 0.01)
+    setCookie('log_in_b', hashedPassword, 0.01)
+    const ws = new WebSocket('wss://tippie.me/lcn');
     ws.onerror = function (e) {
         document.getElementById('error-box').innerHTML = 'Login failed! Unexpected error occured!.'
     }
     ws.onmessage = function (e) {
-        var data = JSON.parse(e.data)
+        const data = JSON.parse(e.data);
+        deleteCookie('log_in_a')
+        deleteCookie('log_in_b')
+        deleteCookie('log_in_c')
         switch (data.type) {
             case 'UNAUTHORIZED':
                 document.getElementById('error-box').innerHTML = 'Login failed! Incorrect token.'
                 return;
             case 'LOGIN':
                 setCookie('session_token', data.data, 30)
-                deleteCookie('log_in')
                 window.location.href = '/lcn/'
         }
     }
@@ -21,7 +31,7 @@ function login() {
 document.addEventListener("DOMContentLoaded", function(){
     let token = getCookie('session_token')
     if (token) {
-        var ws = new WebSocket('wss://tippie.me/lcn')
+        const ws = new WebSocket('wss://tippie.me/lcn');
         ws.onerror = function (e) {
             document.getElementById('error-box').innerHTML = 'Login failed! Unexpected error occured!.'
         }

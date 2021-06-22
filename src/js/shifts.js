@@ -34,7 +34,7 @@ function pageLogin() {
             <div class="intro">Create your first app to start making keys and get your API secret!</div>
         </div><!--//app-card-body-->
         <div class="app-card-footer p-4 mt-auto">
-           <a class="btn app-btn-secondary" href="#">Create New</a>
+           <a class="btn app-btn-secondary" href="javascript:void(0)">Create New</a>
         </div><!--//app-card-footer-->
                 </div>`)
                 
@@ -77,7 +77,7 @@ function setTable(start, amount) {
         <td class="cell">${escapeHtml(item_list[x].started_by_name)}</td>
         <td class="cell">${escapeHtml(item_list[x].ended_by_name)}</td>
         <td class="cell">¥${escapeHtml(item_list[x].stat_sales)}</td>
-        <td class="cell"><a class="btn-sm app-btn-secondary" href="#" onclick="window.location.href = './shift.html?id=${item_list[x].shift_id}'" >Inspect</a></td>
+        <td class="cell"><a class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="window.location.href = './shift.html?id=${item_list[x].shift_id}'" >Inspect</a></td>
         </tr>`;
         if (item_list[x]) p++;
         x++;
@@ -90,39 +90,39 @@ function setTable(start, amount) {
     let pagination = `<nav class="app-pagination pt-3">
     <ul class="pagination justify-content-end"> 
         <li class="page-item ${(c_btn == 1) ? 'disabled' : ''}">
-            <a class="page-link" aria-disabled="true" href="#" onClick="setTable(${(c_btn - 2) * (amount)}, ${amount})">Previous</a>
+            <a class="page-link" aria-disabled="true" href="javascript:void(0)" onClick="setTable(${(c_btn - 2) * (amount)}, ${amount})">Previous</a>
         </li>`
     if (a_btn > 6) {
         if (c_btn > a_btn - 3) {
-            pagination += `<li class="page-item"><a class="page-link" href="#" onClick='setTable(0, ${amount})'>1</a></li>`
-            pagination += `<li class="page-item"><a class="page-link" href="#">...</a></li>`
+            pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)" onClick='setTable(0, ${amount})'>1</a></li>`
+            pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)">...</a></li>`
             for (let i = a_btn - 5;i < a_btn; i++) {
                 if (i < 0) continue;
-                pagination += `<li class="page-item ${(c_btn - 1 == i) ? 'active' : ''}"><a class="page-link" href="#" onClick='setTable(${i * (amount)}, ${amount})'>${i + 1}</a></li>`
+                pagination += `<li class="page-item ${(c_btn - 1 == i) ? 'active' : ''}"><a class="page-link" href="javascript:void(0)" onClick='setTable(${i * (amount)}, ${amount})'>${i + 1}</a></li>`
             }
         } else if (c_btn <= 3) {
             for (let i = 0 ;i < 5; i++) {
                 if (i < 0) continue;
-                pagination += `<li class="page-item ${(c_btn - 1 == i) ? 'active' : ''}"><a class="page-link" href="#" onClick='setTable(${i * (amount)}, ${amount})'>${i + 1}</a></li>`
+                pagination += `<li class="page-item ${(c_btn - 1 == i) ? 'active' : ''}"><a class="page-link" href="javascript:void(0)" onClick='setTable(${i * (amount)}, ${amount})'>${i + 1}</a></li>`
             }
-            pagination += `<li class="page-item"><a class="page-link" href="#">...</a></li>`
-            pagination += `<li class="page-item"><a class="page-link" href="#" onClick='setTable(${(a_btn-1) * (amount)}, ${amount})'>${a_btn}</a></li>`
+            pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)">...</a></li>`
+            pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)" onClick='setTable(${(a_btn-1) * (amount)}, ${amount})'>${a_btn}</a></li>`
         } else {
-            pagination += `<li class="page-item"><a class="page-link" href="#" onClick='setTable(0, ${amount})'>1</a></li>`
-            pagination += `<li class="page-item"><a class="page-link" href="#">...</a></li>`
+            pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)" onClick='setTable(0, ${amount})'>1</a></li>`
+            pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)">...</a></li>`
             for (let i = c_btn - 2; i < c_btn + 1 && i < a_btn; i++) {
                 if (i < 0) continue;
-                pagination += `<li class="page-item ${(c_btn - 1 == i) ? 'active' : ''}"><a class="page-link" href="#" onClick='setTable(${i * (amount)}, ${amount})'>${i + 1}</a></li>`
+                pagination += `<li class="page-item ${(c_btn - 1 == i) ? 'active' : ''}"><a class="page-link" href="javascript:void(0)" onClick='setTable(${i * (amount)}, ${amount})'>${i + 1}</a></li>`
             }
-            pagination += `<li class="page-item"><a class="page-link" href="#">...</a></li>`
-            pagination += `<li class="page-item"><a class="page-link" href="#" onClick='setTable(${(a_btn-1) * (amount)}, ${amount})'>${a_btn}</a></li>`
+            pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)">...</a></li>`
+            pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)" onClick='setTable(${(a_btn-1) * (amount)}, ${amount})'>${a_btn}</a></li>`
         }
     } else {
         for (let i = 0; i < a_btn; i++) {
-            pagination += `<li class="page-item ${(c_btn - 1 == i) ? 'active' : ''}"><a class="page-link" href="#" onClick='setTable(${i * (amount)}, ${amount})'>${i + 1}</a></li>`
+            pagination += `<li class="page-item ${(c_btn - 1 == i) ? 'active' : ''}"><a class="page-link" href="javascript:void(0)" onClick='setTable(${i * (amount)}, ${amount})'>${i + 1}</a></li>`
         }
     }
     pagination += `<li class="page-item ${(c_btn == a_btn) ? 'disabled' : ''}">
-    <a class="page-link" href="#" onClick="setTable(${((c_btn) * (amount))}, ${amount})">Next</a></li></ul></nav>`
+    <a class="page-link" href="javascript:void(0)" onClick="setTable(${((c_btn) * (amount))}, ${amount})">Next</a></li></ul></nav>`
     $('#pagination').html(pagination)
 }

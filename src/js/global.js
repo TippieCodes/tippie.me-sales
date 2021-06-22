@@ -76,3 +76,30 @@ async function sha256(message) {
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
+
+function shake(id){
+  let style = document.createElement('style');
+  style.innerHTML = '\t@keyframes shake {\n' +
+      '\t\t10%, 90% {\n' +
+      '\t\t\ttransform: translate3d(-1px, 0, 0);\n' +
+      '\t\t}\n' +
+      '\n' +
+      '\t\t20%, 80% {\n' +
+      '\t\t\ttransform: translate3d(2px, 0, 0);\n' +
+      '\t\t}\n' +
+      '\n' +
+      '\t\t30%, 50%, 70% {\n' +
+      '\t\t\ttransform: translate3d(-4px, 0, 0);\n' +
+      '\t\t}\n' +
+      '\n' +
+      '\t\t40%, 60% {\n' +
+      '\t\t\ttransform: translate3d(4px, 0, 0);\n' +
+      '\t\t}\n' +
+      '\t}'
+  const ref = document.querySelector('script');
+  ref.parentNode.insertBefore(style, ref);
+
+  const a = document.getElementById(id)
+  a.style.animation = "shake 1s infinite";
+  setTimeout(function(){a.style.animation = 0;},1000)
+}

@@ -1,0 +1,254 @@
+<header class="app-header fixed-top">
+    <div class="app-header-inner">
+        <div class="container-fluid py-2">
+            <div class="app-header-content">
+                <div class="row justify-content-between align-items-center">
+
+                    <div class="col-auto">
+                        <a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
+                                role="img">
+                                <title>Menu</title>
+                                <path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+                                    stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    <!--//col-->
+                    <div class="search-mobile-trigger d-sm-none col">
+                        <i class="search-mobile-trigger-icon fas fa-search"></i>
+                    </div>
+                    <!--//col-->
+
+                    <div class="app-utilities col-auto d-flex align-items-center">
+                        <style>
+                            .blink {
+                                -webkit-animation: flickerAnimation 1s infinite;
+                                -moz-animation: flickerAnimation 1s infinite;
+                                -o-animation: flickerAnimation 1s infinite;
+                                animation: flickerAnimation 1s infinite;
+                            }
+
+                            @keyframes flickerAnimation {
+                                0% {
+                                    opacity: 1;
+                                }
+
+                                50% {
+                                    opacity: 0;
+                                }
+
+                                100% {
+                                    opacity: 1;
+                                }
+                            }
+
+                            @-o-keyframes flickerAnimation {
+                                0% {
+                                    opacity: 1;
+                                }
+
+                                50% {
+                                    opacity: 0;
+                                }
+
+                                100% {
+                                    opacity: 1;
+                                }
+                            }
+
+                            @-moz-keyframes flickerAnimation {
+                                0% {
+                                    opacity: 1;
+                                }
+
+                                50% {
+                                    opacity: 0;
+                                }
+
+                                100% {
+                                    opacity: 1;
+                                }
+                            }
+
+                            @-webkit-keyframes flickerAnimation {
+                                0% {
+                                    opacity: 1;
+                                }
+
+                                50% {
+                                    opacity: 0;
+                                }
+
+                                100% {
+                                    opacity: 1;
+                                }
+                            }
+
+                            .circle {
+                                height: 20px;
+                                width: 20px;
+                                border-radius: 50%;
+                                position: fixed;
+                            }
+
+                            .circle.red {
+                                background-color: rgb(255, 0, 0)
+                            }
+
+                            .circle.gray {
+                                background-color: gray;
+                            }
+
+                            .center {
+                                margin: 0;
+                                position: absolute;
+                                top: 50%;
+                                -ms-transform: translateY(-50%);
+                                transform: translateY(-50%);
+                                display: inline;
+                            }
+                        </style>
+                        <div class="app-utility-item pr-2">
+                            <div style="display: inline-block;" class="pr-2" id='shift-text'>No shift</div>
+                            <div class="circle gray center pl-2" id='shift'></div>
+                        </div>
+                        <div class="app-utility-item app-user-dropdown dropdown">
+                            <a class="dropdown-toggle" id="user-dropdown-toggle" data-toggle="dropdown" href="#"
+                                role="button" aria-expanded="false"><img id="profile-picture"
+                                    style="border-radius: 50%; object-fit: cover;" src="/src/img/default_pfp.svg"
+                                    alt="user profile"></a>
+                            <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
+                                <li><a class="dropdown-item"><b id='username'>username</b></a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <!-- <li><a class="dropdown-item" href="account.html">Account</a></li>
+                                <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li> -->
+                                <li><a class="dropdown-item" onclick='logout()' href="#">Log Out</a></li>
+                            </ul>
+                        </div>
+                        <!--//app-user-dropdown-->
+                    </div>
+                    <!--//app-utilities-->
+                </div>
+                <!--//row-->
+            </div>
+            <!--//app-header-content-->
+        </div>
+        <!--//container-fluid-->
+    </div>
+    <!--//app-header-inner-->
+    <div id="app-sidepanel" class="app-sidepanel">
+        <div id="sidepanel-drop" class="sidepanel-drop"></div>
+        <div class="sidepanel-inner d-flex flex-column">
+            <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
+            <div class="app-branding">
+                <a class="app-logo" href="index.html"><img class="logo-icon mr-2" src="assets/images/app-logo.svg"
+                        alt="logo"><span class="logo-text">PORTAL</span></a>
+
+            </div>
+            <!--//app-branding-->
+
+            <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
+                <ul class="app-menu list-unstyled accordion" id="menu-accordion">
+                    <li class="nav-item">
+                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                        <a class="nav-link" href="index.html">
+                            <span class="nav-icon">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z" />
+                                    <path fill-rule="evenodd"
+                                        d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-text">Overview</span>
+                        </a>
+                        <!--//nav-link-->
+                    </li>
+                    <!--//nav-item-->
+
+                    <li class="nav-item">
+                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                        <a class="nav-link" href="sell.html">
+                            <span class="nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
+                                    <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                                    <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"/>
+                                  </svg>
+                            </span>
+                            <span class="nav-link-text">Sell</span>
+                        </a>
+                        <!--//nav-link-->
+                    </li>
+                    <li class="nav-item">
+                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                        <a class="nav-link" href="stock.html">
+                            <span class="nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-box-seam" viewBox="0 0 16 16">
+                                    <path
+                                        d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-text">Stock</span>
+                        </a>
+                        <!--//nav-link-->
+                    </li>
+                    <li class="nav-item">
+                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                        <a class="nav-link" href="shifts.html">
+                            <span class="nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
+                                    <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
+                                    <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
+                                    <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
+                                  </svg>
+                            </span>
+                            <span class="nav-link-text">Shifts</span>
+                        </a>
+                        <!--//nav-link-->
+                    </li>
+                    <!--//nav-item-->
+                </ul>
+                <!--//app-menu-->
+            </nav>
+            <!--//app-nav-->
+            <div class="app-sidepanel-footer">
+                <nav class="app-nav app-nav-footer">
+                    <ul class="app-menu footer-menu list-unstyled">
+                        <li class="nav-item">
+                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                            <a class="nav-link" href="settings.html">
+                                <span class="nav-icon">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gear"
+                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M8.837 1.626c-.246-.835-1.428-.835-1.674 0l-.094.319A1.873 1.873 0 0 1 4.377 3.06l-.292-.16c-.764-.415-1.6.42-1.184 1.185l.159.292a1.873 1.873 0 0 1-1.115 2.692l-.319.094c-.835.246-.835 1.428 0 1.674l.319.094a1.873 1.873 0 0 1 1.115 2.693l-.16.291c-.415.764.42 1.6 1.185 1.184l.292-.159a1.873 1.873 0 0 1 2.692 1.116l.094.318c.246.835 1.428.835 1.674 0l.094-.319a1.873 1.873 0 0 1 2.693-1.115l.291.16c.764.415 1.6-.42 1.184-1.185l-.159-.291a1.873 1.873 0 0 1 1.116-2.693l.318-.094c.835-.246.835-1.428 0-1.674l-.319-.094a1.873 1.873 0 0 1-1.115-2.692l.16-.292c.415-.764-.42-1.6-1.185-1.184l-.291.159A1.873 1.873 0 0 1 8.93 1.945l-.094-.319zm-2.633-.283c.527-1.79 3.065-1.79 3.592 0l.094.319a.873.873 0 0 0 1.255.52l.292-.16c1.64-.892 3.434.901 2.54 2.541l-.159.292a.873.873 0 0 0 .52 1.255l.319.094c1.79.527 1.79 3.065 0 3.592l-.319.094a.873.873 0 0 0-.52 1.255l.16.292c.893 1.64-.902 3.434-2.541 2.54l-.292-.159a.873.873 0 0 0-1.255.52l-.094.319c-.527 1.79-3.065 1.79-3.592 0l-.094-.319a.873.873 0 0 0-1.255-.52l-.292.16c-1.64.893-3.433-.902-2.54-2.541l.159-.292a.873.873 0 0 0-.52-1.255l-.319-.094c-1.79-.527-1.79-3.065 0-3.592l.319-.094a.873.873 0 0 0 .52-1.255l-.16-.292c-.892-1.64.902-3.433 2.541-2.54l.292.159a.873.873 0 0 0 1.255-.52l.094-.319z" />
+                                        <path fill-rule="evenodd"
+                                            d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z" />
+                                    </svg>
+                                </span>
+                                <span class="nav-link-text">Settings</span>
+                            </a>
+                            <!--//nav-link-->
+                        </li>
+                        <!--//nav-item-->
+
+                    </ul>
+                    <!--//footer-menu-->
+                </nav>
+            </div>
+            <!--//app-sidepanel-footer-->
+
+        </div>
+        <!--//sidepanel-inner-->
+    </div>
+    <!--//app-sidepanel-->
+</header>
+<!--//app-header-->

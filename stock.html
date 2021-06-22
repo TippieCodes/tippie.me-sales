@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>La Casa Nostra Employee Area</title>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- FontAwesome JS-->
+    <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+
+    <!-- App CSS -->
+    <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+
+</head>
+<style>
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: auto;
+        /* Stay in place */
+        z-index: 3;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        margin-left: inherit;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+    }
+
+    @media (min-width: 1200px) {
+        .modal {
+            margin-left: 250px;
+            width: calc(100% - 250px)
+        }
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        /* background-color: #fefefe; */
+        margin: 15% auto;
+        /* 15% from the top and centered */
+        /* padding: 20px; */
+        border: 0px;
+        /* border: 1px solid #888; */
+        width: fit-content;
+        /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* Add Animation */
+    @keyframes animatetop {
+        from {
+            top: -300px;
+            opacity: 0
+        }
+
+        to {
+            top: 0;
+            opacity: 1
+        }
+    }
+
+    .page-item.active {
+        z-index: 0;
+    }
+</style>
+
+<body class="app">
+    </div>
+
+    <div include-html="src/html/header.html"></div>
+
+    <div class="app-wrapper">
+        <div id="addform" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="app-card app-card-settings shadow-sm p-4">
+                    <div class="app-card-body">
+                        <div>
+                            <div class='row mb-3'>
+                                <div class="col-auto">
+                                    <label for="setting-input-1" class="form-label">Category</label>
+                                    <input type="text" class="form-control" id="add-category" value=""
+                                        required="true">
+                                </div>
+                                <div class="col-auto">
+                                    <label for="setting-input-1" class="form-label">Menu item</label>
+                                    <input type="text" class="form-control" id="add-menu-item" value=""
+                                        required="true">
+                                </div>
+                                <div class="col-auto">
+                                    <label for="setting-input-2" class="form-label">Item name</label>
+                                    <input type="text" class="form-control" id="add-item-name" value=""
+                                        required="true">
+                                </div>
+                            </div>
+                            <div class='row mb-3'>
+                                <div class="col-auto">
+                                    <label for="setting-input-1" class="form-label">Sell price</label>
+                                    <input type="text" class="form-control" id="add-sell-price" value=""
+                                        required="true">
+                                </div>
+                                <div class="col-auto">
+                                    <label for="setting-input-1" class="form-label">Shipment price</label>
+                                    <input type="text" class="form-control" id="add-shipment-price" value=""
+                                        required="true">
+                                </div>
+                                <div class="col-auto">
+                                    <label for="setting-input-2" class="form-label">Stock</label>
+                                    <input type="text" class="form-control" id="add-stock" value=""
+                                        required="true">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn app-btn-primary" id='add-submit' onclick="addItem();">Add item</button><span id='delete-stock' class='ml-2'></span><span class='ml-2' id='error-text' style="color:red;"></span><span id='addform-close' class="close" >&times;</span>
+                        </div>
+                    </div>
+                    <!--//app-card-body-->
+                </div>
+            </div>
+        </div>
+
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+            <div class="container-xl">
+                <h1 class="app-page-title">Stock list</h1>
+                <div class="app-card app-card-progress-list h-100 shadow-sm mb-4">
+                    <div class="app-card-header p-3">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-auto">
+                                <h4 class="app-card-title">All items</h4>
+                            </div>
+                            <!--//col-->
+                            <div class="col-auto">
+                                <div class="card-header-action" id="new-item">
+                                    <!-- <a href="#">New item</a> -->
+                                </div>
+                                <!--//card-header-actions-->
+                            </div>
+                            <!--//col-->
+                        </div>
+                        <!--//row-->
+                    </div>
+                </div>
+                <div class="app-card app-card-progress-list h-100 shadow-sm">
+                    <div class="app-card-body" id='item-list'>
+                    </div>
+                    <!--//app-card-body-->
+                </div>
+                <div class="row g-4 mb-4">
+                    <div class="col-6 col-lg-6">
+                        <div class="justify-content-start pt-3 pl-2" id="amount-showing">
+                            Showing 0 out of 0 entries.
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-6" id='pagination'>
+
+                    </div>
+                </div>
+
+            </div>
+            <!--//container-fluid-->
+        </div>
+        <!--//app-content-->
+        <div include-html="src/html/footer.html"></div>
+    </div>
+    <!--//app-wrapper-->
+
+
+    <!-- Javascript -->
+    <script src="assets/plugins/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+    <!-- Charts JS -->
+    <script src="assets/plugins/chart.js/chart.min.js"></script>
+
+    <!-- Global JS -->
+    <script src="src/js/global.js"></script>
+
+
+    <!-- Page Specific JS -->|
+    <script src="src/js/dashboard.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="src/js/stock.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        includeHTML().then(() => { app(); load(); page(); });
+    </script>
+</body>
+
+</html>

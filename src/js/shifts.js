@@ -11,6 +11,7 @@ function pageLogin() {
             case 'SHIFT_LIST':
                 //TODO sorting
                 item_list = data.data.shifts
+                item_list.sort((a, b) => (a.shift_id < b.shift_id) ? 1 : -1)
                 // console.log(item_list)
                 if (!item_list[0]) return $('#item-list').html(`<div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
         <div class="app-card-header p-3 border-bottom-0">

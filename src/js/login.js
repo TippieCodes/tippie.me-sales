@@ -1,14 +1,13 @@
 async function login() {
     const username = document.getElementById('signin-username').value
     const password = document.getElementById('signin-password').value
-    const hashedPassword = await sha256(password);
     if (document.getElementById("RememberPassword").checked){
         setCookie('log_in_c', "true", 0.01)
     } else {
         setCookie('log_in_c', "false", 0.01)
     }
     setCookie('log_in_a', username, 0.01)
-    setCookie('log_in_b', hashedPassword, 0.01)
+    setCookie('log_in_b', password, 0.01)
     const ws = new WebSocket('wss://tippie.me/lcn');
     ws.onerror = function (e) {
         document.getElementById('error-box').innerHTML = 'Login failed! Unexpected error occured!.'

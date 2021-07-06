@@ -30,9 +30,25 @@ function load() {
                 $("#profile-picture").attr('src', `https://cravatar.eu/helmavatar/${client.username}/100.png`);
                 $("#username").text(client.username);
                 checkShift();
-                page();
         }
     }
+    ws.onclose = function (e) {
+        reconnect(10);
+    }
+    ws.onerror = function (e) {
+        reconnect(10);
+    }
+}
+function reconnect(seconds){
+    if (seconds === 0) {
+        $('#shift-text').text(`Connection lost: Reconnecting...`)
+        return load();
+    }
+    $('#shift').attr('class', 'circle orange blink center pl-2')
+    $('#shift-text').text(`Connection lost: Reconnecting in ${seconds} seconds...`)
+    setTimeout(function(){
+        reconnect(seconds-1)
+    },1000);
 }
 function logout() {
     ws.send(JSON.stringify({ type: 'LOGOUT' }))
@@ -44,7 +60,6 @@ function logout() {
 function checkShift() {
     ws.onmessage = function (e) {
         let data = JSON.parse(e.data)
-        console.log(data)
         if (data.type == 'SHIFT'){
             if (data.data == 'NONE') {
                 $('#shift').attr('class', 'circle gray center pl-2')
@@ -55,6 +70,11 @@ function checkShift() {
                 //TODO dropdown for other shift information
             }
         }
+        page();
     }
-    ws.send(JSON.stringify({type: 'SHIFT'}))
+    if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({type: 'SHIFT'}))
+    } else {
+        setTimeout(function(){checkShift()},500)
+    }
 }

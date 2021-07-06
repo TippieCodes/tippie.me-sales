@@ -1,6 +1,7 @@
+let stocklist;
+let current_order = []
+
 function page() {
-    let stocklist;
-    let current_order = []
     ws.onmessage = function (e) {
         let data = JSON.parse(e.data)
         if (data.type == 'STOCK_LIST') {

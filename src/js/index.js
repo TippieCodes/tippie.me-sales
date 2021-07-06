@@ -14,9 +14,7 @@ function page() {
             }
         }
     }
-    ws.onopen = function () {
-        ws.send(JSON.stringify({type: 'SHIFT'}))
-    }
+    ws.send(JSON.stringify({type: 'SHIFT'}))
 }
 
 function startShift() {

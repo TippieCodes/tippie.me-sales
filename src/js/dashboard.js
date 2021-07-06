@@ -1,3 +1,4 @@
+let ws;
 
 function load() {
     var url_elements = window.location.href.split("/")
@@ -16,33 +17,31 @@ function load() {
     } else {
         $(`a[href="${url_elements[url_elements.length - 1]}"]`).addClass(`active`);
     }
-    var ws = new WebSocket('wss://tippie.me/lcn')
+
+    ws = new WebSocket('wss://tippie.me/lcn');
     ws.onmessage = function (e) {
         let data = JSON.parse(e.data)
         switch (data.type) {
             case 'UNAUTHORIZED':
                 window.location.href = '/lcn/login.html'
+                return;
             case 'CONNECTED':
                 let client = data.data
                 $("#profile-picture").attr('src', `https://cravatar.eu/helmavatar/${client.username}/100.png`);
                 $("#username").text(client.username);
-                ws.close();
+                checkShift();
+                page();
         }
     }
-    checkShift();
 }
 function logout() {
-    var ws = new WebSocket('wss://tippie.me/lcn')
-    ws.onopen = function (e) {
-        ws.send(JSON.stringify({ type: 'LOGOUT' }))
-        ws.close();
-    }
+    ws.send(JSON.stringify({ type: 'LOGOUT' }))
+    ws.close();
     deleteCookie('session_token');
     window.location.href = '/lcn/login.html'
 }
 
 function checkShift() {
-    var ws = new WebSocket('wss://tippie.me/lcn')
     ws.onmessage = function (e) {
         let data = JSON.parse(e.data)
         console.log(data)
@@ -57,7 +56,5 @@ function checkShift() {
             }
         }
     }
-    ws.onopen = function() {
-        ws.send(JSON.stringify({type: 'SHIFT'}))
-    }
+    ws.send(JSON.stringify({type: 'SHIFT'}))
 }

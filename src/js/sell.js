@@ -1,11 +1,11 @@
-var ws = new WebSocket('wss://tippie.me/lcn')
-let stocklist;
-let current_order = []
-ws.onmessage = function (e) {
-    let data = JSON.parse(e.data)
-    if (data.type == 'STOCK_LIST'){
-        stocklist=data.data
-        let a = `												<thead>
+function page() {
+    let stocklist;
+    let current_order = []
+    ws.onmessage = function (e) {
+        let data = JSON.parse(e.data)
+        if (data.type == 'STOCK_LIST') {
+            stocklist = data.data
+            let a = `												<thead>
         <tr>
             <th class="cell">Menu item</th>
             <th class="cell">Item Name</th>
@@ -15,50 +15,50 @@ ws.onmessage = function (e) {
         </tr>
     </thead>
     <tbody>`
-        for (row of data.data) {
-            let index = current_order.findIndex(a => a.id == row.item_id)
-            let item = current_order[index]
-            if (!item) item = {amount:0}
-            a+= `												<tr>
+            for (row of data.data) {
+                let index = current_order.findIndex(a => a.id == row.item_id)
+                let item = current_order[index]
+                if (!item) item = {amount: 0}
+                a += `												<tr>
             <td class="cell">${escapeHtml(row.menu_item)}</td>
             <td class="cell">${escapeHtml(row.item_name)}</td>
             <td class="cell">¥${escapeHtml(row.sell_price)}</td>
             <td class="cell" id="stockrow-${row.item_id}">${escapeHtml(row.stock - item.amount)}</td>
             <td class="cell"><button class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="addToOrder(${row.item_id})"  ${(row.stock - item.amount < 1) ? 'disabled' : ''}>Add</button></td>
             </tr>`
-        }
-        a+=`</tbody>`
-        $('#order-table').html(a)
-    } else if (data.type == 'OK') {
-        $('#order-button').text('Order finished!')
-        setTimeout(function () {
-            $('#order-button').text('Complete order')
-            $('#order-button').prop('disabled',false)
-            updateCurrentOrder();
-        }, 1500)
-        current_order = []
-        
-    } else if (data.type == 'ERROR') {
-        $('#order-button').prop('disabled',false)
-        $('#order-error-text').text(data.data)
-    } else if (data.type == 'SHIFT_PERSONAL_STATS') {
-        $('#no-shift-text').text((data.data.isEnded == '1') ? 'There is no active shift, showing stats of last shift' : '')
-        $('#p-total').text('¥'+data.data.total)
-        $('#p-orders').text(data.data.orders)
-        $('#p-items').text(data.data.items)
-        $('#p-owed').text(data.data.owe)
-    } else if (data.type == 'SHIFT_GLOBAL_STATS'){
-        $('#no-shift-text').text((data.data.isEnded == '1') ? 'There is no active shift, showing stats of last shift' : '')
-        $('#g-total').text('¥'+data.data.total)
-        $('#g-orders').text(data.data.orders)
-        $('#g-items').text(data.data.items)
-    } else if (data.type == 'NEW_ORDER'){
-        let id = Math.round(Math.random()*1000)
-        let items = ''
-        for (item of data.data.items){
-            items += `<br />${item.amount}x ${item.name}`
-        }
-        $('#recent-orders').prepend(`<div class="app-card-body px-4 pt-0 pb-0" id="${id}" style="width: 100%;border-bottom-color: #e7e9ed;border-bottom-width: 2px;border-bottom-style: solid;height:auto;display:none">
+            }
+            a += `</tbody>`
+            $('#order-table').html(a)
+        } else if (data.type == 'OK') {
+            $('#order-button').text('Order finished!')
+            setTimeout(function () {
+                $('#order-button').text('Complete order')
+                $('#order-button').prop('disabled', false)
+                updateCurrentOrder();
+            }, 1500)
+            current_order = []
+
+        } else if (data.type == 'ERROR') {
+            $('#order-button').prop('disabled', false)
+            $('#order-error-text').text(data.data)
+        } else if (data.type == 'SHIFT_PERSONAL_STATS') {
+            $('#no-shift-text').text((data.data.isEnded == '1') ? 'There is no active shift, showing stats of last shift' : '')
+            $('#p-total').text('¥' + data.data.total)
+            $('#p-orders').text(data.data.orders)
+            $('#p-items').text(data.data.items)
+            $('#p-owed').text(data.data.owe)
+        } else if (data.type == 'SHIFT_GLOBAL_STATS') {
+            $('#no-shift-text').text((data.data.isEnded == '1') ? 'There is no active shift, showing stats of last shift' : '')
+            $('#g-total').text('¥' + data.data.total)
+            $('#g-orders').text(data.data.orders)
+            $('#g-items').text(data.data.items)
+        } else if (data.type == 'NEW_ORDER') {
+            let id = Math.round(Math.random() * 1000)
+            let items = ''
+            for (item of data.data.items) {
+                items += `<br />${item.amount}x ${item.name}`
+            }
+            $('#recent-orders').prepend(`<div class="app-card-body px-4 pt-0 pb-0" id="${id}" style="width: 100%;border-bottom-color: #e7e9ed;border-bottom-width: 2px;border-bottom-style: solid;height:auto;display:none">
         <div class="app-card-header p-3 border-bottom-0">
             <div class="row align-items-center gx-3">
                 <!--//col-->
@@ -81,15 +81,15 @@ ws.onmessage = function (e) {
             </div>
         </div>
     </div>`)
-        $(`#${id}`).slideDown();
-    } else if (data.type == 'RECENT_ORDERS'){
-        let orders = '';
-        for (order of data.data.orders){
-            let items = ''
-            for (item of order.items){
-                items += `<br />${item.amount}x ${item.name}`
-            }
-            orders += `<div class="app-card-body px-4 pt-0 pb-0" style="width: 100%;border-bottom-color: #e7e9ed;border-bottom-width: 2px;border-bottom-style: solid;height:auto;">
+            $(`#${id}`).slideDown();
+        } else if (data.type == 'RECENT_ORDERS') {
+            let orders = '';
+            for (order of data.data.orders) {
+                let items = ''
+                for (item of order.items) {
+                    items += `<br />${item.amount}x ${item.name}`
+                }
+                orders += `<div class="app-card-body px-4 pt-0 pb-0" style="width: 100%;border-bottom-color: #e7e9ed;border-bottom-width: 2px;border-bottom-style: solid;height:auto;">
             <div class="app-card-header p-3 border-bottom-0">
                 <div class="row align-items-center gx-3">
                     <!--//col-->
@@ -112,11 +112,11 @@ ws.onmessage = function (e) {
                 </div>
             </div>
         </div>`
+            }
+            $('#recent-orders').html(orders);
         }
-        $('#recent-orders').html(orders);
     }
-}
-ws.onopen = function(e){
+
     ws.send(JSON.stringify({type: 'STOCK_LIST'}))
     ws.send(JSON.stringify({type: 'LAST_SHIFT_STATS'}))
     updateCurrentOrder();

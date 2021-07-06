@@ -1,10 +1,6 @@
-//apps
-function page() { pageLogin(); }
-
 let item_list, data;
 
-function pageLogin() {
-    let ws = new WebSocket('wss://tippie.me/lcn')
+function page() {
     ws.onmessage = function (e) {
         data = JSON.parse(e.data)
         switch (data.type) {
@@ -12,7 +8,6 @@ function pageLogin() {
                 //TODO sorting
                 item_list = data.data.shifts
                 item_list.sort((a, b) => (a.shift_id < b.shift_id) ? 1 : -1)
-                // console.log(item_list)
                 if (!item_list[0]) return $('#item-list').html(`<div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
         <div class="app-card-header p-3 border-bottom-0">
             <div class="row align-items-center gx-3">
@@ -40,12 +35,9 @@ function pageLogin() {
                 </div>`)
                 
                 setTable(0, 10);
-                ws.close();
             }
         }
-    ws.onopen = function (e) {
         ws.send(JSON.stringify({ type: "SHIFT_LIST" }))
-    }
 }
 
 function setTable(start, amount) {

@@ -2,7 +2,6 @@ const urlParams = new URLSearchParams(window.location.search)
 let item_list, data;
 function page() {
     $('#shift-id').text(urlParams.get('id'))
-    var ws = new WebSocket('wss://tippie.me/lcn')
     ws.onmessage = function (e) {
         const data = JSON.parse(e.data)
         if (data.type == 'SHIFT_INFO') {
@@ -15,9 +14,7 @@ function page() {
             setTable(0, 20);
         }
     }
-    ws.onopen = function (e) {
-        ws.send(JSON.stringify({ type: 'SHIFT_INFO', id: urlParams.get('id') }))
-    }
+    ws.send(JSON.stringify({ type: 'SHIFT_INFO', id: urlParams.get('id') }))
 }
 
 function setTable(start, amount) {

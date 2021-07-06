@@ -1,10 +1,7 @@
-//apps
-function page() { pageLogin(); }
 
 let item_list, data;
 
-function pageLogin() {
-    let ws = new WebSocket('wss://tippie.me/lcn')
+function page() {
     ws.onmessage = function (e) {
         data = JSON.parse(e.data)
         switch (data.type) {
@@ -63,12 +60,9 @@ function pageLogin() {
                     }
                 }
                 setTable(0, 10);
-                ws.close();
         }
     }
-    ws.onopen = function (e) {
-        ws.send(JSON.stringify({ type: "STOCK_LIST" }))
-    }
+    ws.send(JSON.stringify({ type: "STOCK_LIST" }))
 }
 
 function setTable(start, amount) {

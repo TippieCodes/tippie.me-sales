@@ -16,7 +16,93 @@
 
   <!-- App CSS -->
   <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+  <style type="text/css">
+    a:hover {
+      cursor:pointer;
+    }
+    .dropdown-menu .dropdown-item {
+      padding: .1rem 0.5rem;
+      border: gray;
+      border-style: solid;
+      border-right-style: none;
+      border-left-style: none;
+      border-width: 0;
+    }
+  </style>
+  <style>
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: auto;
+      /* Stay in place */
+      z-index: 3;
+      /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      margin-left: inherit;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+    }
 
+    @media (min-width: 1200px) {
+      .modal {
+        margin-left: 250px;
+        width: calc(100% - 250px)
+      }
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+      /* background-color: #fefefe; */
+      margin: 15% auto;
+      /* 15% from the top and centered */
+      /* padding: 20px; */
+      border: 0px;
+      /* border: 1px solid #888; */
+      width: fit-content;
+      /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Add Animation */
+    @keyframes animatetop {
+      from {
+        top: -300px;
+        opacity: 0
+      }
+
+      to {
+        top: 0;
+        opacity: 1
+      }
+    }
+
+    .page-item.active {
+      z-index: 0;
+    }
+  </style>
 </head>
 
 <body class="app">
@@ -24,9 +110,60 @@
 
 <div class="app-wrapper">
 
+  <div id="model" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="app-card app-card-settings shadow-sm p-4">
+        <div class="app-card-body">
+          <div id="model-content">
+            <div class='row mb-3' id="model-row-default">
+
+            </div>
+            <button type="submit" class="btn app-btn-primary" id='model-submit' onclick="placeholderfunction();">Add item</button><span class='ml-2' id='error-text' style="color:red;"></span><span id='model-close' class="close" >&times;</span>
+          </div>
+        </div>
+        <!--//app-card-body-->
+      </div>
+    </div>
+  </div>
+
   <div class="app-content pt-3 p-md-3 p-lg-4">
     <div class="container-xl">
-      <h1 class="app-page-title">Employees</h1>
+      <h1 class="app-page-title">Employee list</h1>
+      <div class="app-card app-card-progress-list h-100 shadow-sm mb-4">
+        <div class="app-card-header p-3">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-auto">
+              <h4 class="app-card-title">All Employees</h4>
+            </div>
+            <!--//col-->
+            <div class="col-auto">
+              <div class="card-header-action" id="new-item">
+                <!-- <a href="javascript:void(0)">New item</a> -->
+              </div>
+              <!--//card-header-actions-->
+            </div>
+            <!--//col-->
+          </div>
+          <!--//row-->
+        </div>
+      </div>
+      <div class="app-card app-card-progress-list h-100 shadow-sm">
+        <div class="app-card-body" id='item-list'>
+        </div>
+        <!--//app-card-body-->
+      </div>
+      <div class="row g-4 mb-4">
+        <div class="col-6 col-lg-6">
+          <div class="justify-content-start pt-3 pl-2" id="amount-showing">
+            Showing 0 out of 0 entries.
+          </div>
+        </div>
+        <div class="col-6 col-lg-6" id='pagination'>
+
+        </div>
+      </div>
+
     </div>
     <!--//container-fluid-->
   </div>
@@ -49,6 +186,7 @@
 
 
 <!-- Page Specific JS -->|
+<script src="src/js/employees.js"></script>
 <script src="src/js/dashboard.js"></script>
 <script src="assets/js/app.js"></script>
 

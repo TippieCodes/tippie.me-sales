@@ -166,7 +166,7 @@ function addToOrder(id) {
     updateCurrentOrder();
     let stock = stocklist.find(a => a.item_id == id)
     $(`#stockrow-${id}`).text(stock.stock-current_order[index].amount)
-    $(`button[onclick="addToOrder(${id})"]`).prop('disabled', (stock.stock-current_order[index].amount < 1) ? true : false)
+    $(`button[onclick="addToOrder(${id})"]`).prop('disabled', (stock.stock - current_order[index].amount < 1))
 }
 
 function removeFromOrder(id) {
@@ -176,7 +176,7 @@ function removeFromOrder(id) {
     current_order[index].amount -= 1
     let stock = stocklist.find(a => a.item_id == id)
     $(`#stockrow-${id}`).text(stock.stock-current_order[index].amount)
-    $(`button[onclick="addToOrder(${id})"]`).prop('disabled', (stock.stock-current_order[index].amount < 1) ? true : false)
+    $(`button[onclick="addToOrder(${id})"]`).prop('disabled', (stock.stock - current_order[index].amount < 1))
     if (current_order[index].amount < 1) current_order.splice(index, 1);
     updateCurrentOrder();
 }

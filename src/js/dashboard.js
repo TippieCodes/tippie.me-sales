@@ -28,7 +28,7 @@ function load() {
                         "                    <!--//nav-item-->");
                 }
                 checkShift();
-
+                page();
                 let url_elements = window.location.href.split("/")
                 if (window.location.href.split("")[window.location.href.split("").length - 1] == "#") {
                     window.location.href = window.location.href.slice(0, -1);
@@ -73,7 +73,8 @@ function logout() {
 }
 
 function checkShift() {
-    ws.onmessage = function (e) {
+    const ws2 = new WebSocket("wss://tippie.me/lcn")
+    ws2.onmessage = function (e) {
         let data = JSON.parse(e.data)
         if (data.type == 'SHIFT'){
             if (data.data == 'NONE') {
@@ -85,11 +86,8 @@ function checkShift() {
                 //TODO dropdown for other shift information
             }
         }
-        page();
     }
-    if (ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({type: 'SHIFT'}))
-    } else {
-        setTimeout(function(){checkShift()},500)
+    ws2.onopen = function (e){
+        ws2.send(JSON.stringify({type: "SHIFT"}))
     }
 }

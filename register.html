@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>La Casa Nostra Employee Area</title>
+
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<!-- FontAwesome JS-->
+	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+
+	<!-- App CSS -->
+	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+
+</head>
+
+<body class="app">
+<div class="app-wrapper">
+
+	<div class="app-content pt-3 p-md-3 p-lg-4">
+		<div class="container-xl">
+			<h1 class="app-page-title">Register Account</h1>
+			<div class="app-card app-card-settings shadow-sm p-4">
+
+				<div class="app-card-body">
+					<div class="settings-form">
+						<div class="mb-3">
+							<label for="invite-token" class="form-label">Invite Token</label>
+							<input type="text" class="form-control" id="invite-token" value="" onfocusout="checkToken()">
+						</div>
+						<div class="mb-3">
+							<label for="username" class="form-label">Username</label>
+							<input type="text" class="form-control" id="username" value="" disabled>
+						</div>
+						<div class="mb-3">
+							<label for="password" class="form-label">Password</label>
+							<input type="password" class="form-control" id="password" value="">
+						</div>
+						<div class="mb-3">
+							<label for="repeat-password" class="form-label">Repeat Password</label>
+							<input type="password" class="form-control" id="repeat-password" value="">
+						</div>
+						<button type="submit" id="submit" class="btn app-btn-primary" onclick="register()">Register Account</button>
+						<span class="ml-2" style="color:red" id="error-text"></span>
+					</div>
+				</div><!--//app-card-body-->
+
+			</div><!--//app-card-->
+		</div>
+		<!--//container-fluid-->
+	</div>
+	<!--//app-content-->
+	<div include-html="src/html/footer.html"></div>
+</div>
+<!--//app-wrapper-->
+
+
+<!-- Javascript -->
+<script src="assets/plugins/popper.min.js"></script>
+<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Charts JS -->
+<script src="assets/plugins/chart.js/chart.min.js"></script>
+
+<!-- Global JS -->
+<script src="src/js/global.js"></script>
+
+
+<!-- Page Specific JS -->|
+<script src="src/js/dashboard.js"></script>
+<script src="src/js/register.js"></script>
+<script src="assets/js/app.js"></script>
+
+
+</body>
+
+</html>

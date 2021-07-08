@@ -49,6 +49,7 @@ function setTable(start, amount) {
         let status = `<span class="badge bg-success">Enabled</span>`
         if (item_list[x].legacy_user == true) status = `<span class="badge bg-warning text-dark">Legacy</span>`
         if (item_list[x].disabled == true) status = `<span class="badge bg-danger">Disabled</span>`
+        if (item_list[x].invited == true) status = `<span class="badge bg-info">Invited</span>`
         let last_activity = item_list[x].last_activity;
         let last_activity_color = '#5d6778';
         if (last_activity == -1) {
@@ -61,7 +62,9 @@ function setTable(start, amount) {
         } else if (last_activity > 15) {
             last_activity_color = 'yellow'
         }
-        items += `<tr>
+
+        if (item_list[x].invited == false) {
+            items += `<tr>
         <td class="cell">#${escapeHtml(item_list[x].user_id)}</td>
         <td class="cell">${escapeHtml(item_list[x].user_name)}</td>
         <td class="cell">${roles[item_list[x].user_permlevel]}</td>
@@ -73,11 +76,31 @@ function setTable(start, amount) {
         <a class="btn-sm app-btn-secondary dropdown-toggle" aria-expanded="false" data-toggle="dropdown" aria-haspopup="true" >Disable</a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href="javascript:void(0)" onclick="resetPassword(${item_list[x].user_id})">Reset Password</a>
+        <a class="dropdown-item" href="javascript:void(0)" onclick="updateUsername(${item_list[x].user_id})">Change Username</a>
         <a class="dropdown-item" href="javascript:void(0)" onclick="updateRole(${item_list[x].user_id})">Change Role</a>
         <a class="dropdown-item" href="javascript:void(0)" onclick="updateOwe(${item_list[x].user_id})">Change Owe</a>
         ${(item_list[x].disabled == false) ? '<a class="dropdown-item" style="color:red" href="javascript:void(0)" onclick="disableAccount(${item_list[x].user_id})">Disable</a>' :
             '<a class="dropdown-item" style="color:green" href="javascript:void(0)" onclick="enableAccount(${item_list[x].user_id})">Enable</a>'}
         </div></div>`:''}</td>`;
+        } else {
+            items += `<tr>
+        <td class="cell">#${escapeHtml(item_list[x].user_id)}</td>
+        <td class="cell">${escapeHtml(item_list[x].user_name)}</td>
+        <td class="cell">${roles[item_list[x].user_permlevel]}</td>
+        <td class="cell">${status}</td>
+        <td class="cell">${escapeHtml(item_list[x].user_owe + "%")}</td>
+        <td class="cell">n/a</td>
+        <td class="cell">
+        ${(permlevel < 2) ? `<div class="dropdown">
+        <a class="btn-sm app-btn-secondary dropdown-toggle" aria-expanded="false" data-toggle="dropdown" aria-haspopup="true" >Disable</a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="javascript:void(0)" onclick="copyInvite(${item_list[x].user_id})">Copy Invite</a>
+        <a class="dropdown-item" href="javascript:void(0)" onclick="updateUsername(${item_list[x].user_id})">Change Username</a>
+        <a class="dropdown-item" href="javascript:void(0)" onclick="updateRole(${item_list[x].user_id})">Change Role</a>
+        <a class="dropdown-item" href="javascript:void(0)" onclick="updateOwe(${item_list[x].user_id})">Change Owe</a>
+        <a class="dropdown-item" style="color:red" href="javascript:void(0)" onclick="deleteInvite(${item_list[x].user_id})">Delete invite</a>'
+        </div></div>`:''}</td>`;
+        }
         if (item_list[x]) p++;
         x++;
     }
@@ -177,4 +200,66 @@ function resetModel(){
     $('#model-content').html(`<div class='row mb-3' id="model-row-default">
             </div>
             <button type="submit" class="btn app-btn-primary" id='model-submit' onclick="placeholderfunction();">Add item</button><span class='ml-2' id='error-text' style="color:red;"></span><span id='model-close' class="close" onclick="modal.style.display = 'none';">&times;</span>`)
+}
+
+function newInvite(){
+    resetModel();
+    $('#model-row-default').append(`<div class="col-auto">
+                                    <label for="new-username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="new-username" value="">
+                                    </div>`)
+    $('#model-row-default').append(`<div class="col-auto">
+                                    <label for="new-role" class="form-label">Role</label>
+                                    <select type="text" class="form-control" id="new-role">
+                                    <option value="6">Trail employee</option>
+                                    <option value="5">Employee</option>
+                                    <option value="4">Senior employee</option>
+                                    <option value="3">Manager</option>
+                                    <option value="2">Secretary</option>
+                                    <option value="1">Co-Owner</option>
+                                    </select>
+                                    </div>`)
+    $('#model-row-default').append(`<div class="col-auto">
+                                    <label for="new-owe" class="form-label">Owe Percentage</label>
+                                    <input type="number" class="form-control" id="new-owe" value="60">
+                                    </div>`)
+    $('#model-submit').attr('onclick', 'newInviteSubmit()');
+    $('#model-submit').text('Create new invite')
+    modal.style.display = "block";
+}
+
+function newInviteSubmit(){
+    $('#model-submit').attr('disabled', true)
+    ws.onmessage = function(e){
+        const data = JSON.parse(e.data);
+        if (data.type != 'NEW_INVITE'){
+            return;
+        }
+        if (data.data.success == true){
+            copyTextToClipboard(data.data.link, a => {
+                if (a == true) {
+                    $('#model-submit').text('Invite copied to clipboard')
+                    setTimeout(function () {
+                        model.style.display = "none"
+                        page();
+                    }, 2500)
+                } else {
+                    $('#model-submit').text('Invite successfully created')
+                    $('#error-text').text("Invite: " +data.data.link)
+                }
+            })
+        } else {
+            shake("model-submit")
+            $('#model-submit').attr('disabled', false)
+            $('#error-text').text(data.data.message)
+        }
+    }
+    ws.send(JSON.stringify({
+        type: "NEW_INVITE",
+        data: {
+            username: $("#new-username").val(),
+            permlevel: $("#new-role").val(),
+            owe: $("#new-owe").val()
+        }
+    }))
 }

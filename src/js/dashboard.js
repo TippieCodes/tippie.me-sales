@@ -1,6 +1,7 @@
 let ws;
 
 function load() {
+    deleteCookie("invite_token")
     ws = new WebSocket('wss://tippie.me/lcn');
     ws.onmessage = function (e) {
         let data = JSON.parse(e.data)

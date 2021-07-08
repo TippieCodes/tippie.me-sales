@@ -35,7 +35,7 @@ function page() {
         </div><!--//app-card-footer-->
         </div>`)
                 console.log(data)
-                if (data.permission <= 1) {
+                if (data.permission <= 3) {
                     var addform = document.getElementById("addform")
                     $('#new-item').html('<a href="javascript:void(0)">New item</a>');
                     document.getElementById('new-item').onclick = function () {
@@ -79,7 +79,7 @@ function setTable(start, amount) {
                 <th class="cell">Sell price</th>
                 <th class="cell">Shipment Price</th>
                 <th class="cell">Stock</th>
-                ${(data.permission <= 1) ? '<th class="cell"></th>' : ''}
+                ${(data.permission <= 3) ? '<th class="cell"></th>' : ''}
             </tr>
         </thead>
     <tbody>`
@@ -94,7 +94,7 @@ function setTable(start, amount) {
         <td class="cell">¥${escapeHtml(item_list[x].sell_price)}</td>
         <td class="cell">¥${escapeHtml(item_list[x].shipment_price)}</td>
         <td class="cell">${escapeHtml(item_list[x].stock)}</td>
-        ${(data.permission <= 1) ? `<td class="cell"><a class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="editItem(${item_list[x].item_id})" >Edit</a></td>` : ''}
+        ${(data.permission <= 3) ? `<td class="cell"><a class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="editItem(${item_list[x].item_id})" >Edit</a></td>` : ''}
         </tr>`;
         if (item_list[x]) p++;
         x++;

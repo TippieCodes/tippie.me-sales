@@ -49,6 +49,7 @@ function page() {
                         document.getElementById('add-sell-price').value = ''
                         document.getElementById('add-shipment-price').value = ''
                         document.getElementById('add-stock').value = ''
+                        $('#add-category').val('')
                     }
                     document.getElementById('addform-close').onclick = function () {
                         addform.style.display = 'none';
@@ -76,6 +77,7 @@ function setTable(start, amount) {
                 <th class="cell">Item ID</th>
                 <th class="cell">Menu item</th>
                 <th class="cell">Item Name</th>
+                <th class="cell">Chest Location</th>
                 <th class="cell">Sell price</th>
                 <th class="cell">Shipment Price</th>
                 <th class="cell">Stock</th>
@@ -91,6 +93,7 @@ function setTable(start, amount) {
         <td class="cell">#${escapeHtml(item_list[x].item_id)}</td>
         <td class="cell">${escapeHtml(item_list[x].menu_item)}</td>
         <td class="cell">${escapeHtml(item_list[x].item_name)}</td>
+        <td class="cell">${escapeHtml(("00" + item_list[x].chest_id).slice(-3))}</td>
         <td class="cell">¥${escapeHtml(item_list[x].sell_price)}</td>
         <td class="cell">¥${escapeHtml(item_list[x].shipment_price)}</td>
         <td class="cell">${escapeHtml(item_list[x].stock)}</td>
@@ -153,7 +156,6 @@ function addItem() {
     let sellprice = document.getElementById('add-sell-price')
     let shipmentprice = document.getElementById('add-shipment-price')
     let stock = document.getElementById('add-stock')
-    let ws = new WebSocket('wss://tippie.me/lcn')
     ws.onmessage = function (e) {
         data = JSON.parse(e.data)
         console.log(data)
@@ -167,7 +169,6 @@ function addItem() {
             stock.value = ''
             $('#error-text').text('')
             document.getElementById('add-submit').innerHTML = 'Added!'
-            ws.close();
             setTimeout(function () {
                 document.getElementById("addform").style.display = 'none'
                 document.getElementById('add-submit').innerHTML = 'Add item'
@@ -178,23 +179,21 @@ function addItem() {
             $('#add-submit').removeClass('disabled')
             $('#error-text').text('Error occured! See console for details.')
             console.log(data.data)
-            ws.close();
         }
     }
-    ws.onopen = function (e) {
-        let request = {
-            type: 'ADD_STOCK',
-            data: {
-                category: category.value,
-                menuitem: menuitem.value,
-                itemname: itemname.value,
-                sellprice: sellprice.value,
-                shipmentprice: shipmentprice.value,
-                stock: stock.value
-            }
-        }
-        ws.send(JSON.stringify(request))
-    }
+     let request = {
+         type: 'ADD_STOCK',
+         data: {
+             category: category.value,
+             menuitem: menuitem.value,
+             itemname: itemname.value,
+             sellprice: sellprice.value,
+             shipmentprice: shipmentprice.value,
+             stock: stock.value,
+             chest: $('#add-chest').val()
+         }
+     }
+     ws.send(JSON.stringify(request))
 }
 
 function editItem(id) {
@@ -214,6 +213,7 @@ function editItem(id) {
     sellprice.value = item.sell_price
     shipmentprice.value = item.shipment_price
     stock.value = item.stock
+    $('#add-chest').val(item.chest_id)
     document.getElementById("addform").style.display = 'block';
 }
 
@@ -226,7 +226,6 @@ function saveItem(id) {
     let sellprice = document.getElementById('add-sell-price')
     let shipmentprice = document.getElementById('add-shipment-price')
     let stock = document.getElementById('add-stock')
-    let ws = new WebSocket('wss://tippie.me/lcn')
     ws.onmessage = function (e) {
         data = JSON.parse(e.data)
         console.log(data)
@@ -239,9 +238,9 @@ function saveItem(id) {
             sellprice.value = ''
             shipmentprice.value = ''
             stock.value = ''
+            $('#add-chest').val('000')
             $('#error-text').text('')
             document.getElementById('add-submit').innerHTML = 'Saved!'
-            ws.close();
             setTimeout(function () {
                 document.getElementById("addform").style.display = 'none'
                 document.getElementById('add-submit').innerHTML = 'Update item'
@@ -252,24 +251,22 @@ function saveItem(id) {
             $('#add-submit').removeClass('disabled')
             $('#error-text').text('Error occured! See console for details.')
             console.log(data.data)
-            ws.close();
         }
     }
-    ws.onopen = function (e) {
-        let request = {
-            type: 'UPDATE_STOCK',
-            data: {
-                id: id,
-                category: category.value,
-                menuitem: menuitem.value,
-                itemname: itemname.value,
-                sellprice: sellprice.value,
-                shipmentprice: shipmentprice.value,
-                stock: stock.value
-            }
+    let request = {
+        type: 'UPDATE_STOCK',
+        data: {
+            id: id,
+            category: category.value,
+            menuitem: menuitem.value,
+            itemname: itemname.value,
+            sellprice: sellprice.value,
+            shipmentprice: shipmentprice.value,
+            stock: stock.value,
+            chest: $("#add-chest").val()
         }
-        ws.send(JSON.stringify(request))
     }
+    ws.send(JSON.stringify(request))
 }
 
 function deleteItem(id) {
@@ -280,7 +277,6 @@ function deleteItem(id) {
     let sellprice = document.getElementById('add-sell-price')
     let shipmentprice = document.getElementById('add-shipment-price')
     let stock = document.getElementById('add-stock')
-    let ws = new WebSocket('wss://tippie.me/lcn')
     ws.onmessage = function (e) {
         data = JSON.parse(e.data)
         console.log(data)
@@ -292,8 +288,8 @@ function deleteItem(id) {
             shipmentprice.value = ''
             stock.value = ''
             $('#error-text').text('')
+            $('#add-chest').val('000')
             document.getElementById('delete-item').innerHTML = 'Deleted!'
-            ws.close();
             setTimeout(function () {
                 document.getElementById("addform").style.display = 'none'
                 document.getElementById('delete-item').innerHTML = 'Delete item'
@@ -305,16 +301,13 @@ function deleteItem(id) {
             $('#delete-item').removeClass('disabled')
             $('#error-text').text('Error occured! See console for details.')
             console.log(data.data)
-            ws.close();
         }
     }
-    ws.onopen = function (e) {
-        let request = {
-            type: 'DELETE_STOCK',
-            data: {
-                id: id,
-            }
+    let request = {
+        type: 'DELETE_STOCK',
+        data: {
+            id: id,
         }
-        ws.send(JSON.stringify(request))
     }
+    ws.send(JSON.stringify(request))
 }

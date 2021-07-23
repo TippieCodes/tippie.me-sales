@@ -31,6 +31,19 @@ function load() {
                 checkShift();
                 page();
                 let url_elements = window.location.href.split("/")
+                console.log(url_elements)
+                if (url_elements[4].toLowerCase() == "casino"){
+                    $(`#casino`).addClass("active");
+                    $(`#casino`).attr("aria-expanded", "true");
+                    $(`#submenu-casino`).addClass("show");
+                    $(`#app-nav-main a`).attr('href', function(index, href) {
+                        if (href.indexOf('http') === 0 || href.indexOf('javascript:void(0)') === 0) {
+                            return href;
+                        } else {
+                            return '../' + href;
+                        }
+                    });
+                }
                 if (window.location.href.split("")[window.location.href.split("").length - 1] == "#") {
                     window.location.href = window.location.href.slice(0, -1);
                 } else if (url_elements[url_elements.length - 1] == "" && url_elements[url_elements.length - 2] != "lcn") {
@@ -44,14 +57,11 @@ function load() {
                 } else if (url_elements[url_elements.length - 1] == 'app.html') {
                     $(`a[href="apps.html"]`).addClass(`active`);
                 } else {
-                    $(`a[href="${url_elements[url_elements.length - 1]}"]`).addClass(`active`);
+                    $(`a[href$="${url_elements[url_elements.length - 1]}"]`).addClass(`active`);
                 }
         }
     }
     ws.onclose = function (e) {
-        reconnect(10);
-    }
-    ws.onerror = function (e) {
         reconnect(10);
     }
 }

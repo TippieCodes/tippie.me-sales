@@ -8,8 +8,8 @@ function page() {
             stocklist = data.data
             let a = `												<thead>
         <tr>
-            <th class="cell">Menu item</th>
             <th class="cell">Item Name</th>
+            <th class="cell">Item location</th>
             <th class="cell">Sell price</th>
             <th class="cell">Stock</th>
             <th class="cell"></th>
@@ -21,8 +21,8 @@ function page() {
                 let item = current_order[index]
                 if (!item) item = {amount: 0}
                 a += `												<tr>
-            <td class="cell">${escapeHtml(row.menu_item)}</td>
             <td class="cell">${escapeHtml(row.item_name)}</td>
+            <td class="cell">${escapeHtml(("00" + row.chest_id).slice(-3))}</td>
             <td class="cell">¥${escapeHtml(row.sell_price)}</td>
             <td class="cell" id="stockrow-${row.item_id}">${escapeHtml(row.stock - item.amount)}</td>
             <td class="cell"><button class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="addToOrder(${row.item_id})"  ${(row.stock - item.amount < 1) ? 'disabled' : ''}>Add</button></td>
@@ -129,6 +129,7 @@ function updateCurrentOrder(){
     <tr>
         <th scope="col">Amount</th>
         <th scope="col">Item name</th>
+        <th scope="col">Item location</th>
         <th scope="col">Total price</th>
         <th scope="col-sm"></th>
     </tr>
@@ -148,6 +149,7 @@ $('#order-error-text').text('')
         a += `													<tr>
         <td>${escapeHtml(item.amount)}</td>
         <td>${escapeHtml(b.menu_item)}</td>
+        <td class="cell">${escapeHtml(("00" + b.chest_id).slice(-3))}</td>
         <td>${escapeHtml(price)}</td>
         <td><a class="btn-sm app-btn-secondary" href="javascript:void(0)"
                 onclick="removeFromOrder(${item.id})">Remove</a></td>

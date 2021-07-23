@@ -16,7 +16,7 @@ function page() {
         switch (data.type) {
             case 'EMPLOYEE_LIST':
                 //TODO sorting
-                item_list = data.data
+                item_list = data.data.sort((a,b) => (a.user_permlevel > b.user_permlevel)? 1 : -1)
                 permlevel = data.permlevel
                 setTable(0, 10);
         }

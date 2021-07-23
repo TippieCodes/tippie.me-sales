@@ -125,18 +125,23 @@
                             <div class='row mb-3'>
                                 <div class="col-auto">
                                     <label for="setting-input-1" class="form-label">Sell price</label>
-                                    <input type="text" class="form-control" id="add-sell-price" value=""
+                                    <input type="number" class="form-control" id="add-sell-price" value=""
                                         required="true">
                                 </div>
                                 <div class="col-auto">
                                     <label for="setting-input-1" class="form-label">Shipment price</label>
-                                    <input type="text" class="form-control" id="add-shipment-price" value=""
+                                    <input type="number" class="form-control" id="add-shipment-price" value=""
                                         required="true">
                                 </div>
                                 <div class="col-auto">
                                     <label for="setting-input-2" class="form-label">Stock</label>
-                                    <input type="text" class="form-control" id="add-stock" value=""
+                                    <input type="number" class="form-control" id="add-stock" value=""
                                         required="true">
+                                </div>
+                                <div class="col-auto">
+                                    <label for="setting-input-2" class="form-label">Chest Location</label>
+                                    <input type="number" class="form-control" id="add-chest" value="000"
+                                           required="true">
                                 </div>
                             </div>
                             <button type="submit" class="btn app-btn-primary" id='add-submit' onclick="addItem();">Add item</button><span id='delete-stock' class='ml-2'></span><span class='ml-2' id='error-text' style="color:red;"></span><span id='addform-close' class="close" >&times;</span>

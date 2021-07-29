@@ -139,29 +139,44 @@ function copyTextToClipboard(text, callback) {
   });
 }
 
-function RNG(seed) {
-  // LCG using GCC's constants
-  this.m = 0x80000000; // 2**31;
-  this.a = 1103515245;
-  this.c = 12345;
+let card_dictionary = {
+  "h": "Hearts",
+  "c": "Clubs",
+  "d": "Diamonds",
+  "s": "Spades",
+  1: "Ace",
+  2: "Two",
+  3: "Three",
+  4: "Four",
+  5: "Five",
+  6: "Six",
+  7: "Seven",
+  8: "Eight",
+  9: "Nine",
+  10: "Ten",
+  "j": "Jack",
+  "q": "Queen",
+  "k": "King",
+  "b": "Blank Card"
+}
 
-  this.state = seed ? seed : Math.floor(Math.random() * (this.m - 1));
+function cardToText(card){
+  let e = false;
+  if (card.endsWith(".")) {
+    card = card.slice(0, -1)
+    e = true;
+  }
+  let a = card.split("")
+  let c = a[0]
+  a.shift()
+  let d = a.join("")
+  return (card.length === 0) ? undefined :card_dictionary[d] + " of " + card_dictionary[c] + ((e) ? " (down)" : "")
 }
-RNG.prototype.nextInt = function() {
-  this.state = (this.a * this.state + this.c) % this.m;
-  return this.state;
-}
-RNG.prototype.nextFloat = function() {
-  // returns in range [0,1]
-  return this.nextInt() / (this.m - 1);
-}
-RNG.prototype.nextRange = function(start, end) {
-  // returns in range [start, end): including start, excluding end
-  // can't modulu nextInt because of weak randomness in lower bits
-  var rangeSize = end - start;
-  var randomUnder1 = this.nextInt() / this.m;
-  return start + Math.floor(randomUnder1 * rangeSize);
-}
-RNG.prototype.choice = function(array) {
-  return array[this.nextRange(0, array.length)];
+
+function cardsToText(cards){
+  let r = []
+  for (const c of cards){
+    r.push(cardToText(c))
+  }
+  return (r.length === 0) ? undefined : r.join(", ")
 }

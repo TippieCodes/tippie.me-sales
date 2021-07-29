@@ -35,6 +35,9 @@ function page(){
         } else if (data.type === "BINGO_GAME_UPDATE") {
             cards = data.cards
             rolled = data.rolled.split(",")
+            for (const i in rolled) {
+                if (rolled.hasOwnProperty(i)) rolled[i] = parseInt(rolled[i]);
+            }
             gameId = data.game_id
             $('#prize').text(data.prize)
             if (rolled[0] === ""){

@@ -6,30 +6,7 @@ function page() {
         let data = JSON.parse(e.data)
         if (data.type == 'STOCK_LIST') {
             stocklist = data.data
-            let a = `												<thead>
-        <tr>
-            <th class="cell">Item Name</th>
-            <th class="cell">Item location</th>
-            <th class="cell">Sell price</th>
-            <th class="cell">Stock</th>
-            <th class="cell"></th>
-        </tr>
-    </thead>
-    <tbody>`
-            for (row of data.data) {
-                let index = current_order.findIndex(a => a.id == row.item_id)
-                let item = current_order[index]
-                if (!item) item = {amount: 0}
-                a += `												<tr>
-            <td class="cell">${escapeHtml(row.item_name)}</td>
-            <td class="cell">${escapeHtml(("00" + row.chest_id).slice(-3))}</td>
-            <td class="cell">¥${escapeHtml(row.sell_price)}</td>
-            <td class="cell" id="stockrow-${row.item_id}">${escapeHtml(row.stock - item.amount)}</td>
-            <td class="cell"><button class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="addToOrder(${row.item_id})"  ${(row.stock - item.amount < 1) ? 'disabled' : ''}>Add</button></td>
-            </tr>`
-            }
-            a += `</tbody>`
-            $('#order-table').html(a)
+            updateTable();
         } else if (data.type == 'OK') {
             $('#order-button').text('Order finished!')
             setTimeout(function () {
@@ -168,6 +145,7 @@ function addToOrder(id) {
     updateCurrentOrder();
     let stock = stocklist.find(a => a.item_id == id)
     $(`#stockrow-${id}`).text(stock.stock-current_order[index].amount)
+    updateStock(stock.id,stock.stock-current_order[index].amount)
     $(`button[onclick="addToOrder(${id})"]`).prop('disabled', (stock.stock - current_order[index].amount < 1))
 }
 
@@ -178,6 +156,7 @@ function removeFromOrder(id) {
     current_order[index].amount -= 1
     let stock = stocklist.find(a => a.item_id == id)
     $(`#stockrow-${id}`).text(stock.stock-current_order[index].amount)
+    updateStock(stock.id,stock.stock-current_order[index].amount)
     $(`button[onclick="addToOrder(${id})"]`).prop('disabled', (stock.stock - current_order[index].amount < 1))
     if (current_order[index].amount < 1) current_order.splice(index, 1);
     updateCurrentOrder();
@@ -186,6 +165,52 @@ function removeFromOrder(id) {
 function completeOrder() {
     $('#order-button').prop('disabled',true)
     ws.send(JSON.stringify({type: 'NEW_ORDER', data:current_order}))
+}
+
+document.getElementById("sell-search").onkeydown = function (){
+    let search = $("#sell-search").val();
+    if (search.length > 0 ) {
+        stocklist.sort((a, b) => (similarity(a.item_name, search) > similarity(b.item_name, search)) ? -1:1)
+    } else {
+        stocklist.sort((a, b) => (a.chest_id < b.chest_id) ? -1:1);
+    }
+    updateTable();
+}
+
+function updateStock( id, count ) {
+    for (let i in stocklist) {
+        if (stocklist[i].id == id) {
+            stocklist[i].stock = count;
+            break;
+        }
+    }
+}
+
+function updateTable(){
+    let a = `												<thead>
+        <tr>
+            <th class="cell">Item Name</th>
+            <th class="cell">Item location</th>
+            <th class="cell">Sell price</th>
+            <th class="cell">Stock</th>
+            <th class="cell"></th>
+        </tr>
+    </thead>
+    <tbody>`
+    for (row of stocklist) {
+        let index = current_order.findIndex(a => a.id == row.item_id)
+        let item = current_order[index]
+        if (!item) item = {amount: 0}
+        a += `												<tr>
+            <td class="cell">${escapeHtml(row.item_name)}</td>
+            <td class="cell">${escapeHtml(("00" + row.chest_id).slice(-3))}</td>
+            <td class="cell">¥${escapeHtml(row.sell_price)}</td>
+            <td class="cell" id="stockrow-${row.item_id}">${escapeHtml(row.stock - item.amount)}</td>
+            <td class="cell"><button class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="addToOrder(${row.item_id})"  ${(row.stock - item.amount < 1) ? 'disabled' : ''}>Add</button></td>
+            </tr>`
+    }
+    a += `</tbody>`
+    $('#order-table').html(a)
 }
 
 

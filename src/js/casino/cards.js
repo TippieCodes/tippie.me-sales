@@ -60,3 +60,15 @@ function withdraw(){
 function makeVip(){
     ws.send(JSON.stringify({type: "CARD_MANAGEMENT", data: {id: $("#card-ID").val(), action: "VIP"}}));
 }
+
+//region Spin the Wheel
+
+function spinWheel(){
+    ws.send(JSON.stringify({type: "LUCKY_WHEEL", action:"SPIN"}))
+}
+
+function wonSpin(){
+    ws.send(JSON.stringify({type: "LUCKY_WHEEL", action:"WON"}))
+}
+
+//endRegion

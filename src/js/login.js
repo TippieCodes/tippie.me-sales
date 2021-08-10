@@ -23,7 +23,7 @@ async function login() {
                 return;
             case 'LOGIN':
                 setCookie('session_token', data.data, 30)
-                window.location.href = '/lcn/'
+                window.location.href = root_url
         }
     }
 }
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function(){
         ws.onmessage = function (e) {
             var data = JSON.parse(e.data)
             if (data.type == 'CONNECTED'){
-                window.location.href = '/lcn/'
+                window.location.href = root_url
             } else {
                 deleteCookie('session_token')
             }

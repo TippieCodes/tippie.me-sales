@@ -28,7 +28,7 @@ function register(){
             $('#submit').text('Account created!')
             $('#error-text').text('')
             setTimeout(function () {
-                window.location.href = '/lcn/login.html'
+                window.location.href = root_url + 'login.html'
             }, 2000)
         }
     }

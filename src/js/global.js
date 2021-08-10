@@ -1,3 +1,8 @@
+//Constants
+const root_url = "/sales/"
+const root_url_name = root_url.split("/")[1]
+
+//Functions
 function includeHTML() {
   return new Promise(function (resolve, reject) {
     var z, i, p, u;

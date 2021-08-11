@@ -1,3 +1,8 @@
+var xhttp = new XMLHttpRequest();
+xhttp.open("GET", "https://tippie.me/sales/api/stores", false); 
+xhttp.send(null);
+const stores = JSON.parse(xhttp.responseText)
+
 async function login() {
     const username = document.getElementById('signin-username').value
     const password = document.getElementById('signin-password').value
@@ -8,7 +13,7 @@ async function login() {
     }
     setCookie('log_in_a', username, 0.01)
     setCookie('log_in_b', password, 0.01)
-    const ws = new WebSocket('wss://tippie.me/lcn');
+    const ws = new WebSocket('wss://tippie.me/sales');
     ws.onerror = function (e) {
         document.getElementById('error-box').innerHTML = 'Login failed! Unexpected error occured!.'
     }
@@ -30,7 +35,7 @@ async function login() {
 document.addEventListener("DOMContentLoaded", function(){
     let token = getCookie('session_token')
     if (token) {
-        const ws = new WebSocket('wss://tippie.me/lcn');
+        const ws = new WebSocket('wss://tippie.me/sales');
         ws.onerror = function (e) {
             document.getElementById('error-box').innerHTML = 'Login failed! Unexpected error occured!.'
         }
@@ -43,4 +48,27 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         }
     }
+
+    for (let store of stores) {
+        $("#store-select").append(`<option value=${store.store_id}>${store.store_name}</option>`)
+    }
+    const urlParams = new URLSearchParams(window.location.search)
+    if (urlParams.has("id")) {
+        $(`#store-select option[value=${urlParams.get("id")}]`).attr("selected",true)
+    } else if (urlParams.has("store")) {
+        let store = stores.find(a => a.store_url_friendly == urlParams.get("store"))
+        if (store) $(`#store-select option[value=${store.store_id}]`).attr("selected",true)
+    } else {
+        $(`#store-select option[value=0]`).attr("selected",true)
+    }
+    loadStoreLogin();
 });
+
+function loadStoreLogin(){
+    let selected = $("#store-select").val()
+    let store = stores.find(a => a.store_id == selected)
+    $("#text-1").text("the " + store.store_name + " online area.")
+    $(".logo-icon").attr("src", store.logo_url)
+}
+
+document.getElementById("store-select").onchange = function(){loadStoreLogin()};

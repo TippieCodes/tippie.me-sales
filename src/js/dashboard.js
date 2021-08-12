@@ -2,7 +2,7 @@ let ws;
 
 function load() {
     deleteCookie("invite_token")
-    ws = new WebSocket('wss://tippie.me/lcn');
+    ws = new WebSocket('wss://tippie.me/sales');
     ws.onmessage = function (e) {
         let data = JSON.parse(e.data)
         switch (data.type) {
@@ -84,7 +84,7 @@ function logout() {
 }
 
 function checkShift() {
-    const ws2 = new WebSocket("wss://tippie.me/lcn")
+    const ws2 = new WebSocket("wss://tippie.me/sales")
     ws2.onmessage = function (e) {
         let data = JSON.parse(e.data)
         if (data.type == 'SHIFT'){

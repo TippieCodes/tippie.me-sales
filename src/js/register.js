@@ -7,7 +7,7 @@ function register(){
     }
     setCookie("invite_token", $('#invite-token').val(),0.1)
     setCookie("register_password",$('#password').val(),0.1)
-    const ws = new WebSocket("wss://tippie.me/lcn")
+    const ws = new WebSocket("wss://tippie.me/sales")
     ws.onmessage = function (e) {
         deleteCookie("invite_token")
         deleteCookie("register_password")
@@ -36,7 +36,7 @@ function register(){
 
 function checkToken(){
     setCookie("invite_token", $('#invite-token').val())
-    const ws = new WebSocket("wss://tippie.me/lcn")
+    const ws = new WebSocket("wss://tippie.me/sales")
     ws.onmessage = function (e){
         const data = JSON.parse(e.data)
         if (data.type == "CORRECT_TOKEN") {

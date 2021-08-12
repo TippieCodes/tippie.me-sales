@@ -6,6 +6,7 @@ const stores = JSON.parse(xhttp.responseText)
 async function login() {
     const username = document.getElementById('signin-username').value
     const password = document.getElementById('signin-password').value
+    setCookie('store', $("#store-select").val(), 0.01)
     if (document.getElementById("RememberPassword").checked){
         setCookie('log_in_c', "true", 0.01)
     } else {
@@ -22,6 +23,7 @@ async function login() {
         deleteCookie('log_in_a')
         deleteCookie('log_in_b')
         deleteCookie('log_in_c')
+        deleteCookie('store')
         switch (data.type) {
             case 'UNAUTHORIZED':
                 document.getElementById('error-box').innerHTML = 'Login failed! Incorrect token.'
@@ -71,6 +73,8 @@ function loadStoreLogin(){
     $(".logo-icon").attr("src", store.logo_url)
     $(".auth-background-holder").attr("style", "background: url("+store.login_side_image+") no-repeat center center")
     $(`link[rel="shortcut icon"]`).attr("href", store.favicon_url)
+    $('#side-text-header').text(store.login_side_text_header)
+    $('#side-text-body').text(store.login_side_text_body)
 }
 
 document.getElementById("store-select").onchange = function(){loadStoreLogin()};

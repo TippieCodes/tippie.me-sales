@@ -69,6 +69,8 @@ function loadStoreLogin(){
     let store = stores.find(a => a.store_id == selected)
     $("#text-1").text("the " + store.store_name + " online area.")
     $(".logo-icon").attr("src", store.logo_url)
+    $(".auth-background-holder").attr("style", "background: url("+store.login_side_image+") no-repeat center center")
+    $(`link[rel="shortcut icon"]`).attr("href", store.favicon_url)
 }
 
 document.getElementById("store-select").onchange = function(){loadStoreLogin()};

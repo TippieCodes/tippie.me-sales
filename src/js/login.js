@@ -75,6 +75,7 @@ function loadStoreLogin(){
     $(`link[rel="shortcut icon"]`).attr("href", store.favicon_url)
     $('#side-text-header').text(store.login_side_text_header)
     $('#side-text-body').text(store.login_side_text_body)
+    $("title").text(`${store.store_name} Online Area`)
 }
 
 document.getElementById("store-select").onchange = function(){loadStoreLogin()};

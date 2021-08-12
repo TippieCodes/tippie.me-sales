@@ -29,6 +29,7 @@ function load() {
                         "                    <!--//nav-item-->");
                 }
                 checkShift();
+                ws.send(JSON.stringify({type:"STORE"}));
                 page();
                 let url_elements = window.location.href.split("/")
                 console.log(url_elements)
@@ -59,6 +60,12 @@ function load() {
                 } else {
                     $(`a[href$="${url_elements[url_elements.length - 1]}"]`).addClass(`active`);
                 }
+                break;
+            case "STORE":
+                let store = data.data;
+                $(".logo-icon").attr("src", store.logo_url)
+                $(`link[rel="shortcut icon"]`).attr("href", store.favicon_url)
+                $("title").text(`${store.store_name} Online Area`)
         }
     }
     ws.onclose = function (e) {

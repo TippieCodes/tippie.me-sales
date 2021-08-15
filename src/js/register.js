@@ -41,7 +41,8 @@ function register(){
 }
 
 function checkToken(){
-    setCookie("invite_token", $('#invite-token').val())
+    setCookie("invite_token", $('#invite-token').val(), 0.1)
+    setCookie("store", $("#store-select").val(), 0.1)
     const ws = new WebSocket("wss://tippie.me/sales")
     ws.onmessage = function (e){
         const data = JSON.parse(e.data)

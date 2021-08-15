@@ -1,5 +1,20 @@
 let ws;
 
+const modules = {
+    "casino/bingo.html": "CASINO",
+    "casino/blackjack.html": "CASINO",
+    "casino/cards.html": "CASINO",
+    "casino/war.html": "CASINO",
+    "employees.html": "CORE",
+    "index.html": "CORE",
+    "sell.html": "CORE",
+    "settings.html": "CORE",
+    "shift.html": "CORE",
+    "shifts.html": "CORE",
+    "stock.html": "CORE",
+
+}
+
 function load() {
     deleteCookie("invite_token")
     ws = new WebSocket('wss://tippie.me/sales');
@@ -61,11 +76,6 @@ function load() {
                     $(`a[href$="${url_elements[url_elements.length - 1]}"]`).addClass(`active`);
                 }
                 break;
-            case "STORE":
-                let store = data.data;
-                $(".logo-icon").attr("src", store.logo_url)
-                $(`link[rel="shortcut icon"]`).attr("href", store.favicon_url)
-                $("title").text(`${store.store_name} Online Area`)
         }
     }
     ws.onclose = function (e) {
@@ -103,9 +113,34 @@ function checkShift() {
                 $('#shift-text').text('Current shift: ' + data.data.shift_name)
                 //TODO dropdown for other shift information
             }
+        } else if (data.type == 'STORE'){
+            let store = data.data;
+            let current = window.location.href.split(root_url)[1].split("?")[0];
+            $(".logo-icon").attr("src", store.logo_url)
+            $(`link[rel="shortcut icon"]`).attr("href", store.favicon_url)
+            $("title").text(`${store.store_name} Online Area`)
+            if (store[`module_${modules[current].toLowerCase()}`] != true) {
+                $(".container-xl").first().html(`
+                        <h1 class="app-page-title">${current}</h1>
+                <div class="alert alert-danger" role="alert">
+                    <div class="inner">
+                    <div class="app-card-body p-3 p-lg-4">
+                    <h3 class="mb-3">Module not enabled!</h3>
+                <div class="row gx-5 gy-3">
+                    <div class="col-12 col-lg-9">
+                        <div>The ${modules[current].toLowerCase()} module is not enabled. If you believe this is a mistake contact your store owner.</div>
+                    </div><!--//col-->
+                </div><!--//row-->
+            </div><!--//app-card-body-->
+
+            </div><!--//inner-->
+            </div>`
+                )
+            }
         }
     }
     ws2.onopen = function (e){
         ws2.send(JSON.stringify({type: "SHIFT"}))
+        ws2.send(JSON.stringify({type: "STORE"}))
     }
 }

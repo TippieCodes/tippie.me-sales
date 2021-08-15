@@ -12,6 +12,7 @@ function register(){
     }
     setCookie("invite_token", $('#invite-token').val(),0.1)
     setCookie("register_password",$('#password').val(),0.1)
+    setCookie("store", $("#store-select").val(), 0.1)
     const ws = new WebSocket("wss://tippie.me/sales")
     ws.onmessage = function (e) {
         deleteCookie("invite_token")
@@ -71,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function(){
     }
     deleteCookie("invite_token")
     deleteCookie("register_password")
+    deleteCookie("store")
     $("#invite-token").val(urlParams.get("token"))
     checkToken();
 })

@@ -1,4 +1,6 @@
-var xhttp = new XMLHttpRequest();
+// noinspection JSUnresolvedVariable
+
+const xhttp = new XMLHttpRequest();
 xhttp.open("GET", "https://tippie.me/sales/api/stores", false); 
 xhttp.send(null);
 const stores = JSON.parse(xhttp.responseText)
@@ -15,6 +17,7 @@ async function login() {
     setCookie('log_in_a', username, 0.01)
     setCookie('log_in_b', password, 0.01)
     const ws = new WebSocket('wss://tippie.me/sales');
+    // noinspection JSUnusedLocalSymbols
     ws.onerror = function (e) {
         document.getElementById('error-box').innerHTML = 'Login failed! Unexpected error occured!.'
     }
@@ -38,11 +41,12 @@ document.addEventListener("DOMContentLoaded", function(){
     let token = getCookie('session_token')
     if (token) {
         const ws = new WebSocket('wss://tippie.me/sales');
+        // noinspection JSUnusedLocalSymbols
         ws.onerror = function (e) {
             document.getElementById('error-box').innerHTML = 'Login failed! Unexpected error occured!.'
         }
         ws.onmessage = function (e) {
-            var data = JSON.parse(e.data)
+            const data = JSON.parse(e.data);
             if (data.type == 'CONNECTED'){
                 window.location.href = root_url
             } else {

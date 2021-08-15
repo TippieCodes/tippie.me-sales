@@ -3,12 +3,13 @@
 
 <head><!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+new Date().getTime(),event:'gtm.js'});
+	const f = d.getElementsByTagName(s)[0],
+			j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-KFP2925');</script>
 <!-- End Google Tag Manager -->
-	<title>La Casa Nostra Employee Area</title>
+	<title>Register</title>
 
 	<!-- Meta -->
 	<meta charset="utf-8">
@@ -26,22 +27,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </head>
 
 <body class="app">
-<<<<<<< HEAD
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KFP2925"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) --><div class="app-wrapper">
-=======
 <div class="app-wrapper">
->>>>>>> df6b0ed02b929fb92812bde721aee4ca357f9019
 
 	<div class="app-content pt-3 p-md-3 p-lg-4">
 		<div class="container-xl">
 			<h1 class="app-page-title">Register Account</h1>
 			<div class="app-card app-card-settings shadow-sm p-4">
-
 				<div class="app-card-body">
 					<div class="settings-form">
+						<div class="mb-3">
+							<label for="store-select" class="form-label">Store</label>
+							<select class="form-select form-select" aria-label="Stores" id="store-select">
+							</select>
+						</div>
 						<div class="mb-3">
 							<label for="invite-token" class="form-label">Invite Token</label>
 							<input type="text" class="form-control" id="invite-token" value="" onfocusout="checkToken()">
@@ -72,6 +74,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 <!--//app-wrapper-->
 
+</div>
 
 <!-- Javascript -->
 <script src="assets/plugins/popper.min.js"></script>

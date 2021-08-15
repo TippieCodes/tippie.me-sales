@@ -1,3 +1,8 @@
+let xhttp = new XMLHttpRequest();
+xhttp.open("GET", "https://tippie.me/sales/api/stores", false);
+xhttp.send(null);
+const stores = JSON.parse(xhttp.responseText)
+
 function register(){
     $("#submit").prop('disabled',true);
     if ($("#password").val() !== $("#repeat-password").val()){
@@ -47,10 +52,27 @@ function checkToken(){
     }
 }
 
+// noinspection JSUnresolvedVariable
 document.addEventListener("DOMContentLoaded", function(){
+    for (let store of stores) {
+        // noinspection JSUnresolvedVariable
+        $("#store-select").append(`<option value=${store.store_id}>${store.store_name}</option>`)
+    }
+    const urlParams = new URLSearchParams(window.location.search)
+    if (urlParams.has("id")) {
+        $(`#store-select option[value=${urlParams.get("id")}]`).attr("selected",true)
+    } else if (urlParams.has("store")) { // noinspection JSUnresolvedVariable
+        let store = stores.find(a => a.store_url_friendly == urlParams.get("store"))
+        if (store) { // noinspection JSUnresolvedVariable
+            $(`#store-select option[value=${store.store_id}]`).attr("selected",true)
+        }
+    } else {
+        $(`#store-select option[value=0]`).attr("selected",true)
+    }
     deleteCookie("invite_token")
     deleteCookie("register_password")
-    const urlParams = new URLSearchParams(window.location.search)
     $("#invite-token").val(urlParams.get("token"))
     checkToken();
 })
+
+document.getElementById("store-select").onchange = function(){checkToken()}

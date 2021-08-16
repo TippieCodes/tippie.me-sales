@@ -92,7 +92,7 @@ function setTable(start, amount) {
         <td class="cell">#${escapeHtml(item_list[x].item_id)}</td>
         <td class="cell">${escapeHtml(item_list[x].menu_item)}</td>
         <td class="cell">${escapeHtml(item_list[x].item_name)}</td>
-        <td class="cell">${escapeHtml(("00" + item_list[x].chest_id).slice(-3))}</td>
+        <td class="cell">${escapeHtml(item_list[x].chest_id)}</td>
         <td class="cell">¥${escapeHtml(item_list[x].sell_price)}</td>
         <td class="cell">¥${escapeHtml(item_list[x].shipment_price)}</td>
         <td class="cell">${escapeHtml(item_list[x].stock)}</td>

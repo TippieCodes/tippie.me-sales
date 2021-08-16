@@ -6,6 +6,7 @@ function page() {
         let data = JSON.parse(e.data)
         if (data.type == 'STOCK_LIST') {
             stocklist = data.data
+            stocklist.sort((a, b) => (a.chest_id > b.chest_id) ? 1 : -1)
             updateTable();
         } else if (data.type == 'OK') {
             $('#order-button').text('Order finished!')
@@ -126,7 +127,7 @@ $('#order-error-text').text('')
         a += `													<tr>
         <td>${escapeHtml(item.amount)}</td>
         <td>${escapeHtml(b.menu_item)}</td>
-        <td class="cell">${escapeHtml(("00" + b.chest_id).slice(-3))}</td>
+        <td class="cell">${escapeHtml(b.chest_id)}</td>
         <td>${escapeHtml(price)}</td>
         <td><a class="btn-sm app-btn-secondary" href="javascript:void(0)"
                 onclick="removeFromOrder(${item.id})">Remove</a></td>
@@ -203,7 +204,7 @@ function updateTable(){
         if (!item) item = {amount: 0}
         a += `												<tr>
             <td class="cell">${escapeHtml(row.item_name)}</td>
-            <td class="cell">${escapeHtml(("00" + row.chest_id).slice(-3))}</td>
+            <td class="cell">${escapeHtml(row.chest_id).slice(-3)}</td>
             <td class="cell">¥${escapeHtml(row.sell_price)}</td>
             <td class="cell" id="stockrow-${row.item_id}">${escapeHtml(row.stock - item.amount)}</td>
             <td class="cell"><button class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="addToOrder(${row.item_id})"  ${(row.stock - item.amount < 1) ? 'disabled' : ''}>Add</button></td>

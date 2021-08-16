@@ -12,69 +12,25 @@ const modules = {
     "shift.html": "CORE",
     "shifts.html": "CORE",
     "stock.html": "CORE",
-
 }
 
-let navBar = {
-    1:`<li class="nav-item">
-                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="index.html">
-                            <span class="nav-icon">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door"
-                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z" />
-                                    <path fill-rule="evenodd"
-                                        d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
-                                </svg>
-                            </span>
-                            <span class="nav-link-text">Overview</span>
-                        </a>
-                        <!--//nav-link-->
-                    </li>`,
-        2: `<!--//nav-item-->
-                    <li class="nav-item">
-                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="sell.html">
-                            <span class="nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
-                                    <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-                                    <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"/>
-                                  </svg>
-                            </span>
-                            <span class="nav-link-text">Sell</span>
-                        </a>
-                        <!--//nav-link-->
-                    </li>`,
-            3: `<li class="nav-item">
-                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="stock.html">
-                            <span class="nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-box-seam" viewBox="0 0 16 16">
-                                    <path
-                                        d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z" />
-                                </svg>
-                            </span>
-                            <span class="nav-link-text">Stock</span>
-                        </a>
-                        <!--//nav-link-->
-                    </li>`,
-            4: `<li class="nav-item">
-                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="shifts.html">
-                            <span class="nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
-                                    <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
-                                    <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
-                                    <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
-                                  </svg>
-                            </span>
-                            <span class="nav-link-text">Shifts</span>
-                        </a>
-                        <!--//nav-link-->
-                    </li>`
+const permissions = {
+    "casino/bingo.html": "casino_bingo",
+    "casino/blackjack.html": "casino_blackjack",
+    "casino/cards.html": "casino_cards",
+    "casino/war.html": "null",
+    "employees.html": "list_employees",
+    "index.html": "overview",
+    "sell.html": "sell",
+    "settings.html": "none",
+    "shift.html": "list_shifts",
+    "shifts.html": "list_shifts",
+    "stock.html": "list_stock",
 }
+
+let client;
+
+let navBar = {}
 
 function load() {
     deleteCookie("invite_token")
@@ -86,10 +42,10 @@ function load() {
                 window.location.href = root_url + 'login.html'
                 return;
             case 'CONNECTED':
-                let client = data.data
+                client = data.data
                 $("#profile-picture").attr('src', `https://cravatar.eu/helmavatar/${client.username}/100.png`);
                 $("#username").text(client.username);
-                if (!(client.permlevel > 3)) {
+                if (client.role["permission_list_employees"]) {
                     navBar[6]="<li class=\"nav-item\" id=\"nav-employees\">\n" +
                         "                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->\n" +
                         "                        <a class=\"nav-link\" href=\"employees.html\">\n" +
@@ -104,7 +60,73 @@ function load() {
                         "                    </li>\n" +
                         "                    <!--//nav-item-->";
                 }
-                checkShift();
+                if (client.role["permission_overview"]) {
+                    navBar[1]=`<li class="nav-item">
+                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                        <a class="nav-link" href="index.html">
+                            <span class="nav-icon">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z" />
+                                    <path fill-rule="evenodd"
+                                        d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-text">Overview</span>
+                        </a>
+                        <!--//nav-link-->
+                    </li>`
+                }
+                if (client.role["permission_sell"]) {
+                    navBar[2]=`<!--//nav-item-->
+                    <li class="nav-item">
+                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                        <a class="nav-link" href="sell.html">
+                            <span class="nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
+                                    <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                                    <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"/>
+                                  </svg>
+                            </span>
+                            <span class="nav-link-text">Sell</span>
+                        </a>
+                        <!--//nav-link-->
+                    </li>`
+                }
+                if (client.role["permission_list_stock"]){
+                    navBar[3]=`<li class="nav-item">
+                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                        <a class="nav-link" href="stock.html">
+                            <span class="nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-box-seam" viewBox="0 0 16 16">
+                                    <path
+                                        d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-text">Stock</span>
+                        </a>
+                        <!--//nav-link-->
+                    </li>`
+                }
+                if (client.role["permission_list_shifts"]) {
+                    navBar[4]=`<li class="nav-item">
+                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                        <a class="nav-link" href="shifts.html">
+                            <span class="nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
+                                    <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
+                                    <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
+                                    <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
+                                  </svg>
+                            </span>
+                            <span class="nav-link-text">Shifts</span>
+                        </a>
+                        <!--//nav-link-->
+                    </li>`
+                }
+                checkPage();
                 ws.send(JSON.stringify({type:"STORE"}));
                 page();
                 break;
@@ -132,7 +154,7 @@ function logout() {
     window.location.href = root_url + 'login.html'
 }
 
-function checkShift() {
+function checkPage() {
     const ws2 = new WebSocket("wss://tippie.me/sales")
     ws2.onmessage = function (e) {
         let data = JSON.parse(e.data)
@@ -148,12 +170,11 @@ function checkShift() {
         } else if (data.type == 'STORE'){
             let store = data.data;
             let current = window.location.href.split(root_url)[1].split("?")[0];
+            if (current == "") current = "index.html"
             $(".logo-icon").attr("src", store.logo_url)
             $(`link[rel="shortcut icon"]`).attr("href", store.favicon_url)
             $("title").text(`${store.store_name} Online Area`)
-            let current_module = modules[current];
-            if (current_module == undefined) current_module = "CORE";
-            if (store[`module_${current_module.toLowerCase()}`] != true) {
+            if (store[`module_${modules[current].toLowerCase()}`] != true) {
                 $(".container-xl").first().html(`
                         <h1 class="app-page-title">${current}</h1>
                 <div class="alert alert-danger" role="alert">
@@ -170,7 +191,26 @@ function checkShift() {
             </div><!--//inner-->
             </div>`)
             }
-            if (store[`module_casino`] == true) {
+
+            if (client.role[`permission_${permissions[current]}`] != true && permissions[current] != "none") {
+                $(".container-xl").first().html(`
+                        <h1 class="app-page-title">${current}</h1>
+                <div class="alert alert-danger" role="alert">
+                    <div class="inner">
+                    <div class="app-card-body p-3 p-lg-4">
+                    <h3 class="mb-3">No permission!</h3>
+                <div class="row gx-5 gy-3">
+                    <div class="col-12 col-lg-9">
+                        <div>You don't have the required permission to view this page. Required permission: ${permissions[current]}</div>
+                    </div><!--//col-->
+                </div><!--//row-->
+            </div><!--//app-card-body-->
+
+            </div><!--//inner-->
+            </div>`)
+            }
+
+            if (store[`module_casino`] == true && (client.role["permission_casino_cards"] || client.role["permission_casino_bingo"] || client.role["permission_casino_blackjack"])) {
                 navBar[5] = `<li class="nav-item has-submenu">
                     <a id="casino" class="nav-link submenu-toggle" href="javascript:void(0)" data-toggle="collapse"
                        data-target="#submenu-casino" aria-expanded="false" aria-controls="submenu-casino">
@@ -192,10 +232,10 @@ function checkShift() {
                     </a><!--//nav-link-->
                     <div id="submenu-casino" class="collapse submenu submenu-1" data-parent="#nav-bar">
                         <ul class="submenu-list list-unstyled">
-                            <li class="submenu-item"><a class="submenu-link" href="casino/cards.html">Card Management</a></li>
-                            <li class="submenu-item"><a class="submenu-link" href="casino/bingo.html">Bingo</a></li>
-                            <li class="submenu-item"><a class="submenu-link" href="casino/blackjack.html">Blackjack</a></li>
-                            <li class="submenu-item"><a class="submenu-link" href="casino/war.html">War</a></li>
+                            ${(client.role["permission_casino_cards"] == true) ? `<li class="submenu-item"><a class="submenu-link" href="casino/cards.html">Card Management</a></li>` : ""}
+                            ${(client.role["permission_casino_bingo"] == true) ? `<li class="submenu-item"><a class="submenu-link" href="casino/bingo.html">Bingo</a></li>` : ""}
+                            ${(client.role["permission_casino_blackjack"] == true) ? `<li class="submenu-item"><a class="submenu-link" href="casino/blackjack.html">Blackjack</a></li>` : ""}
+                                                <!--<li class="submenu-item"><a class="submenu-link" href="casino/war.html">War</a></li>-->
                         </ul>
                     </div>
                 </li>

@@ -1,7 +1,7 @@
 // noinspection JSUnresolvedVariable
 
 const xhttp = new XMLHttpRequest();
-xhttp.open("GET", "https://tippie.me/sales/api/stores", false); 
+xhttp.open("GET", "https://tippie.me/sales/api/stores", false);
 xhttp.send(null);
 const stores = JSON.parse(xhttp.responseText)
 

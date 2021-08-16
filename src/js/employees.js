@@ -1,15 +1,4 @@
 let item_list, data, permlevel;
-const roles = {
-    0: 'Shop Owner',
-    1: 'Co-Owner',
-    2: 'Secratary',
-    3: 'Manager',
-    4: 'Senior Employee',
-    5: 'Employee',
-    6: 'Trail Employee',
-    99: 'Former Employee'
-}
-
 function page() {
     ws.onmessage = function (e) {
         data = JSON.parse(e.data)
@@ -67,7 +56,7 @@ function setTable(start, amount) {
             items += `<tr>
         <td class="cell">#${escapeHtml(item_list[x].user_id)}</td>
         <td class="cell">${escapeHtml(item_list[x].user_name)}</td>
-        <td class="cell">${roles[item_list[x].user_permlevel]}</td>
+        <td class="cell">${item_list[x].role.role_name}</td>
         <td class="cell">${status}</td>
         <td class="cell">${escapeHtml(item_list[x].user_owe + "%")}</td>
         <td class="cell" style="color:${last_activity_color}">${escapeHtml(last_activity + ' days ago')}</td>

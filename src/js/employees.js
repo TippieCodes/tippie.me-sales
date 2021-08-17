@@ -1,12 +1,13 @@
-let item_list, data, permlevel;
+let item_list, data, roles;
 function page() {
     ws.onmessage = function (e) {
         data = JSON.parse(e.data)
         switch (data.type) {
             case 'EMPLOYEE_LIST':
                 //TODO sorting
-                item_list = data.data.sort((a,b) => (a.user_permlevel > b.user_permlevel)? 1 : -1)
-                permlevel = data.permlevel
+                item_list = data.data.sort((a,b) => (a.role.role_priority > b.role.role_priority)? 1 : -1)
+                roles = data.roles;
+                roles.sort((a,b) => (a.role_priority > b.role_priority) ? 1 : -1)
                 setTable(0, 10);
         }
     }
@@ -27,7 +28,7 @@ function setTable(start, amount) {
                 <th class="cell">Status</th>
                 <th class="cell">Owe Percentage</th>
                 <th class="cell">Last Activity</th>
-                ${(permlevel < 2) ? '<th class="cell">Manage</th>' : ''}
+                ${(client.role["permission_manage_employees"] == true) ? '<th class="cell">Manage</th>' : ''}
             </tr>
         </thead>
     <tbody>`
@@ -49,19 +50,19 @@ function setTable(start, amount) {
         } else if (last_activity > 25) {
             last_activity_color = 'orange'
         } else if (last_activity > 15) {
-            last_activity_color = 'yellow'
+            last_activity_color = 'gold'
         }
 
         if (item_list[x].invited == false) {
             items += `<tr>
         <td class="cell">#${escapeHtml(item_list[x].user_id)}</td>
         <td class="cell">${escapeHtml(item_list[x].user_name)}</td>
-        <td class="cell">${item_list[x].role.role_name}</td>
+        <td class="cell">${escapeHtml(item_list[x].role.role_name)}</td>
         <td class="cell">${status}</td>
         <td class="cell">${escapeHtml(item_list[x].user_owe + "%")}</td>
         <td class="cell" style="color:${last_activity_color}">${escapeHtml(last_activity + ' days ago')}</td>
         <td class="cell">
-        ${(permlevel < 2) ? `<div class="dropdown">
+        ${(client.role["permission_manage_employees"] == true) ? `<div class="dropdown">
         <a class="btn-sm app-btn-secondary dropdown-toggle" aria-expanded="false" data-toggle="dropdown" aria-haspopup="true" >Disable</a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href="javascript:void(0)" onclick="resetPassword(${item_list[x].user_id})">Reset Password</a>
@@ -69,18 +70,18 @@ function setTable(start, amount) {
         <a class="dropdown-item" href="javascript:void(0)" onclick="updateRole(${item_list[x].user_id})">Change Role</a>
         <a class="dropdown-item" href="javascript:void(0)" onclick="updateOwe(${item_list[x].user_id})">Change Owe</a>
         ${(item_list[x].disabled == false) ? '<a class="dropdown-item" style="color:red" href="javascript:void(0)" onclick="disableAccount(${item_list[x].user_id})">Disable</a>' :
-            '<a class="dropdown-item" style="color:green" href="javascript:void(0)" onclick="enableAccount(${item_list[x].user_id})">Enable</a>'}
+                '<a class="dropdown-item" style="color:green" href="javascript:void(0)" onclick="enableAccount(${item_list[x].user_id})">Enable</a>'}
         </div></div>`:''}</td>`;
         } else {
             items += `<tr>
         <td class="cell">#${escapeHtml(item_list[x].user_id)}</td>
         <td class="cell">${escapeHtml(item_list[x].user_name)}</td>
-        <td class="cell">${roles[item_list[x].user_permlevel]}</td>
+        <td class="cell">${escapeHtml(item_list[x].role.role_name)}</td>
         <td class="cell">${status}</td>
         <td class="cell">${escapeHtml(item_list[x].user_owe + "%")}</td>
         <td class="cell">n/a</td>
         <td class="cell">
-        ${(permlevel < 2) ? `<div class="dropdown">
+        ${(client.role["permission_manage_employees"] == true) ? `<div class="dropdown">
         <a class="btn-sm app-btn-secondary dropdown-toggle" aria-expanded="false" data-toggle="dropdown" aria-haspopup="true" >Disable</a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href="javascript:void(0)" onclick="copyInvite(${item_list[x].user_id})">Copy Invite</a>
@@ -200,14 +201,11 @@ function newInvite(){
     $('#model-row-default').append(`<div class="col-auto">
                                     <label for="new-role" class="form-label">Role</label>
                                     <select type="text" class="form-control" id="new-role">
-                                    <option value="6">Trail employee</option>
-                                    <option value="5">Employee</option>
-                                    <option value="4">Senior employee</option>
-                                    <option value="3">Manager</option>
-                                    <option value="2">Secretary</option>
-                                    <option value="1">Co-Owner</option>
                                     </select>
                                     </div>`)
+    for (const role of roles) {
+        $('#new-role').append(`<option value="${role.role_id}">${role.role_name}</option>`)
+    }
     $('#model-row-default').append(`<div class="col-auto">
                                     <label for="new-owe" class="form-label">Owe Percentage</label>
                                     <input type="number" class="form-control" id="new-owe" value="60">
@@ -247,7 +245,7 @@ function newInviteSubmit(){
         type: "NEW_INVITE",
         data: {
             username: $("#new-username").val(),
-            permlevel: $("#new-role").val(),
+            role: $("#new-role").val(),
             owe: $("#new-owe").val()
         }
     }))

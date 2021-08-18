@@ -7,35 +7,8 @@ function page() {
             case 'STOCK_LIST':
                 //TODO sorting
                 item_list = data.data
-                // console.log(item_list)
-                if (!item_list[0]) return $('#item-list').html(`<div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
-        <div class="app-card-header p-3 border-bottom-0">
-            <div class="row align-items-center gx-3">
-                <div class="col-auto">
-                    <div class="app-icon-holder">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-code-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
-<path fill-rule="evenodd" d="M6.854 4.646a.5.5 0 0 1 0 .708L4.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0zm2.292 0a.5.5 0 0 0 0 .708L11.793 8l-2.647 2.646a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708 0z"></path>
-</svg>
-                    </div><!--//icon-holder-->
-                    
-                </div><!--//col-->
-                <div class="col-auto">
-                    <h4 class="app-card-title">Start creating your first app!</h4>
-                </div><!--//col-->
-            </div><!--//row-->
-        </div><!--//app-card-header-->
-        <div class="app-card-body px-4">
-            
-            <div class="intro">Create your first app to start making keys and get your API secret!</div>
-        </div><!--//app-card-body-->
-        <div class="app-card-footer p-4 mt-auto">
-           <a class="btn app-btn-secondary" href="javascript:void(0)">Create New</a>
-        </div><!--//app-card-footer-->
-        </div>`)
-                console.log(data)
-                if (data.permission <= 3) {
-                    var addform = document.getElementById("addform")
+                if (client.role["permission_manage_stock"] == true) {
+                    let addform = document.getElementById("addform")
                     $('#new-item').html('<a href="javascript:void(0)">New item</a>');
                     document.getElementById('new-item').onclick = function () {
                         addform.style.display = 'block'
@@ -80,7 +53,7 @@ function setTable(start, amount) {
                 <th class="cell">Sell price</th>
                 <th class="cell">Shipment Price</th>
                 <th class="cell">Stock</th>
-                ${(data.permission <= 3) ? '<th class="cell"></th>' : ''}
+                ${(client.role["permission_manage_stock"] == true) ? '<th class="cell"></th>' : ''}
             </tr>
         </thead>
     <tbody>`
@@ -96,7 +69,7 @@ function setTable(start, amount) {
         <td class="cell">¥${escapeHtml(item_list[x].sell_price)}</td>
         <td class="cell">¥${escapeHtml(item_list[x].shipment_price)}</td>
         <td class="cell">${escapeHtml(item_list[x].stock)}</td>
-        ${(data.permission <= 3) ? `<td class="cell"><a class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="editItem(${item_list[x].item_id})" >Edit</a></td>` : ''}
+        ${(client.role["permission_manage_stock"] == true) ? `<td class="cell"><a class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="editItem(${item_list[x].item_id})" >Edit</a></td>` : ''}
         </tr>`;
         if (item_list[x]) p++;
         x++;
@@ -299,7 +272,7 @@ function deleteItem(id) {
         } else if (data.type === 'ERROR') {
             $('#delete-item').attr('onclick', `deleteItem(${id});`)
             $('#delete-item').removeClass('disabled')
-            $('#error-text').text('Error occured! See console for details.')
+            $('#error-text').text('Error occurred! See console for details.')
             console.log(data.data)
         }
     }

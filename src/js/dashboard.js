@@ -43,7 +43,7 @@ function load() {
                 return;
             case 'CONNECTED':
                 client = data.data
-                $("#profile-picture").attr('src', `https://cravatar.eu/helmavatar/${client.username}/100.png`);
+                $("#profile-picture").attr('src', `https://mc-heads.net/avatar/${client.username}`);
                 $("#username").text(client.username);
                 if (client.role["permission_list_employees"]) {
                     navBar[6]="<li class=\"nav-item\" id=\"nav-employees\">\n" +

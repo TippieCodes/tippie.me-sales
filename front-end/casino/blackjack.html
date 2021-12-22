@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KFP2925');</script>
+<!-- End Google Tag Manager -->
+    <title>La Casa Nostra Employee Area</title>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- FontAwesome JS-->
+    <script defer src="../assets/plugins/fontawesome/js/all.min.js"></script>
+
+    <!-- App CSS -->
+    <link id="theme-style" rel="stylesheet" href="../assets/css/portal.css">
+    <style>
+        .btn-outline-danger:hover{
+            border:solid 1px transparent !important;
+        }
+    </style>
+</head>
+
+<body class="app">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KFP2925"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div include-html="../src/html/header.html"></div>
+<div class="app-wrapper">
+
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+            <h1 class="app-page-title">BlackJack</h1>
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-lg-6">
+                    <div class="app-card app-card-chart shadow-sm">
+                        <div class="app-card-header p-3">
+                            <div class="row justify-content-between align-items-center">
+                                <div class="col-auto">
+                                    <h4 class="app-card-title">Game Information</h4>
+                                </div><!--//col-->
+                                <div class="col-auto">
+                                    <div class="card-header-action">
+                                    </div><!--//card-header-actions-->
+                                </div><!--//col-->
+                            </div><!--//row-->
+                        </div><!--//app-card-header-->
+                        <div class="app-card-body">
+                            <div class="app-card app-card-basic align-items-start shadow-sm">
+                                <div class="app-card-body px-4" style="width: 100%">
+                                    <div class="pt-3">
+                                        <b>Round ID:</b> #<span id="round-id">undefined</span> <br/>
+                                        <b>Last Drawn Card:</b> <span id="last-drawn">No cards drawn</span> <br/>
+                                        <b>Cards In Deck:</b> <span id="cards-deck">No cards drawn</span> <br/>
+                                        <b>Players In Game:</b> <span id="players-in-game">0</span> <br />
+                                        <b>Profit Made This Shift:</b> <span id="shift-profit">No games played</span> <br />
+                                        <b>Cards Update /it:</b> <span id="last-round">No last round</span>
+                                    </div>
+                                    <div class="intro"></div>
+                                </div><!--//app-card-body-->
+                                <div class="app-card-footer p-4 mt-auto">
+                                    <div class="input-group">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn app-btn-secondary" onclick="shuffleDeck()">Shuffle Deck</button>
+                                            <button type="button" class="btn app-btn-secondary" onclick="addPlayer()">Add Player</button>
+                                        </div>
+                                        <input type="number" class="form-control" id="add-player-id" placeholder="Card ID" aria-label="Card ID">
+                                    </div>
+                                    <span id="game-information-response"> </span>
+                                </div><!--//app-card-footer-->
+                            </div>
+                        </div><!--//app-card-body-->
+                    </div>
+                </div><!--//col-->
+                <div class="col-12 col-lg-6">
+                    <div class="app-card app-card-chart shadow-sm">
+                        <div class="app-card-header p-3">
+                            <div class="row justify-content-between align-items-center">
+                                <div class="col-auto">
+                                    <h4 class="app-card-title">Dealer</h4>
+                                </div><!--//col-->
+                                <div class="col-auto">
+                                    <div class="card-header-action">
+                                    </div><!--//card-header-actions-->
+                                </div><!--//col-->
+                            </div><!--//row-->
+                        </div><!--//app-card-header-->
+                        <div class="app-card-body shadow-sm">
+                            <div class="app-card app-card-basic align-items-start shadow-sm">
+                                <div class="app-card-body px-4" style="width: 100%">
+                                    <div class="pt-3">
+                                        <b>Open Card:</b> <span id="open-card">None</span> <br />
+                                        <b>Closed Card(s):</b> <span id="closed-cards">None</span> <br />
+                                        <b>Total value:</b> <span id="dealer-value">0</span> <br />
+                                        <b>Dealer Status:</b> <span id="dealer-status">Not playing</span>
+                                    </div>
+                                    <div class="intro"></div>
+                                </div><!--//app-card-body-->
+                                <div class="app-card-footer p-4 mt-auto">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn app-btn-secondary" onclick="deal(0)" id="dealer-deal">Deal Card</button>
+                                        <button type="button" class="btn app-btn-secondary" onclick="stand(0)" id="dealer-stand">Stand</button>
+                                        <button type="button" class="btn app-btn-secondary" onclick="endRound()" id="end-round">End Round</button>
+                                    </div>
+                                    <span id="0-result"></span>
+                                </div><!--//app-card-footer-->
+                            </div>
+                        </div><!--//app-card-body-->
+                    </div>
+                    <div id="players">
+
+                    </div>
+                </div><!--//col-->
+            </div>
+        </div>
+        <!--//container-fluid-->
+    </div>
+    <!--//app-content-->
+    <div include-html="../src/html/footer.html"></div>
+</div>
+<!--//app-wrapper-->
+
+
+<!-- Javascript -->
+<script src="../assets/plugins/popper.min.js"></script>
+<script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Charts JS -->
+<script src="../assets/plugins/chart.js/chart.min.js"></script>
+
+<!-- Global JS -->
+<script src="../src/js/global.js"></script>
+
+
+<!-- Page Specific JS -->|
+<script src="../src/js/dashboard.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../src/js/casino/blackjack.js"></script>
+
+<script>
+    includeHTML().then(() => {app(); load()});
+</script>
+</body>
+
+</html>

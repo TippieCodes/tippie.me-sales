@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KFP2925');</script>
+<!-- End Google Tag Manager -->
+	<title>La Casa Nostra Employee Area</title>
+
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<!-- FontAwesome JS-->
+	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+
+	<!-- App CSS -->
+	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+
+</head>
+
+<body class="app">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KFP2925"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->	<div include-html="src/html/header.html"></div>
+
+	<div class="app-wrapper">
+
+		<div class="app-content pt-3 p-md-3 p-lg-4">
+			<div class="container-xl">
+				<h1 class="app-page-title">Shifts history</h1>
+				<div class="app-card app-card-progress-list h-100 shadow-sm mb-4">
+                    <div class="app-card-header p-3">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-auto">
+                                <h4 class="app-card-title">All shifts</h4>
+                            </div>
+                            <!--//col-->
+                            <div class="col-auto">
+                                <div class="card-header-action" id="">
+                                    <!-- <a href="javascript:void(0)">New item</a> -->
+                                </div>
+                                <!--//card-header-actions-->
+                            </div>
+                            <!--//col-->
+                        </div>
+                        <!--//row-->
+                    </div>
+                </div>
+                <div class="app-card app-card-progress-list h-100 shadow-sm">
+                    <div class="app-card-body" id='item-list'>
+                    </div>
+                    <!--//app-card-body-->
+                </div>
+                <div class="row g-4 mb-4">
+                    <div class="col-6 col-lg-6">
+                        <div class="justify-content-start pt-3 pl-2" id="amount-showing">
+                            Showing 0 out of 0 entries.
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-6" id='pagination'>
+
+                    </div>
+                </div>
+			</div>
+			<!--//container-fluid-->
+		</div>
+		<!--//app-content-->
+		<div include-html="src/html/footer.html"></div>
+	</div>
+	<!--//app-wrapper-->
+
+
+	<!-- Javascript -->
+	<script src="assets/plugins/popper.min.js"></script>
+	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<!-- Charts JS -->
+	<script src="assets/plugins/chart.js/chart.min.js"></script>
+
+	<!-- Global JS -->
+	<script src="src/js/global.js"></script>
+	
+
+	<!-- Page Specific JS -->|
+	<script src="src/js/dashboard.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script src="src/js/shifts.js"></script>
+
+	<script>
+		includeHTML().then(() => {app(); load();});
+	</script>
+</body>
+
+</html>

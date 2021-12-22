@@ -16,9 +16,9 @@ let server;
 const conn = new Database('sales-global')
 
 conn.init({
-    host: 'localhost',
-    user: 'websocket',
-    password: 'qc!C^#pw59s8?*6d'}
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS}
 )
 
 const modules = {
@@ -207,7 +207,7 @@ class SalesEndpoint extends Endpoint {
             let result = await conn.query("SELECT store_id,store_name,store_url_friendly,logo_url,login_side_image,favicon_url,login_side_text_header,login_side_text_body FROM stores;")
             res.end(JSON.stringify(result))
         }) 
-        server = api.listen(3001, function(){console.log("Sales REST API listening...")})
+        server = api.listen(process.env.API_PORT, function(){console.log("Sales REST API listening...")})
         await updateStores();
         setInterval(function (){updateStores()},60000)
     }
@@ -235,7 +235,7 @@ wss.on('upgrade', function upgrade(request, socket, head) {
     });
 });
 
-wss.listen(3000);
+wss.listen(process.env.WS_PORT);
 
 async function updateStores() {
     console.log("Updating stores & databases...")

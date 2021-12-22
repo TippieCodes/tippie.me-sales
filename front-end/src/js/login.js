@@ -13,6 +13,7 @@ async function login() {
 
     const xhttp = new XMLHttpRequest();
     xhttp.open("GET", vars['api'] + "/authenticate", false);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.send(JSON.stringify({
         username: username,
         password: password,

@@ -25,7 +25,7 @@ jobs:
           cp tippie.me-sales/back-end sales -R
           rm /var/www/tippie.me/public_html/sales -rf
           cp tippie.me-sales/front-end /var/www/tippie.me/public_html/sales  -R
-          echo "let vars = {'websocket_url': "wss://tippie.me/sales",'root_url': '/sales/','api': 'https://tippie.me/sales/api'}" > /var/www/tippie.me/public_html/src/vars.js 
+          echo "let vars = {'websocket_url': "wss://tippie.me/sales",'root_url': '/sales/','api': 'https://tippie.me/sales/api'}" > /var/www/tippie.me/public_html/sales/src/vars.js 
           rm tippie.me-sales -rf
           cd sales
           echo -e "DB_HOST=localhost\nDB_USER=${{secrets.DB_PRODUCTION_USER}}\nDB_PASS=${{ secrets.DB_PRODUCTION_PASSW }}" > .env

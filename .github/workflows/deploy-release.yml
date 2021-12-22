@@ -27,7 +27,7 @@ jobs:
           cp tippie.me/sales/front-end /var/www/tippie.me/public_html/sales  -R
           rm tippie.me-sales -rf
           cd sales
-          npm install
+          npm install --loglevel verbose
           pm2 start sales.js --name sales
           pm2 save
   

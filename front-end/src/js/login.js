@@ -12,7 +12,7 @@ async function login() {
     const save = document.getElementById("RememberPassword").checked
 
     const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", vars['api'] + "/stores", false);
+    xhttp.open("GET", vars['api'] + "/authenticate", false);
     xhttp.send(JSON.stringify({
         username: username,
         password: password,

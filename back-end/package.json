@@ -10,6 +10,7 @@
   "license": "WTFPL",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "enmap": "^5.8.4",
     "express": "^4.17.1",

@@ -8,6 +8,18 @@ const bcrypt = require('bcrypt');
 
 const express = require('express');
 const api = express();
+const cors = require("cors");
+
+const allowedOrigins = ["https://tippie.me/", "https://sales.tippie.me/"]
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        // db.loadOrigins is an example call to load
+        // a list of origins from a backing database
+        if (allowedOrigins.contains(origin)) return origin;
+        return "https://tippie.me/"
+    }
+}
 
 let databases = new Map();
 let stores = new Map();
@@ -204,7 +216,7 @@ class SalesEndpoint extends Endpoint {
     }
 
     async onLoad(){
-        api.get("/stores", async function (req, res) {
+        api.get("/stores",cors(corsOptions), async function (req, res) {
             let result = await conn.query("SELECT store_id,store_name,store_url_friendly,logo_url,login_side_image,favicon_url,login_side_text_header,login_side_text_body FROM stores;")
             res.end(JSON.stringify(result))
         }) 

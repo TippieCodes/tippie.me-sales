@@ -8,33 +8,21 @@ const stores = JSON.parse(xhttp.responseText)
 async function login() {
     const username = document.getElementById('signin-username').value
     const password = document.getElementById('signin-password').value
-    setCookie('store', $("#store-select").val(), 0.01)
-    if (document.getElementById("RememberPassword").checked){
-        setCookie('log_in_c', "true", 0.01)
+    const store = $("#store-select").val()
+    const save = document.getElementById("RememberPassword").checked
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", vars['api'] + "/stores", false);
+    xhttp.send(JSON.stringify({
+        username: username,
+        password: password,
+        store:store,save:save
+    }));
+    const token = JSON.parse(xhttp.responseText)
+    if (token == 'UNAUTHORIZED') {
+        document.getElementById('error-box').innerHTML = 'Login failed! Incorrect password!.'
     } else {
-        setCookie('log_in_c', "false", 0.01)
-    }
-    setCookie('log_in_a', username, 0.01)
-    setCookie('log_in_b', password, 0.01)
-    const ws = new WebSocket(vars['websocket_url']);
-    // noinspection JSUnusedLocalSymbols
-    ws.onerror = function (e) {
-        document.getElementById('error-box').innerHTML = 'Login failed! Unexpected error occured!.'
-    }
-    ws.onmessage = function (e) {
-        const data = JSON.parse(e.data);
-        deleteCookie('log_in_a')
-        deleteCookie('log_in_b')
-        deleteCookie('log_in_c')
-        deleteCookie('store')
-        switch (data.type) {
-            case 'UNAUTHORIZED':
-                document.getElementById('error-box').innerHTML = 'Login failed! Incorrect token.'
-                return;
-            case 'LOGIN':
-                setCookie('session_token', data.data, 30)
-                window.location.href = root_url
-        }
+        window.location.href = "https://tippie.me/auth.html?token=" + token + "&save=" + (save ? "1" : "0") + "&callback="+root_url
     }
 }
 document.addEventListener("DOMContentLoaded", function(){

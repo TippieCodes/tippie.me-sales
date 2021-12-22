@@ -214,7 +214,24 @@ class SalesEndpoint extends Endpoint {
         api.get("/stores",cors(corsOptions), async function (req, res) {
             let result = await conn.query("SELECT store_id,store_name,store_url_friendly,logo_url,login_side_image,favicon_url,login_side_text_header,login_side_text_body FROM stores;")
             res.end(JSON.stringify(result))
-        }) 
+        })
+        api.get("/authenticate", cors(corsOptions), express.json() ,async function (req, res){
+            const json = req.body;
+            const username = json.username;
+            const password = json.password;
+            const store = json.store;
+            const savepass = json.save;
+            let user = await endpoint.getDatabase(store).query(`SELECT * FROM users WHERE user_name = ?;`, [username]);
+            const valid_password = (user[0]) ? await bcrypt.compare(password, user[0].user_password) : false;
+            const expiry = new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * ((savepass) ? 31 : 1)));
+            if (valid_password && user[0].disabled == false && user[0].invited == false) {
+                let token = Math.floor(new Date().getTime() * Math.random() * 100)
+                await conn.query(`INSERT INTO sessions (session_token, session_user, session_expiry, session_store) VALUES (?,?,?,?);`, [token, user[0].user_id, utils.mysqlDate(expiry), store_id])
+                res.end(token);
+            } else {
+                res.send("UNAUTHORIZED")
+            }
+        });
         server = api.listen(process.env.API_PORT, function(){console.log("Sales REST API listening...")})
         await updateStores();
         setInterval(function (){updateStores()},60000)

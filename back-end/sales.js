@@ -228,7 +228,7 @@ class SalesEndpoint extends Endpoint {
             const expiry = new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * ((savepass) ? 31 : 1)));
             if (valid_password && user[0].disabled == false && user[0].invited == false) {
                 let token = Math.floor(new Date().getTime() * Math.random() * 100)
-                await conn.query(`INSERT INTO sessions (session_token, session_user, session_expiry, session_store) VALUES (?,?,?,?);`, [token, user[0].user_id, utils.mysqlDate(expiry), store_id])
+                await conn.query(`INSERT INTO sessions (session_token, session_user, session_expiry, session_store) VALUES (?,?,?,?);`, [token, user[0].user_id, utils.mysqlDate(expiry), store])
                 res.end(token.toString());
             } else {
                 res.send("UNAUTHORIZED")

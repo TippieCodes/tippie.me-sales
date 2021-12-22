@@ -19,7 +19,6 @@ async function login() {
         password: password,
         store:store,save:save
     }));
-    const token = JSON.parse(xhttp.responseText)
     if (token == 'UNAUTHORIZED') {
         document.getElementById('error-box').innerHTML = 'Login failed! Incorrect password!.'
     } else {

@@ -34,7 +34,7 @@ let navBar = {}
 
 function load() {
     deleteCookie("invite_token")
-    ws = new WebSocket('wss://tippie.me/sales');
+    ws = new WebSocket(vars['websocket_url']);
     ws.onmessage = function (e) {
         let data = JSON.parse(e.data)
         switch (data.type) {
@@ -155,7 +155,7 @@ function logout() {
 }
 
 function checkPage() {
-    const ws2 = new WebSocket("wss://tippie.me/sales")
+    const ws2 = new WebSocket(vars['websocket_url'])
     ws2.onmessage = function (e) {
         let data = JSON.parse(e.data)
         if (data.type == 'SHIFT'){

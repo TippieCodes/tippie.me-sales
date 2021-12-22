@@ -1,5 +1,5 @@
 //Constants
-const root_url = "/sales/"
+const root_url = vars['root_url'];
 const root_url_name = root_url.split("/")[1]
 
 //Functions

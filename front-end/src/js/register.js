@@ -1,5 +1,5 @@
 let xhttp = new XMLHttpRequest();
-xhttp.open("GET", "https://tippie.me/sales/api/stores", false);
+xhttp.open("GET", vars['api'] + "/stores", false);
 xhttp.send(null);
 const stores = JSON.parse(xhttp.responseText)
 
@@ -13,7 +13,7 @@ function register(){
     setCookie("invite_token", $('#invite-token').val(),0.1)
     setCookie("register_password",$('#password').val(),0.1)
     setCookie("store", $("#store-select").val(), 0.1)
-    const ws = new WebSocket("wss://tippie.me/sales")
+    const ws = new WebSocket(vars['websocket_url'])
     ws.onmessage = function (e) {
         deleteCookie("invite_token")
         deleteCookie("register_password")
@@ -43,7 +43,7 @@ function register(){
 function checkToken(){
     setCookie("invite_token", $('#invite-token').val(), 0.1)
     setCookie("store", $("#store-select").val(), 0.1)
-    const ws = new WebSocket("wss://tippie.me/sales")
+    const ws = new WebSocket(vars['websocket_url'])
     ws.onmessage = function (e){
         const data = JSON.parse(e.data)
         if (data.type == "CORRECT_TOKEN") {

@@ -9,10 +9,11 @@
   "author": "tippie.me",
   "license": "WTFPL",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "enmap": "^5.8.4",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
-    "ws": "^7.4.2",
-    "bcrypt": "^5.0.1",
-    "enmap": "^5.8.4"
+    "ws": "^7.4.2"
   }
 }

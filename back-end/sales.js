@@ -1,3 +1,4 @@
+require('dotenv').config()
 const Endpoint = require('./endpoint')
 const utils = require('./utils')
 const Database = require('./database')

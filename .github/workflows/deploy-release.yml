@@ -24,7 +24,7 @@ jobs:
           git clone https://${{ secrets.GIT_USER}}:${{ secrets.GIT_token }}@github.com/TippieCodes/tippie.me-sales/
           cp tippie.me-sales/back-end sales -R
           rm /var/www/tippie.me/public_html/sales -rf
-          cp tippie.me/sales/front-end /var/www/tippie.me/public_html/sales  -R
+          cp tippie.me-sales/front-end /var/www/tippie.me/public_html/sales  -R
           rm tippie.me-sales -rf
           cd sales
           npm install --loglevel verbose

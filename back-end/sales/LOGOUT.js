@@ -4,7 +4,8 @@ const RequestType = require("../requesttype")
 
 class LogoutRequest extends RequestType{
     onRequest(wss, ws, request, client, data, incoming) {
-        const conn = require("../sales").getDatabase(client.store);let token = utils.getCookie(request, 'session_token')
+        const conn = require("../sales").getDatabase(0);
+        let token = utils.getCookie(request, 'session_token')
         conn.query(`DELETE FROM sessions WHERE session_token = ?;`, [token])
     }
 }

@@ -12,7 +12,7 @@ async function login() {
     const save = document.getElementById("RememberPassword").checked
 
     const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", vars['api'] + "/authenticate", false);
+    xhttp.open("POST", vars['api'] + "/authenticate", true);
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.send(JSON.stringify({
         username: username,
@@ -23,7 +23,7 @@ async function login() {
     if (token == 'UNAUTHORIZED') {
         document.getElementById('error-box').innerHTML = 'Login failed! Incorrect password!.'
     } else {
-        window.location.href = "https://tippie.me/auth.html?token=" + token + "&save=" + (save ? "1" : "0") + "&callback="+root_url
+        window.location.href = "https://tippie.me/auth.html?token=" + token + "&save=" + (save ? "1" : "0") + "&callback=https://"+window.location.hostname + root_url
     }
 }
 document.addEventListener("DOMContentLoaded", function(){

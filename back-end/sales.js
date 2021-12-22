@@ -211,11 +211,13 @@ class SalesEndpoint extends Endpoint {
     }
 
     async onLoad(){
-        api.get("/stores",cors(corsOptions), async function (req, res) {
+        api.use(cors(corsOptions));
+        api.get("/stores", async function (req, res) {
             let result = await conn.query("SELECT store_id,store_name,store_url_friendly,logo_url,login_side_image,favicon_url,login_side_text_header,login_side_text_body FROM stores;")
             res.end(JSON.stringify(result))
         })
-        api.get("/authenticate", cors(corsOptions), express.json() ,async function (req, res){
+        api.use("/authenticate", express.json());
+        api.post("/authenticate", async function (req, res){
             const json = req.body;
             const username = json.username;
             const password = json.password;
@@ -227,7 +229,7 @@ class SalesEndpoint extends Endpoint {
             if (valid_password && user[0].disabled == false && user[0].invited == false) {
                 let token = Math.floor(new Date().getTime() * Math.random() * 100)
                 await conn.query(`INSERT INTO sessions (session_token, session_user, session_expiry, session_store) VALUES (?,?,?,?);`, [token, user[0].user_id, utils.mysqlDate(expiry), store_id])
-                res.end(token);
+                res.end(token.toString());
             } else {
                 res.send("UNAUTHORIZED")
             }

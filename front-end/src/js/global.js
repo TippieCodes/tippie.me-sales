@@ -4,33 +4,10 @@ const root_url_name = root_url.split("/")[1]
 
 //Functions
 function includeHTML() {
-  return new Promise(function (resolve, reject) {
-    var z, i, p, u;
-    u = p = 0;
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
-      let elmnt, file;
-      elmnt = z[i];
-      file = elmnt.getAttribute("include-html");
-      if (file) {
-        p++;
-        let xhttp;
-        xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-          if (this.readyState == 4) {
-            if (this.status == 200) { elmnt.innerHTML = this.responseText; }
-            if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
-            elmnt.removeAttribute("include-html");
-            u++;
-            if (p == u) resolve()
-          }
-        }
-        xhttp.open("GET", file, true);
-        xhttp.send();
+  $("div[include-html]").each(function () {
+      $(this).load($(this).attr('include-html'));
       }
-    }
-    if (p == 0 && u == 0) { resolve() }
-  })
+  )
 }
 function getCookie(name) {
   const value = `; ${document.cookie}`;

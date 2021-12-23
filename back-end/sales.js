@@ -13,7 +13,9 @@ const cors = require("cors");
 const allowedOrigins = ["https://tippie.me", "https://sales.tippie.me"]
 
 const corsOptions = {
-    origin: allowedOrigins
+    origin: function (origin, callback){
+        if (origin.endsWith("sales.tippie.me")) callback.call(origin);
+    }
 }
 
 let databases = new Map();

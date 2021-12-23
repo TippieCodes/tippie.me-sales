@@ -1,0 +1,36 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Deploy Staging
+
+on:
+  push:
+    branches: [ staging ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run SSH commands
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          pm2 stop sales-staging
+          rm sales-staging -R
+          git clone https://${{ secrets.GIT_USER}}:${{ secrets.GIT_token }}@github.com/TippieCodes/tippie.me-sales/
+          cp tippie.me-sales/back-end sales-staging -R
+          rm /var/www/tippie.me/public_html/sales-staging -rf
+          cp tippie.me-sales/front-end /var/www/tippie.me/public_html/sales-staging  -R
+          echo "let vars = {'websocket_url': 'wss://tippie.me/sales-staging','root_url': '/sales-staging/','api': 'https://tippie.me/sales-staging/api'}" > /var/www/tippie.me/public_html/sales-staging/src/vars.js 
+          rm tippie.me-sales -rf
+          cd sales
+          echo -e "GLOBAL_DB=sales-staging-global\nDB_HOST=localhost\nDB_USER=${{secrets.DB_PRODUCTION_USER}}\nDB_PASS=${{ secrets.DB_PRODUCTION_PASSW }}\nAPI_PORT=3004\nWS_PORT=3003" > .env
+          npm install --loglevel info
+          pm2 start sales.js --name sales-staging
+          pm2 save
+  
+

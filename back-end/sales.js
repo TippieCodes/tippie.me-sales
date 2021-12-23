@@ -23,7 +23,7 @@ let stores = new Map();
 let server;
 
 
-const conn = new Database('sales-global')
+const conn = new Database(process.env.GLOBAL_DB)
 
 conn.init({
     host: process.env.DB_HOST,

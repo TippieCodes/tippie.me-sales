@@ -1,3 +1,4 @@
 /src/html/*
   Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET
   X-Robots-Tag: nosnippet

@@ -21,7 +21,7 @@ function includeHTML() {
                             me.attr("include-html", null);
                         }
                     }
-                    xhttp.open("GET", me.attr('include-html'), true);
+                    xhttp.open("GET", me.attr('include-html'), false);
                     xhttp.send();
                 }
             ).promise().done(function () {resolve()});

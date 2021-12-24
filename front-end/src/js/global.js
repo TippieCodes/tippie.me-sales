@@ -4,26 +4,29 @@ const root_url_name = root_url.split("/")[1]
 
 //Functions
 function includeHTML() {
-
-    $("div[include-html]").each(function () {
-            let xhttp;
-            const me = $(this);
-            xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4) {
-                    if (this.status == 200) {
-                        me.html(this.responseText);
+    return new Promise(function (resolve, reject) {
+        {
+            $("div[include-html]").each(function () {
+                    let xhttp;
+                    const me = $(this);
+                    xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4) {
+                            if (this.status == 200) {
+                                me.html(this.responseText);
+                            }
+                            if (this.status == 404) {
+                                me.html("Page not found.");
+                            }
+                            me.attr("include-html", null);
+                        }
                     }
-                    if (this.status == 404) {
-                        me.html("Page not found.");
-                    }
-                    me.attr("include-html",null);
+                    xhttp.open("GET", me.attr('include-html'), true);
+                    xhttp.send();
                 }
-            }
-            xhttp.open("GET", me.attr('include-html'), true);
-            xhttp.send();
+            ).promise().done(function () {resolve()});
         }
-    )
+    });
 }
 
 function getCookie(name) {

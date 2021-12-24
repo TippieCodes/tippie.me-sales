@@ -25,10 +25,10 @@ jobs:
           cp tippie.me-sales/back-end sales -R
           rm /var/www/tippie.me/public_html/sales -rf
           cp tippie.me-sales/front-end /var/www/tippie.me/public_html/sales  -R
-          echo "let vars = {'websocket_url': 'wss://tippie.me/sales','root_url': '/sales/','api': 'https://tippie.me/sales/api'}" > /var/www/tippie.me/public_html/sales/src/vars.js 
+          echo "let vars = {'websocket_url': 'wss://tippie.me/sales','root_url': '/sales/','api': 'https://tippie.me/sales/api','auth_url': 'https://tippie.me/auth.html'}" > /var/www/tippie.me/public_html/sales/src/vars.js 
           rm tippie.me-sales -rf
           cd sales
-          echo -e "GLOBAL_DB=sales-global\nDB_HOST=localhost\nDB_USER=${{secrets.DB_PRODUCTION_USER}}\nDB_PASS=${{ secrets.DB_PRODUCTION_PASSW }}\nAPI_PORT=3001\nWS_PORT=3000" > .env
+          echo -e "GLOBAL_DB=sales-global\nDB_HOST=localhost\nDB_USER=${{secrets.DB_PRODUCTION_USER}}\nDB_PASS=${{ secrets.DB_PRODUCTION_PASSW }}\nAPI_PORT=3001\nWS_PORT=3000\nAPI_ALLOWED_ORIGINS=sales\.tippie\.me$" > .env
           npm install --loglevel verbose
           pm2 start sales.js --name sales
           pm2 save

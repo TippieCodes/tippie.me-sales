@@ -19,7 +19,7 @@ async function login() {
             if (token == 'UNAUTHORIZED') {
                 document.getElementById('error-box').innerHTML = 'Login failed! Incorrect password!.'
             } else {
-                window.location.href="https://tippie.me/auth?token=" + token + "&save=" + (save ? "1" : "0") + "&callback=https://"+window.location.hostname + root_url
+                window.location.href=vars['auth_url']+"?token=" + token + "&save=" + (save ? "1" : "0") + "&callback="+ window.location.origin + root_url
             }
         }
     }

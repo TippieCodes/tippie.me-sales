@@ -28,7 +28,7 @@ async function submitPassword(){
         } else if (data.type == 'OK') {
             $('submit').text('Password updated!')
             setTimeout(function () {
-                window.location.href = root_url + 'login.html'
+                window.location.href = root_url + 'login'
             }, 2000)
         }
     }

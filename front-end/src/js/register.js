@@ -10,12 +10,11 @@ function register(){
         $('#error-text').text('Passwords do not match.')
         $("#submit").prop('disabled',false);
     }
-    setCookie("register_password",$('#password').val(),0.1)
 
     let xhttp = new XMLHttpRequest();
     xhttp.open("POST", vars['api'] + `/register/${$("#store-select").val()}/${$('#invite-token').val()}`, false);
     xhttp.setRequestHeader("Content-Type", "text/plain");
-    xhttp.send(null);
+    xhttp.send($('#password').val());
     const data = JSON.parse(xhttp.responseText)
 
     if (data.type == 'UNAUTHORIZED'){

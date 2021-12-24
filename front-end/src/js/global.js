@@ -1,6 +1,6 @@
 if (!window.location.hostname.endsWith("sales.tippie.me")){
     let sub = window.location.hostname.split(".")[0];
-    window.location.hostname =  (sub != 'sales' ? '.' : '') + "sales.tippie.me";
+    window.location.hostname =  (sub != 'sales' ? sub + '.' : '') + "sales.tippie.me";
 }
 
 //Constants

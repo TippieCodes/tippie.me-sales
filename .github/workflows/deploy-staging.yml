@@ -21,7 +21,7 @@ jobs:
         script: |
           pm2 stop sales-staging
           rm sales-staging -R
-          git clone https://${{ secrets.GIT_USER}}:${{ secrets.GIT_token }}@github.com/TippieCodes/tippie.me-sales/
+          git clone -b staging https://${{ secrets.GIT_USER}}:${{ secrets.GIT_token }}@github.com/TippieCodes/tippie.me-sales/
           cp tippie.me-sales/back-end sales-staging -R
           rm /var/www/tippie.me/public_html/sales-staging -rf
           cp tippie.me-sales/front-end /var/www/tippie.me/public_html/sales-staging  -R

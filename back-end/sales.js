@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const api = express();
 const cors = require("cors");
+var bodyParser = require('body-parser')
 
 const corsOptions = {
     origin: [/sales\.tippie\.me$/]
@@ -247,6 +248,7 @@ class SalesEndpoint extends Endpoint {
             }
         });
 
+        api.use("/register/:store/:token",bodyParser.text());
         api.post("/register/:store/:token", async function (req, res){
             const token = req.params.token
             const password = req.body

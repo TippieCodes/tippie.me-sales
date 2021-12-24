@@ -272,7 +272,7 @@ function loadNavBar(){
     if (window.location.href.split("")[window.location.href.split("").length - 1] == "#") {
         window.location.href = window.location.href.slice(0, -1);
     } else if (url_elements[url_elements.length - 1] == "" && url_elements[url_elements.length - 2] != root_url_name) {
-        window.location.href = window.location.href.slice(0, -1);
+        //window.location.href = window.location.href.slice(0, -1);
     } else if (url_elements[url_elements.length - 2] == root_url_name && window.location.href.split("")[window.location.href.split("").length - 1] == "/") {
         $(`a[href="index"]`).addClass(`active`);
     } else if (url_elements[url_elements.length - 1].includes("?")) {

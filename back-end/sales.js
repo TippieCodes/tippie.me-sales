@@ -10,8 +10,6 @@ const express = require('express');
 const api = express();
 const cors = require("cors");
 
-const allowedOrigins = ["https://tippie.me", "https://sales.tippie.me"]
-
 const corsOptions = {
     origin: [/sales\.tippie\.me$/]
 }

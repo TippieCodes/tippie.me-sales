@@ -27,7 +27,7 @@ jobs:
           cp tippie.me-sales/front-end /var/www/tippie.me/public_html/sales-staging  -R
           echo "let vars = {'websocket_url': 'wss://tippie.me/sales-staging','root_url': '/sales-staging/','api': 'https://tippie.me/sales-staging/api'}" > /var/www/tippie.me/public_html/sales-staging/src/vars.js 
           rm tippie.me-sales -rf
-          cd sales
+          cd sales-staging
           echo -e "GLOBAL_DB=sales-staging-global\nDB_HOST=localhost\nDB_USER=${{secrets.DB_PRODUCTION_USER}}\nDB_PASS=${{ secrets.DB_PRODUCTION_PASSW }}\nAPI_PORT=3004\nWS_PORT=3003" > .env
           npm install --loglevel info
           pm2 start sales.js --name sales-staging

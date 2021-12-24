@@ -1,8 +1,8 @@
 {
-  "name": "websocket",
+  "name": "sales-websocket",
   "version": "1.0.0",
   "description": "",
-  "main": "websocket.js",
+  "main": "sales.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +10,7 @@
   "license": "WTFPL",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "enmap": "^5.8.4",

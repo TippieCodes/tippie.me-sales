@@ -9,11 +9,10 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const api = express();
 const cors = require("cors");
-
-const allowedOrigins = ["https://tippie.me", "https://sales.tippie.me"]
+var bodyParser = require('body-parser')
 
 const corsOptions = {
-    origin: allowedOrigins
+    origin: [/sales\.tippie\.me$/]
 }
 
 let databases = new Map();
@@ -21,7 +20,7 @@ let stores = new Map();
 let server;
 
 
-const conn = new Database('sales-global')
+const conn = new Database(process.env.GLOBAL_DB)
 
 conn.init({
     host: process.env.DB_HOST,
@@ -231,9 +230,50 @@ class SalesEndpoint extends Endpoint {
                 await conn.query(`INSERT INTO sessions (session_token, session_user, session_expiry, session_store) VALUES (?,?,?,?);`, [token, user[0].user_id, utils.mysqlDate(expiry), store])
                 res.end(token.toString());
             } else {
-                res.send("UNAUTHORIZED")
+                res.end("UNAUTHORIZED")
             }
         });
+
+        api.get("/register/:store/:token", async function (req, res){
+            const result = await endpoint.getDatabase(req.params.store).query('SELECT user_name FROM users WHERE user_password = ? AND invited = 1', [req.params.token])
+            if (result[0]){
+                res.end(JSON.stringify({
+                    type: "CORRECT_TOKEN",
+                    data: result[0].user_name
+                }))
+            } else {
+                res.end(JSON.stringify({
+                    type: "UNAUTHORIZED"
+                }))
+            }
+        });
+
+        api.use("/register/:store/:token",bodyParser.text());
+        api.post("/register/:store/:token", async function (req, res){
+            const token = req.params.token
+            const password = req.body
+            const db = endpoint.getDatabase(req.params.store);
+            let user = await db.query(`SELECT * FROM users WHERE user_password = ? AND invited = 1 LIMIT 1;`, [token]);
+            if (!user[0]){
+                res.end(JSON.stringify({type:"UNAUTHORIZED"}))
+            } else {
+                const check = utils.passwordCheck(password, user[0]['user_name']);
+                if (check === true) {
+                    let salt = await bcrypt.genSalt(14);
+                    let hash = await bcrypt.hash(password, salt)
+                    try {
+                        await db.query('UPDATE users SET user_password = ?, legacy_user = 0, invited = 0 WHERE (user_id = ?);', [hash, user[0].user_id])
+                        res.end(JSON.stringify({type: "OK"}))
+                    } catch (e) {
+                        res.end(JSON.stringify({type: "ERROR"}))
+                        console.log(e)
+                    }
+                } else {
+                    res.end(JSON.stringify({type: "INVALID_CHECK", data: check}))
+                }
+            }
+        });
+
         server = api.listen(process.env.API_PORT, function(){console.log("Sales REST API listening...")})
         await updateStores();
         setInterval(function (){updateStores()},60000)

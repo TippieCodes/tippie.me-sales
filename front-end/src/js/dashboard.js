@@ -169,7 +169,7 @@ function checkPage() {
             }
         } else if (data.type == 'STORE'){
             let store = data.data;
-            let current = window.location.href.split(root_url)[1].split("?")[0];
+            let current = window.location.href.split(window.location.host+root_url)[1].split("?")[0];
             if (current == "") current = "index"
             $(".logo-icon").attr("src", store.logo_url)
             $(`link[rel="shortcut icon"]`).attr("href", store.favicon_url)
@@ -257,7 +257,7 @@ function loadNavBar(){
         nav_element.append(element);
     }
     let url_elements = window.location.href.split("/")
-    if (url_elements[4].toLowerCase() == "casino"){
+    if (url_elements.length > 4 && url_elements[4].toLowerCase() == "casino"){
         $(`#casino`).addClass("active");
         $(`#casino`).attr("aria-expanded", "true");
         $(`#submenu-casino`).addClass("show");

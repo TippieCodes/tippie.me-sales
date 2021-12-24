@@ -10,47 +10,44 @@ function register(){
         $('#error-text').text('Passwords do not match.')
         $("#submit").prop('disabled',false);
     }
-    setCookie("invite_token", $('#invite-token').val(),0.1)
     setCookie("register_password",$('#password').val(),0.1)
-    setCookie("store", $("#store-select").val(), 0.1)
-    const ws = new WebSocket(vars['websocket_url'])
-    ws.onmessage = function (e) {
-        deleteCookie("invite_token")
-        deleteCookie("register_password")
-        const data = JSON.parse(e.data)
-        if (data.type == 'UNAUTHORIZED'){
-            $('#submit').prop('disabled',false)
-            shake('submit')
-            $('#error-text').text('The token provided is not a valid invite token.')
-        } else if (data.type == 'ERROR'){
-            $('#submit').prop('disabled',false)
-            shake('submit')
-            $('#error-text').text('An unexpected error occurred.')
-        } else if (data.type == 'INVALID_CHECK') {
-            $('#submit').prop('disabled',false)
-            shake('submit')
-            $('#error-text').text(data.data)
-        } else if (data.type == 'OK') {
-            $('#submit').text('Account created!')
-            $('#error-text').text('')
-            setTimeout(function () {
-                window.location.href = root_url + 'login.html'
-            }, 2000)
-        }
+
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("GET", vars['api'] + `/register/${$("#store-select").val()}/${$('#invite-token').val()}`, false);
+    xhttp.setRequestHeader("Content-Type", "text/plain");
+    xhttp.send(null);
+    const data = JSON.parse(xhttp.responseText)
+
+    if (data.type == 'UNAUTHORIZED'){
+        $('#submit').prop('disabled',false)
+        shake('submit')
+        $('#error-text').text('The token provided is not a valid invite token.')
+    } else if (data.type == 'ERROR'){
+        $('#submit').prop('disabled',false)
+        shake('submit')
+        $('#error-text').text('An unexpected error occurred.')
+    } else if (data.type == 'INVALID_CHECK') {
+        $('#submit').prop('disabled',false)
+        shake('submit')
+        $('#error-text').text(data.data)
+    } else if (data.type == 'OK') {
+        $('#submit').text('Account created!')
+        $('#error-text').text('')
+        setTimeout(function () {
+            window.location.href = root_url + 'login.html'
+        }, 2000)
     }
 }
 
 function checkToken(){
-    setCookie("invite_token", $('#invite-token').val(), 0.1)
-    setCookie("store", $("#store-select").val(), 0.1)
-    const ws = new WebSocket(vars['websocket_url'])
-    ws.onmessage = function (e){
-        const data = JSON.parse(e.data)
-        if (data.type == "CORRECT_TOKEN") {
-            $('#username').val(data.data)
-        } else {
-            $('#username').val("Incorrect Token")
-        }
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("GET", vars['api'] + `/register/${$("#store-select").val()}/${$('#invite-token').val()}`, false);
+    xhttp.send(null);
+    const data = JSON.parse(xhttp.responseText)
+    if (data.type == "CORRECT_TOKEN") {
+        $('#username').val(data.data)
+    } else {
+        $('#username').val("Incorrect Token")
     }
 }
 

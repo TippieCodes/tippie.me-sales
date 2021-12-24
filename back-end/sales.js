@@ -12,7 +12,7 @@ const cors = require("cors");
 var bodyParser = require('body-parser')
 
 const corsOptions = {
-    origin: [/sales\.tippie\.me$/]
+    origin: [new RegExp(process.env.API_ALLOWED_ORIGINS)]
 }
 
 let databases = new Map();

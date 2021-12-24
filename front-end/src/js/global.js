@@ -1,4 +1,4 @@
-if (!window.location.hostname.endsWith("sales.tippie.me")){
+if (!window.location.hostname.endsWith("sales.tippie.me") && !window.location.hostname == 'localhost'){
     let sub = window.location.hostname.split(".")[0];
     window.location.hostname =  (sub != 'sales' ? sub + '.' : '') + "sales.tippie.me";
 }

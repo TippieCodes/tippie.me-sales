@@ -1,3 +1,8 @@
+if (!window.location.hostname.endsWith("sales.tippie.me")){
+    let sub = window.location.hostname.split(".")[0];
+    window.location.hostname =  (sub != 'sales' ? sub + '.' : '') + "sales.tippie.me";
+}
+
 //Constants
 const root_url = vars['root_url'];
 const root_url_name = root_url.split("/")[1]
@@ -79,6 +84,7 @@ async function sha256(message) {
     const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
 }
 
 function shake(id) {

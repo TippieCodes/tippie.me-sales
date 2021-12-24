@@ -70,7 +70,7 @@ function setTable(start, amount) {
         <td class="cell">${escapeHtml(item_list[x].started_by_name)}</td>
         <td class="cell">${escapeHtml(item_list[x].ended_by_name)}</td>
         <td class="cell">¥${escapeHtml(item_list[x].stat_sales)}</td>
-        <td class="cell"><a class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="window.location.href = './shift.html?id=${item_list[x].shift_id}'" >Inspect</a></td>
+        <td class="cell"><a class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="window.location.href = './shift?id=${item_list[x].shift_id}'" >Inspect</a></td>
         </tr>`;
         if (item_list[x]) p++;
         x++;

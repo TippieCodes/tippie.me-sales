@@ -9,7 +9,7 @@ function page(){
             if (data.data == 'OK'){
                 $("#btn-change-password").text('Password changed!');
                 setTimeout(function () {
-                    window.location.href = root_url + 'login.html'
+                    window.location.href = root_url + 'login'
                 },2000)
             } else if (data.data == 'INVALID_PASSWORD'){
                 $("#btn-change-password").prop('disabled',false);

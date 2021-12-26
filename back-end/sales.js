@@ -221,10 +221,13 @@ class SalesEndpoint extends Endpoint {
             const json = req.body;
             const username = json.username;
             const password = json.password;
+            console.log(json);
             const store = json.store;
             const savepass = json.save;
             let user = await endpoint.getDatabase(store).query(`SELECT * FROM users WHERE user_name = ?;`, [username]);
+            console.log(`Checking ${password} against ${user[0].user_password}...`)
             const valid_password = (user[0]) ? await bcrypt.compare(password, user[0].user_password) : false;
+            console.log(valid_password)
             const expiry = new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * ((savepass) ? 31 : 1)));
             if (valid_password && user[0].disabled == false && user[0].invited == false) {
                 let token = Math.floor(new Date().getTime() * Math.random() * 100)

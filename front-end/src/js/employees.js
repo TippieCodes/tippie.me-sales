@@ -161,7 +161,7 @@ function modify(id) {
                                     </div>`)
     $('#model-submit').attr('onclick', `updateEmployeeSubmit(${id})`);
     $('#model-submit').text('Update Employee')
-    $('#model-submit').after(`<button type="submit" class="btn app-btn-secondary" id="model-submit-disable" style="margin-left: 5px;" onclick="disable(${id})">Disable</button>`)
+    $('#model-submit').after(`<button type="submit" class="btn app-btn-secondary" id="model-submit-disable" style="margin-left: 5px;" onclick="toggleEnabled(${id})">${user['disabled'] == false ? 'Disable' : 'Enable'}</button>`)
     $('#model-submit').after(`<button type="submit" class="btn app-btn-primary" id="model-submit-reset-passw" style="margin-left: 5px;" onclick="resetPassword(${id})">Reset Password</button>`)
     modal.style.display = "block";
 }
@@ -194,32 +194,102 @@ function updateEmployeeSubmit(id) {
             user_id: user.user_id,
             username: $("#new-username").val(),
             role: $("#new-role").val(),
-            owe: $("#new-owe").val()
+            owe: $("#new-owe").val(),
+            disabled: user['disabled']
         }
     }))
+}
+
+function toggleEnabled(id) {
+    const user = user_list[id];
+    if (!confirm(`Are you sure you want to ${(user['disabled'] == true) ? 'enable' : 'disable'} Employee ${user['user_name']}?`)) return;
+    $('#model-submit-disable').attr('disabled', true)
+    ws.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        if (data.type != 'EMPLOYEE_UPDATE') {
+            return;
+        }
+        if (data.data.success == true) {
+
+            $('#model-submit-disable').text((user['disabled'] == true) ? 'Enabled!' : 'Disabled!')
+            setTimeout(function () {
+                model.style.display = "none"
+                page();
+            }, 2500)
+
+        } else {
+            shake("model-submit-disable")
+            $('#model-submit-disable').attr('disabled', false)
+            $('#error-text').text(data.data.message)
+        }
+    }
+    ws.send(JSON.stringify({
+        type: "EMPLOYEE_UPDATE",
+        data: {
+            user_id: user.user_id,
+            username: user['user_name'],
+            role: user['user_role'],
+            owe: user['user_owe'],
+            disabled: (user['disabled'] == true) ? 0 : 1
+        }
+    }))
+}
+
+
+function resetPassword(id){
+    resetModel();
+    const user = user_list[id];
+    $('#model-row-default').append(`<div class="col-auto">
+                                    <label for="new-username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="new-username" value="${user['user_name']}" disabled>
+                                    </div>`)
+    $('#model-row-default').after(`<div class="row mb-3" id="model-row-default">
+                                    <div class="col-auto">
+                                    <label for="new-username" class="form-label">Repeat new Password</label>
+                                    <input type="password" class="form-control" id="new-passw" style="width: 500px" value="">
+                                    </div></div>`)
+    $('#model-row-default').after(`<div class="row mb-3" id="model-row-default">
+                                    <div class="col-auto">
+                                    <label for="new-username" class="form-label">New Password</label>
+                                    <input type="password" class="form-control" id="new-passw1" style="width: 500px" value="">
+                                    </div></div>`)
+    $('#model-submit').attr('onclick', `resetPasswordSubmit(${id})`);
+    $('#model-submit').text('Reset Password')
+    modal.style.display = "block";
 }
 
 function resetPasswordSubmit(id) {
     let password = $('#new-password').val();
     $('#model-submit').attr('disabled', true);
+    const newpassw = $('#new-passw').val();
+    const repeatedpassw = $('#new-passw1').val();
+
+    if (newpassw !== repeatedpassw) {
+        shake('model-submit')
+        $('#model-submit').prop('disabled', false)
+        $('#error-text').text('The repeated password is not the same.')
+        return;
+    }
     ws.onmessage = function (e) {
-        const data = JSON.parse(e.data)
-        if (data.type == 'ERROR') {
-            $('#model-submit').prop('disabled', false)
-            shake('model-submit')
-            $('#errortext').text('An unexpected error occurred.')
-        } else if (data.type == 'INVALID_CHECK') {
-            $('#model-submit').prop('disabled', false)
-            shake('model-submit')
-            $('#errortext').text(data.data)
-        } else if (data.type == 'OK') {
-            $('submit').text('Password updated!')
+        const data = JSON.parse(e.data);
+        if (data.type != 'EMPLOYEE_UPDATE') {
+            return;
+        }
+        if (data.data.success == true) {
+
+            $('#model-submit').text('Password updated!')
             setTimeout(function () {
-                model.style.disabled = 'none';
-            }, 2000)
+                model.style.display = "none"
+                page();
+            }, 2500)
+
+        } else {
+            shake("model-submit")
+            $('#model-submit').attr('disabled', false)
+            $('#error-text').text(data.data.message)
         }
     }
-    ws.send(JSON.stringify({type: 'RESET_PASSWORD', data: {id: id, new: password}}))
+    ws.send(JSON.stringify({type: 'EMPLOYEE_UPDATE', data: {type: 'PASSWORD_RESET', user_id: user_list[id]['user_id'], new: newpassw}}))
 }
 
 function resetModel() {

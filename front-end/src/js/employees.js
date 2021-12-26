@@ -77,7 +77,7 @@ function setTable(start, amount) {
         <td class="cell">${escapeHtml(user_list[x].user_owe + "%")}</td>
         <td class="cell">n/a</td>
         <td class="cell">
-        ${(client.role["permission_manage_employees"] == true) ? `><a class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="modify(${x})" >Modify</a></td>` : ''}</td>`;
+        ${(client.role["permission_manage_employees"] == true) ? `<a class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="modify(${x})" >Modify</a></td>` : ''}</td>`;
         }
         if (user_list[x]) p++;
         x++;
@@ -162,8 +162,56 @@ function modify(id) {
     $('#model-submit').attr('onclick', `updateEmployeeSubmit(${id})`);
     $('#model-submit').text('Update Employee')
     $('#model-submit').after(`<button type="submit" class="btn app-btn-secondary" id="model-submit-disable" style="margin-left: 5px;" onclick="toggleEnabled(${id})">${user['disabled'] == false ? 'Disable' : 'Enable'}</button>`)
-    $('#model-submit').after(`<button type="submit" class="btn app-btn-primary" id="model-submit-reset-passw" style="margin-left: 5px;" onclick="resetPassword(${id})">Reset Password</button>`)
+    if (user['invited'] != true) {
+        $('#model-submit').after(`<button type="submit" class="btn app-btn-primary" id="model-submit-reset-passw" style="margin-left: 5px;" onclick="resetPassword(${id})">Reset Password</button>`)
+    } else {
+        $('#model-submit').after(`<button type="submit" class="btn app-btn-primary" id="model-submit-copy-link" style="margin-left: 5px;" onclick="copyLink(${id})">Copy Invite Link</button>`)
+    }
     modal.style.display = "block";
+}
+
+function copyLink(id){
+    const user = user_list[id];
+    $('#model-submit-copy-link').attr('disabled', true)
+    ws.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        if (data.type != 'EMPLOYEE_UPDATE') {
+            return;
+        }
+        if (data.data.success == true) {
+            const invite = origin + "/register" + "?id="+client.store+"&token="+data.data.invite;
+            copyTextToClipboard(invite, a => {
+                if (a == true) {
+                    $('#model-submit-copy-link').text('Invite copied to clipboard')
+                    setTimeout(function () {
+                        model.style.display = "none"
+                        page();
+                    }, 2500)
+                } else {
+                    $('#model-submit-copy-link').text('Invite successfully created')
+                    $('#error-text').text("Invite: " + invite)
+                }
+            })
+
+            $('#model-submit-copy-link').text('Employee Updated!')
+            setTimeout(function () {
+                model.style.display = "none"
+                page();
+            }, 2500)
+
+        } else {
+            shake("model-submit-copy-link")
+            $('#model-submit-copy-link').attr('disabled', false)
+            $('#error-text').text(data.data.message)
+        }
+    }
+    ws.send(JSON.stringify({
+        type: "EMPLOYEE_UPDATE",
+        data: {
+            type: 'COPY_INVITE',
+            user_id: user.user_id
+        }
+    }))
 }
 
 function updateEmployeeSubmit(id) {

@@ -45,6 +45,7 @@ const modules = {
     "CLIENT" : "CORE",
     "DELETE_STOCK" : "CORE",
     "EMPLOYEE_LIST" : "CORE",
+    "EMPLOYEE_UPDATE" : "CORE",
     "END_SHIFT" : "CORE",
     "LAST_SHIFT_STATS" : "CORE",
     "LOGOUT" : "CORE",

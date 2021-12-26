@@ -1,17 +1,22 @@
-let item_list, data, roles;
+// noinspection JSJQueryEfficiency
+
+let user_list, data, roles;
+
 function page() {
     ws.onmessage = function (e) {
         data = JSON.parse(e.data)
         switch (data.type) {
             case 'EMPLOYEE_LIST':
                 //TODO sorting
-                item_list = data.data.sort((a,b) => (a.role.role_priority > b.role.role_priority)? 1 : -1)
+                user_list = data.data.sort((a, b) => (a.role.role_priority > b.role.role_priority) ? 1 : -1)
                 roles = data.roles;
-                roles.sort((a,b) => (a.role_priority > b.role_priority) ? 1 : -1)
+                roles.sort((a, b) => (a.role_priority > b.role_priority) ? 1 : -1)
                 setTable(0, 10);
         }
     }
-    ws.send(JSON.stringify({ type: "EMPLOYEE_LIST" }))
+    ws.send(JSON.stringify({type: "EMPLOYEE_LIST"}))
+
+    if (client.role["permission_manage_employees"] == true) $('#new-item').html(`<a href="javascript:void(0)" onClick="newInvite()">New invite</a>`);
 }
 
 function setTable(start, amount) {
@@ -35,12 +40,12 @@ function setTable(start, amount) {
     let x = start
     let p = 0
     for (let i = 0; i < parseInt(amount - 1) + 1; i++) {
-        if (!item_list[x]) break;
+        if (!user_list[x]) break;
         let status = `<span class="badge bg-success">Enabled</span>`
-        if (item_list[x].legacy_user == true) status = `<span class="badge bg-warning text-dark">Legacy</span>`
-        if (item_list[x].disabled == true) status = `<span class="badge bg-danger">Disabled</span>`
-        if (item_list[x].invited == true) status = `<span class="badge bg-info">Invited</span>`
-        let last_activity = item_list[x].last_activity;
+        if (user_list[x].legacy_user == true) status = `<span class="badge bg-warning text-dark">Legacy</span>`
+        if (user_list[x].disabled == true) status = `<span class="badge bg-danger">Disabled</span>`
+        if (user_list[x].invited == true) status = `<span class="badge bg-info">Invited</span>`
+        let last_activity = user_list[x].last_activity;
         let last_activity_color = '#5d6778';
         if (last_activity == -1) {
             last_activity = '90+'
@@ -53,51 +58,34 @@ function setTable(start, amount) {
             last_activity_color = 'gold'
         }
 
-        if (item_list[x].invited == false) {
+        if (user_list[x].invited == false) {
             items += `<tr>
-        <td class="cell">#${escapeHtml(item_list[x].user_id)}</td>
-        <td class="cell">${escapeHtml(item_list[x].user_name)}</td>
-        <td class="cell">${escapeHtml(item_list[x].role.role_name)}</td>
+        <td class="cell">#${escapeHtml(user_list[x].user_id)}</td>
+        <td class="cell">${escapeHtml(user_list[x].user_name)}</td>
+        <td class="cell">${escapeHtml(user_list[x].role.role_name)}</td>
         <td class="cell">${status}</td>
-        <td class="cell">${escapeHtml(item_list[x].user_owe + "%")}</td>
+        <td class="cell">${escapeHtml(user_list[x].user_owe + "%")}</td>
         <td class="cell" style="color:${last_activity_color}">${escapeHtml(last_activity + ' days ago')}</td>
         <td class="cell">
-        ${(client.role["permission_manage_employees"] == true) ? `<div class="dropdown">
-        <a class="btn-sm app-btn-secondary dropdown-toggle" aria-expanded="false" data-toggle="dropdown" aria-haspopup="true" >Disable</a>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="javascript:void(0)" onclick="resetPassword(${item_list[x].user_id})">Reset Password</a>
-        <a class="dropdown-item" href="javascript:void(0)" onclick="updateUsername(${item_list[x].user_id})">Change Username</a>
-        <a class="dropdown-item" href="javascript:void(0)" onclick="updateRole(${item_list[x].user_id})">Change Role</a>
-        <a class="dropdown-item" href="javascript:void(0)" onclick="updateOwe(${item_list[x].user_id})">Change Owe</a>
-        ${(item_list[x].disabled == false) ? '<a class="dropdown-item" style="color:red" href="javascript:void(0)" onclick="disableAccount(${item_list[x].user_id})">Disable</a>' :
-                '<a class="dropdown-item" style="color:green" href="javascript:void(0)" onclick="enableAccount(${item_list[x].user_id})">Enable</a>'}
-        </div></div>`:''}</td>`;
+        ${(client.role["permission_manage_employees"] == true) ? `<a class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="modify(${x})" >Modify</a></td>` : ''}</td>`;
         } else {
             items += `<tr>
-        <td class="cell">#${escapeHtml(item_list[x].user_id)}</td>
-        <td class="cell">${escapeHtml(item_list[x].user_name)}</td>
-        <td class="cell">${escapeHtml(item_list[x].role.role_name)}</td>
+        <td class="cell">#${escapeHtml(user_list[x].user_id)}</td>
+        <td class="cell">${escapeHtml(user_list[x].user_name)}</td>
+        <td class="cell">${escapeHtml(user_list[x].role.role_name)}</td>
         <td class="cell">${status}</td>
-        <td class="cell">${escapeHtml(item_list[x].user_owe + "%")}</td>
+        <td class="cell">${escapeHtml(user_list[x].user_owe + "%")}</td>
         <td class="cell">n/a</td>
         <td class="cell">
-        ${(client.role["permission_manage_employees"] == true) ? `<div class="dropdown">
-        <a class="btn-sm app-btn-secondary dropdown-toggle" aria-expanded="false" data-toggle="dropdown" aria-haspopup="true" >Disable</a>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="javascript:void(0)" onclick="copyInvite(${item_list[x].user_id})">Copy Invite</a>
-        <a class="dropdown-item" href="javascript:void(0)" onclick="updateUsername(${item_list[x].user_id})">Change Username</a>
-        <a class="dropdown-item" href="javascript:void(0)" onclick="updateRole(${item_list[x].user_id})">Change Role</a>
-        <a class="dropdown-item" href="javascript:void(0)" onclick="updateOwe(${item_list[x].user_id})">Change Owe</a>
-        <a class="dropdown-item" style="color:red" href="javascript:void(0)" onclick="deleteInvite(${item_list[x].user_id})">Delete invite</a>'
-        </div></div>`:''}</td>`;
+        ${(client.role["permission_manage_employees"] == true) ? `<a class="btn-sm app-btn-secondary" href="javascript:void(0)" onclick="modify(${x})" >Modify</a></td>` : ''}</td>`;
         }
-        if (item_list[x]) p++;
+        if (user_list[x]) p++;
         x++;
     }
     items += `</tbody></table></div></div></div></div>`
     $('#item-list').html(items);
-    $('#amount-showing').text(`Showing ${p} out of ${item_list.length} entries.`)
-    let a_btn = Math.ceil((item_list.length) / amount)
+    $('#amount-showing').text(`Showing ${p} out of ${user_list.length} entries.`)
+    let a_btn = Math.ceil((user_list.length) / amount)
     let c_btn = Math.ceil((start + 1) / amount)
     let pagination = `<nav class="app-pagination pt-3">
     <ul class="pagination justify-content-end"> 
@@ -108,17 +96,17 @@ function setTable(start, amount) {
         if (c_btn > a_btn - 3) {
             pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)" onClick='setTable(0, ${amount})'>1</a></li>`
             pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)">...</a></li>`
-            for (let i = a_btn - 5;i < a_btn; i++) {
+            for (let i = a_btn - 5; i < a_btn; i++) {
                 if (i < 0) continue;
                 pagination += `<li class="page-item ${(c_btn - 1 == i) ? 'active' : ''}"><a class="page-link" href="javascript:void(0)" onClick='setTable(${i * (amount)}, ${amount})'>${i + 1}</a></li>`
             }
         } else if (c_btn <= 3) {
-            for (let i = 0 ;i < 5; i++) {
+            for (let i = 0; i < 5; i++) {
                 if (i < 0) continue;
                 pagination += `<li class="page-item ${(c_btn - 1 == i) ? 'active' : ''}"><a class="page-link" href="javascript:void(0)" onClick='setTable(${i * (amount)}, ${amount})'>${i + 1}</a></li>`
             }
             pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)">...</a></li>`
-            pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)" onClick='setTable(${(a_btn-1) * (amount)}, ${amount})'>${a_btn}</a></li>`
+            pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)" onClick='setTable(${(a_btn - 1) * (amount)}, ${amount})'>${a_btn}</a></li>`
         } else {
             pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)" onClick='setTable(0, ${amount})'>1</a></li>`
             pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)">...</a></li>`
@@ -127,7 +115,7 @@ function setTable(start, amount) {
                 pagination += `<li class="page-item ${(c_btn - 1 == i) ? 'active' : ''}"><a class="page-link" href="javascript:void(0)" onClick='setTable(${i * (amount)}, ${amount})'>${i + 1}</a></li>`
             }
             pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)">...</a></li>`
-            pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)" onClick='setTable(${(a_btn-1) * (amount)}, ${amount})'>${a_btn}</a></li>`
+            pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)" onClick='setTable(${(a_btn - 1) * (amount)}, ${amount})'>${a_btn}</a></li>`
         }
     } else {
         for (let i = 0; i < a_btn; i++) {
@@ -137,8 +125,8 @@ function setTable(start, amount) {
     pagination += `<li class="page-item ${(c_btn == a_btn) ? 'disabled' : ''}">
     <a class="page-link" href="javascript:void(0)" onClick="setTable(${((c_btn) * (amount))}, ${amount})">Next</a></li></ul></nav>`
     $('#pagination').html(pagination)
-    $(function(){
-        $(".dropdown-menu").on('click', 'a', function(){
+    $(function () {
+        $(".dropdown-menu").on('click', 'a', function () {
             $(this).parents('.dropdown').find('a').text($(this).text());
         });
     });
@@ -146,53 +134,219 @@ function setTable(start, amount) {
 
 
 const modal = document.getElementById("model");
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (event.target === modal) {
         modal.style.display = "none";
     }
 }
 
-function resetPassword(id){
+function modify(id) {
     resetModel();
+    const user = user_list[id];
     $('#model-row-default').append(`<div class="col-auto">
-                                    <label for="setting-input-1" class="form-label">New Password</label>
-                                    <input type="password" class="form-control" id="new-password" value="">
+                                    <label for="new-username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="new-username" value="${user['user_name']}">
                                     </div>`)
-    $('#model-submit').prop(`onClick', 'resetPasswordSubmit(${id})`)
-    $('#model-submit').text('Reset password')
+    $('#model-row-default').append(`<div class="col-auto">
+                                    <label for="new-role" class="form-label">Role</label>
+                                    <select type="text" class="form-control" id="new-role">
+                                    </select>
+                                    </div>`)
+    for (const role of roles) {
+        $('#new-role').append(`<option value="${role.role_id}" ${(user['user_role'] == role['role_id']) ? 'selected' : ''}>${role.role_name}</option>`)
+    }
+    $('#model-row-default').append(`<div class="col-auto">
+                                    <label for="new-owe" class="form-label">Owe Percentage</label>
+                                    <input type="number" class="form-control" id="new-owe" value="${user['user_owe']}">
+                                    </div>`)
+    $('#model-submit').attr('onclick', `updateEmployeeSubmit(${id})`);
+    $('#model-submit').text('Update Employee')
+    $('#model-submit').after(`<button type="submit" class="btn app-btn-secondary" id="model-submit-disable" style="margin-left: 5px;" onclick="toggleEnabled(${id})">${user['disabled'] == false ? 'Disable' : 'Enable'}</button>`)
+    if (user['invited'] != true) {
+        $('#model-submit').after(`<button type="submit" class="btn app-btn-primary" id="model-submit-reset-passw" style="margin-left: 5px;" onclick="resetPassword(${id})">Reset Password</button>`)
+    } else {
+        $('#model-submit').after(`<button type="submit" class="btn app-btn-primary" id="model-submit-copy-link" style="margin-left: 5px;" onclick="copyLink(${id})">Copy Invite Link</button>`)
+    }
     modal.style.display = "block";
 }
 
-function resetPasswordSubmit(id){
-    let password = $('#new-password').val();
-    $('#model-submit').attr('disabled', true);
-    ws.onmessage = function (e){
-        const data = JSON.parse(e.data)
-        if (data.type == 'ERROR'){
-            $('#model-submit').prop('disabled',false)
-            shake('model-submit')
-            $('#errortext').text('An unexpected error occurred.')
-        } else if (data.type == 'INVALID_CHECK') {
-            $('#model-submit').prop('disabled',false)
-            shake('model-submit')
-            $('#errortext').text(data.data)
-        } else if (data.type == 'OK') {
-            $('submit').text('Password updated!')
+function copyLink(id){
+    const user = user_list[id];
+    $('#model-submit-copy-link').attr('disabled', true)
+    ws.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        if (data.type != 'EMPLOYEE_UPDATE') {
+            return;
+        }
+        if (data.data.success == true) {
+            const invite = origin + "/register" + "?id="+client.store+"&token="+data.data.invite;
+            copyTextToClipboard(invite, a => {
+                if (a == true) {
+                    $('#model-submit-copy-link').text('Invite copied to clipboard')
+                    setTimeout(function () {
+                        model.style.display = "none"
+                        page();
+                    }, 2500)
+                } else {
+                    $('#model-submit-copy-link').text('Invite successfully created')
+                    $('#error-text').text("Invite: " + invite)
+                }
+            })
+
+            $('#model-submit-copy-link').text('Employee Updated!')
             setTimeout(function () {
-                model.style.disabled = 'none';
-            }, 2000)
+                model.style.display = "none"
+                page();
+            }, 2500)
+
+        } else {
+            shake("model-submit-copy-link")
+            $('#model-submit-copy-link').attr('disabled', false)
+            $('#error-text').text(data.data.message)
         }
     }
-    ws.send(JSON.stringify({type:'RESET_PASSWORD', data:{id:id,new:password}}))
+    ws.send(JSON.stringify({
+        type: "EMPLOYEE_UPDATE",
+        data: {
+            type: 'COPY_INVITE',
+            user_id: user.user_id
+        }
+    }))
 }
 
-function resetModel(){
+function updateEmployeeSubmit(id) {
+    const user = user_list[id];
+    $('#model-submit').attr('disabled', true)
+    ws.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        if (data.type != 'EMPLOYEE_UPDATE') {
+            return;
+        }
+        if (data.data.success == true) {
+
+            $('#model-submit').text('Employee Updated!')
+            setTimeout(function () {
+                model.style.display = "none"
+                page();
+            }, 2500)
+
+        } else {
+            shake("model-submit")
+            $('#model-submit').attr('disabled', false)
+            $('#error-text').text(data.data.message)
+        }
+    }
+    ws.send(JSON.stringify({
+        type: "EMPLOYEE_UPDATE",
+        data: {
+            user_id: user.user_id,
+            username: $("#new-username").val(),
+            role: $("#new-role").val(),
+            owe: $("#new-owe").val(),
+            disabled: user['disabled']
+        }
+    }))
+}
+
+function toggleEnabled(id) {
+    const user = user_list[id];
+    if (!confirm(`Are you sure you want to ${(user['disabled'] == true) ? 'enable' : 'disable'} Employee ${user['user_name']}?`)) return;
+    $('#model-submit-disable').attr('disabled', true)
+    ws.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        if (data.type != 'EMPLOYEE_UPDATE') {
+            return;
+        }
+        if (data.data.success == true) {
+
+            $('#model-submit-disable').text((user['disabled'] == true) ? 'Enabled!' : 'Disabled!')
+            setTimeout(function () {
+                model.style.display = "none"
+                page();
+            }, 2500)
+
+        } else {
+            shake("model-submit-disable")
+            $('#model-submit-disable').attr('disabled', false)
+            $('#error-text').text(data.data.message)
+        }
+    }
+    ws.send(JSON.stringify({
+        type: "EMPLOYEE_UPDATE",
+        data: {
+            user_id: user.user_id,
+            username: user['user_name'],
+            role: user['user_role'],
+            owe: user['user_owe'],
+            disabled: (user['disabled'] == true) ? 0 : 1
+        }
+    }))
+}
+
+
+function resetPassword(id){
+    resetModel();
+    const user = user_list[id];
+    $('#model-row-default').append(`<div class="col-auto">
+                                    <label for="new-username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="new-username" value="${user['user_name']}" disabled>
+                                    </div>`)
+    $('#model-row-default').after(`<div class="row mb-3" id="model-row-default">
+                                    <div class="col-auto">
+                                    <label for="new-username" class="form-label">Repeat new Password</label>
+                                    <input type="password" class="form-control" id="new-passw" style="width: 500px" value="">
+                                    </div></div>`)
+    $('#model-row-default').after(`<div class="row mb-3" id="model-row-default">
+                                    <div class="col-auto">
+                                    <label for="new-username" class="form-label">New Password</label>
+                                    <input type="password" class="form-control" id="new-passw1" style="width: 500px" value="">
+                                    </div></div>`)
+    $('#model-submit').attr('onclick', `resetPasswordSubmit(${id})`);
+    $('#model-submit').text('Reset Password')
+    modal.style.display = "block";
+}
+
+function resetPasswordSubmit(id) {
+    let password = $('#new-password').val();
+    $('#model-submit').attr('disabled', true);
+    const newpassw = $('#new-passw').val();
+    const repeatedpassw = $('#new-passw1').val();
+
+    if (newpassw !== repeatedpassw) {
+        shake('model-submit')
+        $('#model-submit').prop('disabled', false)
+        $('#error-text').text('The repeated password is not the same.')
+        return;
+    }
+    ws.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        if (data.type != 'EMPLOYEE_UPDATE') {
+            return;
+        }
+        if (data.data.success == true) {
+
+            $('#model-submit').text('Password updated!')
+            setTimeout(function () {
+                model.style.display = "none"
+                page();
+            }, 2500)
+
+        } else {
+            shake("model-submit")
+            $('#model-submit').attr('disabled', false)
+            $('#error-text').text(data.data.message)
+        }
+    }
+    ws.send(JSON.stringify({type: 'EMPLOYEE_UPDATE', data: {type: 'PASSWORD_RESET', user_id: user_list[id]['user_id'], new: newpassw}}))
+}
+
+function resetModel() {
     $('#model-content').html(`<div class='row mb-3' id="model-row-default">
             </div>
             <button type="submit" class="btn app-btn-primary" id='model-submit' onclick="placeholderfunction();">Add item</button><span class='ml-2' id='error-text' style="color:red;"></span><span id='model-close' class="close" onclick="modal.style.display = 'none';">&times;</span>`)
 }
 
-function newInvite(){
+function newInvite() {
     resetModel();
     $('#model-row-default').append(`<div class="col-auto">
                                     <label for="new-username" class="form-label">Username</label>
@@ -215,15 +369,16 @@ function newInvite(){
     modal.style.display = "block";
 }
 
-function newInviteSubmit(){
+function newInviteSubmit() {
     $('#model-submit').attr('disabled', true)
-    ws.onmessage = function(e){
+    ws.onmessage = function (e) {
         const data = JSON.parse(e.data);
-        if (data.type != 'NEW_INVITE'){
+        if (data.type != 'NEW_INVITE') {
             return;
         }
-        if (data.data.success == true){
-            copyTextToClipboard(data.data.link, a => {
+        if (data.data.success == true) {
+            const invite = origin + "/register" + "?id="+client.store+"&token="+data.data.invite;
+            copyTextToClipboard(invite, a => {
                 if (a == true) {
                     $('#model-submit').text('Invite copied to clipboard')
                     setTimeout(function () {
@@ -232,7 +387,7 @@ function newInviteSubmit(){
                     }, 2500)
                 } else {
                     $('#model-submit').text('Invite successfully created')
-                    $('#error-text').text("Invite: " +data.data.link)
+                    $('#error-text').text("Invite: " + invite)
                 }
             })
         } else {

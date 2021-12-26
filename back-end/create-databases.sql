@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 24, 2021 at 12:55 AM
+-- Generation Time: Dec 26, 2021 at 05:24 PM
 -- Server version: 8.0.25-0ubuntu0.20.04.1
 -- PHP Version: 7.4.20
 
@@ -93,8 +93,8 @@ CREATE TABLE `shifts` (
   `shift_id` int NOT NULL,
   `shift_name` varchar(45) DEFAULT NULL,
   `shift_ended` tinyint NOT NULL DEFAULT '0',
-  `started_by` varchar(45) DEFAULT NULL,
-  `ended_by` varchar(45) DEFAULT NULL,
+  `started_by` int DEFAULT NULL,
+  `ended_by` int DEFAULT NULL,
   `employee_list` varchar(2000) DEFAULT '[]',
   `started_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ended_at` datetime DEFAULT NULL,
@@ -146,7 +146,9 @@ CREATE TABLE `users` (
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`order_id`);
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `order_shift` (`order_shift`),
+  ADD KEY `order_employee` (`order_employee`);
 
 --
 -- Indexes for table `roles`
@@ -160,7 +162,9 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `shifts`
   ADD PRIMARY KEY (`shift_id`),
-  ADD UNIQUE KEY `shift_id_UNIQUE` (`shift_id`);
+  ADD UNIQUE KEY `shift_id_UNIQUE` (`shift_id`),
+  ADD KEY `started_by` (`started_by`),
+  ADD KEY `ended_by` (`ended_by`);
 
 --
 -- Indexes for table `stock`
@@ -174,7 +178,8 @@ ALTER TABLE `stock`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `user_name_UNIQUE` (`user_name`);
+  ADD UNIQUE KEY `user_name_UNIQUE` (`user_name`),
+  ADD KEY `user_role` (`user_role`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -209,6 +214,30 @@ ALTER TABLE `stock`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`order_shift`) REFERENCES `shifts` (`shift_id`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`order_employee`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `shifts`
+--
+ALTER TABLE `shifts`
+  ADD CONSTRAINT `shifts_ibfk_1` FOREIGN KEY (`started_by`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `shifts_ibfk_2` FOREIGN KEY (`ended_by`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`user_role`) REFERENCES `roles` (`role_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -8,11 +8,25 @@ class EmployeeUpdateRequest extends RequestType {
         if (client.role["permission_manage_employees"] != true) return;
         const conn = require("../sales").getDatabase(client.store);
 
-        console.log(incoming.data);
-        console.log(incoming.data.type === 'PASSWORD_RESET')
-        if (incoming.data.type === 'PASSWORD_RESET') {
+        if (incoming.data.type === 'COPY_INVITE') {
             try {
-                let user = await conn.query('SELECT user_name FROM users WHERE user_id = ? LIMIT 1', [incoming.data.user_id])
+                let user = await conn.query('SELECT user_password,invited FROM users WHERE user_id = ? LIMIT 1', [incoming.data.user_id])
+                if (user[0]['invited'] != true) {
+                    ws.send(JSON.stringify({type: "EMPLOYEE_UPDATE", data: {success: false, message: 'This employee is not invited.'}}))
+                    return;
+                }
+                ws.send(JSON.stringify({type: "EMPLOYEE_UPDATE", data: {success: true, invite: user[0]['user_password']}}))
+            } catch (e){
+                ws.send(JSON.stringify({type: "EMPLOYEE_UPDATE", data: {success: false, message: e.message}}))
+            }
+        } else if (incoming.data.type === 'PASSWORD_RESET') {
+            try {
+                let user = await conn.query('SELECT user_name,invited FROM users WHERE user_id = ? LIMIT 1', [incoming.data.user_id])
+                console.log(user)
+                if (user['invited'] == true) {
+                    ws.send(JSON.stringify({type: "EMPLOYEE_UPDATE", data: {success: false, message: 'Not possible'}}))
+                    return;
+                }
                 const check = utils.passwordCheck(incoming.data.new, user[0]['user_name']);
                 let hash;
                 if (check === true) {

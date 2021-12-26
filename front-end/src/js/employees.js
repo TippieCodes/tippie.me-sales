@@ -377,7 +377,8 @@ function newInviteSubmit() {
             return;
         }
         if (data.data.success == true) {
-            copyTextToClipboard(data.data.link, a => {
+            const invite = origin + "/register" + "?id="+client.store+"&token="+data.data.invite;
+            copyTextToClipboard(invite, a => {
                 if (a == true) {
                     $('#model-submit').text('Invite copied to clipboard')
                     setTimeout(function () {
@@ -386,7 +387,7 @@ function newInviteSubmit() {
                     }, 2500)
                 } else {
                     $('#model-submit').text('Invite successfully created')
-                    $('#error-text').text("Invite: " + data.data.link)
+                    $('#error-text').text("Invite: " + invite)
                 }
             })
         } else {

@@ -4,12 +4,11 @@ class NewInviteRequest extends RequestType{
     async onRequest(wss, ws, request, client, data, incoming) {
         if (client.role["permission_manage_employees"] != true) return;
         const conn = sales.getDatabase(client.store);
-        const store = sales.getStore(client.store)
         let response = {
             type: 'NEW_INVITE',
             data: {
                 success: true,
-                link: `https://tippie.me/sales/register.html?store=${store.store_url_friendly}&token=`
+                invite: ``
             }
         }
         const key = makeKey(16);
@@ -23,7 +22,7 @@ class NewInviteRequest extends RequestType{
                 response.data.message = e.sqlMessage;
             }
         }
-        response.data.link += key;
+        response.data.invite = key;
         ws.send(JSON.stringify(response))
     }
 }

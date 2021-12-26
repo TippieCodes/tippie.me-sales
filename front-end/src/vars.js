@@ -1,1 +1,0 @@
-let vars = {'websocket_url': 'ws://localhost:8000','root_url': '/','api': 'http://localhost:8001','auth_url': 'http://localhost:8080/auth'}

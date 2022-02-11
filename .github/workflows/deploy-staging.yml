@@ -6,6 +6,7 @@ name: Deploy Staging
 on:
   push:
     branches: [ staging ]
+  workflow_dispatch:
 
 jobs:
   deploy:

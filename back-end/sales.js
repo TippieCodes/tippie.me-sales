@@ -19,7 +19,6 @@ let databases = new Map();
 let stores = new Map();
 let server;
 
-
 const conn = new Database(process.env.GLOBAL_DB)
 
 conn.init({

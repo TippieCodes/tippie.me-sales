@@ -39,6 +39,7 @@ function page() {
     </div><!--//inner-->
   </div>`)
     }
+  
 }
 
 function startShift() {

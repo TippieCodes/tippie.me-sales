@@ -19,26 +19,6 @@ function page() {
     }
     ws.send(JSON.stringify({type: 'SHIFT'}))
     ws.send(JSON.stringify({type: "OVERVIEW"}))
-
-    if (client.role['permission_manage_employees'] == true) {
-        $('#alert-area').html(`<div class="app-card alert shadow-sm mb-4 border-left-decoration" role="alert">
-  <div class="inner">
- <div class="app-card-body p-3 p-lg-4">
-  <h3 class="mb-3">Update: Managing Employees!</h3>
-<div class="row gx-5 gy-3">
-       <div class="col-12 col-lg-9">
-     
-     <div>It is now possible to manage employees through the Employees screen in this panel. No longer need to use the database to change roles, owe percentages or usernames! It is also possible to reset password of your employees now.</div>
- </div><!--//col-->
- <div class="col-12 col-lg-3">
-    <a class="btn app-btn-primary" href="${root_url}employees">Go to Employees</a>
-   </div>
- </div><!--//row-->
-   </div><!--//app-card-body-->
-   
-    </div><!--//inner-->
-  </div>`)
-    }
 }
 
 function startShift() {

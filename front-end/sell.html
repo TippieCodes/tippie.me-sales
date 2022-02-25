@@ -2,52 +2,90 @@
 <html lang="en">
 
 <head><!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KFP2925');</script>
-<!-- End Google Tag Manager -->
-	<title>La Casa Nostra Employee Area</title>
+    <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-KFP2925');</script>
+    <!-- End Google Tag Manager -->
+    <title>La Casa Nostra Employee Area</title>
 
-	<!-- Meta -->
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
-	<link rel="shortcut icon" href="favicon.ico">
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">
+    <link rel="shortcut icon" href="favicon.ico">
 
-	<!-- FontAwesome JS-->
-	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+    <!-- FontAwesome JS-->
+    <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
 
-	<!-- App CSS -->
-	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
-	<style>
-		@media (min-width: 1400px) {
+    <!-- App CSS -->
+    <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+    <style>
+        @media (min-width: 1400px) {
 
-			.container-xxl,
-			.container-xl,
-			.container-lg,
-			.container-md,
-			.container-sm,
-			.container {
-				max-width: 85%;
-			}
-		}
+            .container-xxl,
+            .container-xl,
+            .container-lg,
+            .container-md,
+            .container-sm,
+            .container {
+                max-width: 85%;
+            }
 
-		/* .row {
-			padding-right: calc(var(--bs-gutter-x) / 2);
-			padding-left: calc(var(--bs-gutter-x) / 2);
-		} */
-		.app-card {
-			border-bottom: 1px solid #e7e9ed;
-		}
+        }
 
-		.btn-sm:disabled {
-			opacity: .65;
-			pointer-events: none;
-		}
-	</style>
+        @media (min-width: 992px) {
+            .current-order-box {
+                height: 400px;
+                margin-top: -43px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .current-order-box {
+                height: 400px;
+            }
+        }
+
+        /* .row {
+            padding-right: calc(var(--bs-gutter-x) / 2);
+            padding-left: calc(var(--bs-gutter-x) / 2);
+        } */
+        .app-card {
+            border-bottom: 1px solid #e7e9ed;
+        }
+
+        .btn-sm:disabled {
+            opacity: .65;
+            pointer-events: none;
+        }
+
+        .nav-tabs {
+            display: inline-flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+            direction: unset;
+            max-width: 100%;
+            border-bottom: 0px;
+        }
+
+        .nav-item {
+            margin-right: 10px;
+            list-style-type: none;
+        }
+
+    </style>
 </head>
 <!-- include vars -->
 <script src="src/vars.js"></script>
@@ -55,292 +93,309 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <body class="app">
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KFP2925"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->	<div include-html="src/html/header.html"></div>
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KFP2925"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div include-html="src/html/header.html"></div>
 
-	<div class="app-wrapper">
+<div class="app-wrapper">
 
-		<div class="app-content pt-3 p-md-3 p-lg-4">
-			<div class="container-xl">
-				<h1 class="app-page-title">Sell</h1>
-				<div class="row g-4 mb-4">
-					<div class="col-12 col-lg-6">
-						<div class="app-card app-card-chart shadow-sm">
-							<div class="app-card-header p-3">
-								<div class="row justify-content-between align-items-center">
-									<div class="col-auto">
-										<h4 class="app-card-title">Add to order</h4>
-									</div>
-									<!--//col-->
-									<div class="col-auto">
-										<input type="text" class="form-control form-control-sm" id="sell-search" placeholder="Search..." aria-placeholder="Search...">
-										<!--//card-header-actions-->
-									</div>
-									<!--//col-->
-								</div>
-								<!--//row-->
-							</div>
-							<!--//app-card-header-->
-							<div class="app-card-body">
-								<div class="app-card-basic d-flex flex-column align-items-start">
-									<div class="app-card-body px-4" id="order-content" style="width: 100%;">
-										<div class="table-responsive" style="max-height: 750px;">
-											<table class="table app-table-hover mb-0 text-left" id='order-table'>
-												<thead>
-													<tr>
-														<th class="cell">Item Name</th>
-														<th class="cell">Item Location</th>
-														<th class="cell">Sell price</th>
-														<th class="cell">Stock</th>
-														<th class="cell"></th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td class="cell"></td>
-														<td class="cell"></td>
-														<td class="cell"></td>
-														<td class="cell"></td>
-														<td class="cell"><a class="btn-sm app-btn-secondary" href="javascript:void(0)"
-																onclick="addItem()">Add</a></td>
-													</tr>
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+            <h1 class="app-page-title">Sell</h1>
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-lg-6">
+                    <div class="app-card app-card-chart shadow-sm">
+                        <div class="app-card-header p-3">
+                            <div class="row justify-content-between align-items-center">
+                                <div class="col-auto">
+                                    <h4 class="app-card-title">Add to order</h4>
+                                </div>
+                                <!--//col-->
+                                <div class="col-auto">
+                                    <input type="text" class="form-control form-control-sm" id="sell-search"
+                                           placeholder="Search..." aria-placeholder="Search...">
+                                    <!--//card-header-actions-->
+                                </div>
+                                <!--//col-->
+                            </div>
+                            <!--//row-->
+                        </div>
+                        <!--//app-card-header-->
+                        <div class="app-card-body">
+                            <div class="app-card-basic d-flex flex-column align-items-start">
+                                <div class="app-card-body px-4" id="order-content" style="width: 100%;">
+                                    <div class="table-responsive" style="max-height: 750px;">
+                                        <table class="table app-table-hover mb-0 text-left" id='order-table'>
+                                            <thead>
+                                            <tr>
+                                                <th class="cell">Item Name</th>
+                                                <th class="cell">Item Location</th>
+                                                <th class="cell">Sell price</th>
+                                                <th class="cell">Stock</th>
+                                                <th class="cell"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="cell"></td>
+                                                <td class="cell"></td>
+                                                <td class="cell"></td>
+                                                <td class="cell"></td>
+                                                <td class="cell"><a class="btn-sm app-btn-secondary"
+                                                                    href="javascript:void(0)"
+                                                                    onclick="addItem()">Add</a></td>
+                                            </tr>
 
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<!--//app-card-body-->
-								</div>
-							</div>
-							<!--//app-card-body-->
-						</div>
-					</div>
-					<!--//col-->
-					<div class="col-12 col-lg-6">
-						<div style="height:400px">
-							<div class="app-card app-card-chart mb-4  shadow-sm">
-								<div class="app-card-header p-3">
-									<div class="row justify-content-between align-items-center">
-										<div class="col-auto">
-											<h4 class="app-card-title">Current order</h4>
-										</div>
-										<!--//col-->
-										<div class="col-auto">
-											<div class="card-header-action">
-											</div>
-											<!--//card-header-actions-->
-										</div>
-										<!--//col-->
-									</div>
-									<!--//row-->
-								</div>
-								<!--//app-card-header-->
-								<div class="app-card-body">
-									<div class="app-card-basic d-flex flex-column align-items-start">
-										<div class="app-card-body px-4" id="order-content" style="width: 100%;">
-											<div class="table-responsive" style="max-height:250px">
-												<table class="table" style="width: 100%" id='current-order-table'>
-													<thead>
-														<tr>
-															<th scope="col">Amount</th>
-															<th scope="col">Item name</th>
-															<th scope="col">Item location</th>
-															<th scope="col">Total price</th>
-															<th scope="col-sm"></th>
-														</tr>
-													</thead>
-													<tbody>
-													</tbody>
-												</table>
-											</div>
-										</div>
-										<!--//app-card-body-->
-										<div class="app-card-footer p-4 pt-1 mt-auto" style="width: 100%;">
-											<div class="row">
-												<div class="col-8">
-													<button class="btn app-btn-secondary" onclick="completeOrder()"
-														id="order-button">Complete order</button>
-													<span id='order-error-text' style="color:red;" class="pl-1"></span>
-												</div>
-												<div class="col-4 d-flex justify-content-end">
-													<b>Total: </b><span id="total">6000</span>
-												</div>
-											</div>
-										</div>
-										<!--//app-card-footer-->
-									</div>
-								</div>
-								<!--//app-card-body-->
-
-
-							</div>
-						</div>
-						<div style="height:404.2px;display: flex;">
-							<div class="app-card app-card-chart shadow-sm" style="width:100%">
-								<div class="app-card-header p-3">
-									<div class="row justify-content-between align-items-center">
-										<div class="col-auto">
-											<h4 class="app-card-title">Current shift statisitcs</h4>
-										</div>
-										<!--//col-->
-										<div class="col-auto">
-											<div class="card-header-action" id='no-shift-text'>
-											</div>
-										</div>
-										<!--//col-->
-									</div>
-									<!--//row-->
-								</div>
-								<!--//app-card-header-->
-								<div class="app-card-body">
-									<div class="app-card-basic d-flex flex-column align-items-start">
-										<div class="app-card-body px-4" id="order-content" style="width: 100%;">
-											<div class="app-card-header p-3 border-bottom-0">
-												<div class="row align-items-center gx-3">
-													<div class="col-auto">
-														<div class="app-icon-holder">
-															<svg xmlns="http://www.w3.org/2000/svg" width="16"
-																height="16" fill="currentColor"
-																class="bi bi-person-bounding-box" viewBox="0 0 16 16">
-																<path
-																	d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z" />
-																<path
-																	d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-															</svg>
-														</div>
-														<!--//icon-holder-->
-
-													</div>
-													<!--//col-->
-													<div class="col-auto">
-														<h4 class="app-card-title" id='shift-title'>Personal Stats</h4>
-													</div>
-													<!--//col-->
-												</div>
-											</div>
-
-											<div class="row pb-2"
-												style="width:100%; border-bottom: gray;border-width: 2px;">
-												<div class="col-3">
-													<b>Total sales:</b><br /><span id="p-total"></span>
-												</div>
-												<div class="col-3">
-													<b>Total orders done:</b><br /><span id="p-orders"></span>
-												</div>
-												<div class="col-3">
-													<b>Total items sold:</b><br /><span id="p-items"></span>
-												</div>
-												<div class="col-3">
-													<b>Total owed:</b><br /><span id="p-owed"></span>
-												</div>
-											</div>
-										</div>
-										<div class="app-card-body px-4" id="order-content"
-											style="width: 100%;border-top-color: #e7e9ed;border-top-width: 2px;border-top-style: solid; height:100%">
-											<div class="app-card-header p-3 border-bottom-0">
-												<div class="row align-items-center gx-3">
-													<div class="col-auto">
-														<div class="app-icon-holder">
-															<svg xmlns="http://www.w3.org/2000/svg" width="16"
-																height="16" fill="currentColor" class="bi bi-shop"
-																viewBox="0 0 16 16">
-																<path
-																	d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z" />
-															</svg>
-														</div>
-														<!--//icon-holder-->
-
-													</div>
-													<!--//col-->
-													<div class="col-auto">
-														<h4 class="app-card-title" id='shift-title'>Global Stats</h4>
-													</div>
-													<!--//col-->
-												</div>
-											</div>
-											<div class="row" style="width:100%; border-bottom: gray;border-width: 2px;">
-												<div class="col-4">
-													<b>Total sales:</b><br /><span id="g-total"></span>
-												</div>
-												<div class="col-4">
-													<b>Total orders done:</b><br /><span id="g-orders"></span>
-												</div>
-												<div class="col-4">
-													<b>Total items sold:</b><br /><span id="g-items"></span>
-												</div>
-											</div>
-										</div>
-										<!--//app-card-body-->
-										<div class="app-card-footer p-4 pt-1 mt-auto" style="width: 100%;">
-										</div>
-										<!--//app-card-footer-->
-									</div>
-								</div>
-								<!--//app-card-body-->
-							</div>
-						</div>
-					</div>
-				</div>
-				<!--//col-->
-				<div class="row g-4 mb-4">
-					<div class="col-12 col-lg-6">
-						<div class="app-card app-card-chart shadow-sm" style="width:100%">
-							<div class="app-card-header p-3">
-								<div class="row justify-content-between align-items-center">
-									<div class="col-auto">
-										<h4 class="app-card-title">Recent Orders</h4>
-									</div>
-									<!--//col-->
-									<div class="col-auto">
-										<!--//card-header-actions-->
-									</div>
-									<!--//col-->
-								</div>
-								<!--//row-->
-							</div>
-							<!--//app-card-header-->
-							<div id="recent-orders" style="max-height: 400px;overflow-y: hidden;">
-							</div>
-							<!--//app-card-body-->
-						</div>
-					</div>
-				</div>
-				<div class="col-12 col-lg-6">
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--//container-fluid-->
-	</div>
-	<!--//app-content-->
-	<div include-html="src/html/footer.html"></div>
-	</div>
-	<!--//app-wrapper-->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!--//app-card-body-->
+                            </div>
+                        </div>
+                        <!--//app-card-body-->
+                    </div>
+                </div>
+                <!--//col-->
+                <div class="col-12 col-lg-6">
+                    <div class="current-order-box">
+                        <ul class="nav nav-tabs" id="order-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Default</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">New</a>
+                            </li>
+                        </ul>
+                        <div class="app-card app-card-chart mb-4  shadow-sm">
+                            <div class="app-card-header p-3">
+                                <div class="row justify-content-between align-items-center">
+                                    <div class="col-auto">
+                                        <h4 class="app-card-title">Current order</h4>
+                                    </div>
+                                    <!--//col-->
+                                    <div class="col-auto">
+                                        <div class="card-header-action" id="order-action">
+                                        </div>
+                                        <!--//card-header-actions-->
+                                    </div>
+                                    <!--//col-->
+                                </div>
+                                <!--//row-->
+                            </div>
+                            <!--//app-card-header-->
+                            <div class="app-card-body">
+                                <div class="app-card-basic d-flex flex-column align-items-start">
+                                    <div class="app-card-body px-4" id="order-content" style="width: 100%;">
+                                        <div class="table-responsive" style="max-height:250px">
+                                            <table class="table" style="width: 100%" id='current-order-table'>
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">Item name</th>
+                                                    <th scope="col">Item location</th>
+                                                    <th scope="col">Total price</th>
+                                                    <th scope="col-sm"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--//app-card-body-->
+                                    <div class="app-card-footer p-4 pt-1 mt-auto" style="width: 100%;">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <button class="btn app-btn-secondary" onclick="completeOrder()"
+                                                        id="order-button">Complete order
+                                                </button>
+                                                <span id='order-error-text' style="color:red;" class="pl-1"></span>
+                                            </div>
+                                            <div class="col-4 d-flex justify-content-end">
+                                                <b>Total: </b><span id="total">6000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--//app-card-footer-->
+                                </div>
+                            </div>
+                            <!--//app-card-body-->
 
 
-	<!-- Javascript -->
-	<script src="assets/plugins/popper.min.js"></script>
-	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"
-		integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+                        </div>
+                    </div>
+                    <div style="height:404.2px;display: flex;">
+                        <div class="app-card app-card-chart shadow-sm" style="width:100%">
+                            <div class="app-card-header p-3">
+                                <div class="row justify-content-between align-items-center">
+                                    <div class="col-auto">
+                                        <h4 class="app-card-title">Current shift statisitcs</h4>
+                                    </div>
+                                    <!--//col-->
+                                    <div class="col-auto">
+                                        <div class="card-header-action" id='no-shift-text'>
+                                        </div>
+                                    </div>
+                                    <!--//col-->
+                                </div>
+                                <!--//row-->
+                            </div>
+                            <!--//app-card-header-->
+                            <div class="app-card-body">
+                                <div class="app-card-basic d-flex flex-column align-items-start">
+                                    <div class="app-card-body px-4" id="order-content" style="width: 100%;">
+                                        <div class="app-card-header p-3 border-bottom-0">
+                                            <div class="row align-items-center gx-3">
+                                                <div class="col-auto">
+                                                    <div class="app-icon-holder">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                             height="16" fill="currentColor"
+                                                             class="bi bi-person-bounding-box" viewBox="0 0 16 16">
+                                                            <path
+                                                                    d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z"/>
+                                                            <path
+                                                                    d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <!--//icon-holder-->
 
-	<!-- Charts JS -->
-	<script src="assets/plugins/chart.js/chart.min.js"></script>
+                                                </div>
+                                                <!--//col-->
+                                                <div class="col-auto">
+                                                    <h4 class="app-card-title" id='shift-title'>Personal Stats</h4>
+                                                </div>
+                                                <!--//col-->
+                                            </div>
+                                        </div>
 
-	<!-- Global JS -->
-	<script src="src/js/global.js"></script>
+                                        <div class="row pb-2"
+                                             style="width:100%; border-bottom: gray;border-width: 2px;">
+                                            <div class="col-3">
+                                                <b>Total sales:</b><br/><span id="p-total"></span>
+                                            </div>
+                                            <div class="col-3">
+                                                <b>Total orders done:</b><br/><span id="p-orders"></span>
+                                            </div>
+                                            <div class="col-3">
+                                                <b>Total items sold:</b><br/><span id="p-items"></span>
+                                            </div>
+                                            <div class="col-3">
+                                                <b>Total owed:</b><br/><span id="p-owed"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="app-card-body px-4" id="order-content"
+                                         style="width: 100%;border-top-color: #e7e9ed;border-top-width: 2px;border-top-style: solid; height:100%">
+                                        <div class="app-card-header p-3 border-bottom-0">
+                                            <div class="row align-items-center gx-3">
+                                                <div class="col-auto">
+                                                    <div class="app-icon-holder">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                             height="16" fill="currentColor" class="bi bi-shop"
+                                                             viewBox="0 0 16 16">
+                                                            <path
+                                                                    d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <!--//icon-holder-->
+
+                                                </div>
+                                                <!--//col-->
+                                                <div class="col-auto">
+                                                    <h4 class="app-card-title" id='shift-title'>Global Stats</h4>
+                                                </div>
+                                                <!--//col-->
+                                            </div>
+                                        </div>
+                                        <div class="row" style="width:100%; border-bottom: gray;border-width: 2px;">
+                                            <div class="col-4">
+                                                <b>Total sales:</b><br/><span id="g-total"></span>
+                                            </div>
+                                            <div class="col-4">
+                                                <b>Total orders done:</b><br/><span id="g-orders"></span>
+                                            </div>
+                                            <div class="col-4">
+                                                <b>Total items sold:</b><br/><span id="g-items"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--//app-card-body-->
+                                    <div class="app-card-footer p-4 pt-1 mt-auto" style="width: 100%;">
+                                    </div>
+                                    <!--//app-card-footer-->
+                                </div>
+                            </div>
+                            <!--//app-card-body-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--//col-->
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-lg-6">
+                    <div class="app-card app-card-chart shadow-sm" style="width:100%">
+                        <div class="app-card-header p-3">
+                            <div class="row justify-content-between align-items-center">
+                                <div class="col-auto">
+                                    <h4 class="app-card-title">Recent Orders</h4>
+                                </div>
+                                <!--//col-->
+                                <div class="col-auto">
+                                    <!--//card-header-actions-->
+                                </div>
+                                <!--//col-->
+                            </div>
+                            <!--//row-->
+                        </div>
+                        <!--//app-card-header-->
+                        <div id="recent-orders" style="max-height: 400px;overflow-y: hidden;">
+                        </div>
+                        <!--//app-card-body-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+            </div>
+        </div>
+    </div>
+</div>
+<!--//container-fluid-->
+</div>
+<!--//app-content-->
+<div include-html="src/html/footer.html"></div>
+</div>
+<!--//app-wrapper-->
 
 
-	<!-- Page Specific JS -->|
-	<script src="src/js/dashboard.js"></script>
-	<script src="src/js/sell.js"></script>
-	<script src="assets/js/app.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Javascript -->
+<script src="assets/plugins/popper.min.js"></script>
+<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
-	<script>
-		includeHTML().then(() => { app(); load() });
-	</script>
+<!-- Charts JS -->
+<script src="assets/plugins/chart.js/chart.min.js"></script>
+
+<!-- Global JS -->
+<script src="src/js/global.js"></script>
+
+
+<!-- Page Specific JS -->|
+<script src="src/js/dashboard.js"></script>
+<script src="src/js/sell.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    includeHTML().then(() => {
+        app();
+        load()
+    });
+</script>
 </body>
 
 </html>

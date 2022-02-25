@@ -1,5 +1,6 @@
 let stocklist;
-let current_order = []
+let orders = {'Default':[]}
+let selected_order = 'Default';
 
 function page() {
     ws.onmessage = function (e) {
@@ -10,12 +11,12 @@ function page() {
             updateTable();
         } else if (data.type == 'OK') {
             $('#order-button').text('Order finished!')
+            orders[selected_order] = []
             setTimeout(function () {
                 $('#order-button').text('Complete order')
                 $('#order-button').prop('disabled', false)
                 updateCurrentOrder();
             }, 1500)
-            current_order = []
 
         } else if (data.type == 'ERROR') {
             $('#order-button').prop('disabled', false)
@@ -101,8 +102,26 @@ function page() {
     updateCurrentOrder();
 }
 
-function updateCurrentOrder(){
-    let total = 0
+function updateCurrentOrder() {
+    let current_order = orders[selected_order];
+    let total = 0;
+
+    let order_nav = "";
+    for (const [key,value] of Object.entries(orders)){
+        order_nav += `
+            <li class="nav-item">
+                <a class="nav-link ${key == selected_order ? "active" : ""}" ${key == selected_order ? "" : `href="javascript:void(0)" onClick="switchOrder('${key}')"`}>${key}</a>
+            </li>`
+    }
+    order_nav += `
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)" onClick="addOrder()">New</a>
+            </li>`
+
+    $('#order-nav').html(order_nav);
+
+    $('#order-action').html(selected_order == 'Default' ? `` : `<a href="javascript:void(0)" onClick="closeOrder()">Close order</a>`)
+
     let a = `<thead>
     <tr>
         <th scope="col">Amount</th>
@@ -113,16 +132,16 @@ function updateCurrentOrder(){
     </tr>
 </thead>
 <tbody>`
-if(current_order.length == 0){
-    $('#order-button').prop('disabled',true)
-    $('#order-error-text').text('Add an item before completing the order.')
-} else {
-$('#order-button').prop('disabled',false)
-$('#order-error-text').text('')
-}
-    for (item of current_order){
+    if (current_order.length == 0) {
+        $('#order-button').prop('disabled', true)
+        $('#order-error-text').text('Add an item before completing the order.')
+    } else {
+        $('#order-button').prop('disabled', false)
+        $('#order-error-text').text('')
+    }
+    for (item of current_order) {
         let b = stocklist.find(a => a.item_id == item.id)
-        let price = item.amount*b.sell_price
+        let price = item.amount * b.sell_price
         total += price
         a += `													<tr>
         <td>${escapeHtml(item.amount)}</td>
@@ -138,47 +157,71 @@ $('#order-error-text').text('')
     $('#total').text(total)
 }
 
+function addOrder(){
+    let name = prompt("Name of new order:");
+    if (name === null) return;
+    orders[name] = [];
+    selected_order = name;
+    updateCurrentOrder();
+}
+
+function closeOrder(){
+    if (selected_order == "Default") return;
+    delete orders[selected_order];
+    selected_order = 'Default';
+    updateCurrentOrder()
+}
+
+function switchOrder(name) {
+    if (orders[name] == undefined) return;
+    selected_order = name;
+    updateCurrentOrder();
+}
+
 function addToOrder(id) {
+    let current_order = orders[selected_order];
     let item = current_order.find(a => a.id == id)
-    if (!item) current_order.push({id:id,amount:0})
+    if (!item) current_order.push({id: id, amount: 0})
     let index = current_order.findIndex(a => a.id == id)
     current_order[index].amount += 1
     updateCurrentOrder();
     let stock = stocklist.find(a => a.item_id == id)
-    $(`#stockrow-${id}`).text(stock.stock-current_order[index].amount)
-    updateStock(stock.id,stock.stock-current_order[index].amount)
+    $(`#stockrow-${id}`).text(stock.stock - current_order[index].amount)
+    updateStock(stock.id, stock.stock - current_order[index].amount)
     $(`button[onclick="addToOrder(${id})"]`).prop('disabled', (stock.stock - current_order[index].amount < 1))
 }
 
 function removeFromOrder(id) {
+    let current_order = orders[selected_order];
     let item = current_order.find(a => a.id == id)
     if (!item) return;
     let index = current_order.findIndex(a => a.id == id)
     current_order[index].amount -= 1
     let stock = stocklist.find(a => a.item_id == id)
-    $(`#stockrow-${id}`).text(stock.stock-current_order[index].amount)
-    updateStock(stock.id,stock.stock-current_order[index].amount)
+    $(`#stockrow-${id}`).text(stock.stock - current_order[index].amount)
+    updateStock(stock.id, stock.stock - current_order[index].amount)
     $(`button[onclick="addToOrder(${id})"]`).prop('disabled', (stock.stock - current_order[index].amount < 1))
     if (current_order[index].amount < 1) current_order.splice(index, 1);
     updateCurrentOrder();
 }
 
 function completeOrder() {
-    $('#order-button').prop('disabled',true)
-    ws.send(JSON.stringify({type: 'NEW_ORDER', data:current_order}))
+    let current_order = orders[selected_order];
+    $('#order-button').prop('disabled', true)
+    ws.send(JSON.stringify({type: 'NEW_ORDER', data: current_order}))
 }
 
-document.getElementById("sell-search").onkeydown = function (){
+document.getElementById("sell-search").onkeydown = function () {
     let search = $("#sell-search").val();
-    if (search.length > 0 ) {
-        stocklist.sort((a, b) => (similarity(a.item_name, search) > similarity(b.item_name, search)) ? -1:1)
+    if (search.length > 0) {
+        stocklist.sort((a, b) => (similarity(a.item_name, search) > similarity(b.item_name, search)) ? -1 : 1)
     } else {
-        stocklist.sort((a, b) => (a.chest_id < b.chest_id) ? -1:1);
+        stocklist.sort((a, b) => (a.chest_id < b.chest_id) ? -1 : 1);
     }
     updateTable();
 }
 
-function updateStock( id, count ) {
+function updateStock(id, count) {
     for (let i in stocklist) {
         if (stocklist[i].id == id) {
             stocklist[i].stock = count;
@@ -187,7 +230,8 @@ function updateStock( id, count ) {
     }
 }
 
-function updateTable(){
+function updateTable() {
+    let current_order = orders[selected_order];
     let a = `												<thead>
         <tr>
             <th class="cell">Item Name</th>
@@ -198,7 +242,7 @@ function updateTable(){
         </tr>
     </thead>
     <tbody>`
-    for (row of stocklist) {
+    for (let row of stocklist) {
         let index = current_order.findIndex(a => a.id == row.item_id)
         let item = current_order[index]
         if (!item) item = {amount: 0}

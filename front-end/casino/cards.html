@@ -2,12 +2,20 @@
 <html lang="en">
 
 <head><!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KFP2925');</script>
-<!-- End Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-KFP2925');</script>
+    <!-- End Google Tag Manager -->
     <title>La Casa Nostra Employee Area</title>
 
     <!-- Meta -->
@@ -28,12 +36,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <script src="../src/vars.js"></script>
 
 
-
 <body class="app">
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KFP2925"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) --><div include-html="../src/html/header.html"></div>
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KFP2925"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div include-html="../src/html/header.html"></div>
 
 <div class="app-wrapper">
 
@@ -62,7 +72,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                         <input type="text" class="form-control" id="card-owner">
                                     </div>
                                     <div class="pt-3">
-                                        <label for="card-starting-balance" class="form-label"><b>Starting Balance</b></label>
+                                        <label for="card-starting-balance" class="form-label"><b>Starting
+                                            Balance</b></label>
                                         <input type="number" class="form-control" id="card-starting-balance" value="0">
                                     </div>
                                 </div><!--//app-card-body-->
@@ -88,69 +99,77 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 </div><!--//col-->
                             </div><!--//row-->
                         </div><!--//app-card-header-->
-                        <div class="app-card-body" style="height:190px">
+                        <div class="app-card-body" style="height:200px">
                             <div class="app-card app-card-basic align-items-start shadow-sm">
                                 <div class="app-card-body px-4" style="width: 100%">
                                     <div class="pt-3">
-                                        <b>Total Times Spun:</b> <span id="total-times-spun">0</span> times <br />
-                                        <b>Total Times Won:</b> <span id="total-times-won">0</span> times <br />
-                                        <b>Times Spinned This Shift:</b> <span id="shift-times-spinned">0</span> times <br />
+                                        <b>Total Times Spun:</b> <span id="total-times-spun">0</span> times <br/>
+                                        <b>Total Times Won:</b> <span id="total-times-won">0</span> times <br/>
+                                        <b>Times Spun This Shift:</b> <span id="shift-times-spun">0</span> times <br/>
                                         <b>Times Won This Shift:</b> <span id="shift-times-won">0</span> times
                                     </div>
                                 </div><!--//app-card-body-->
                                 <div class="app-card-footer p-4 mt-auto">
-									<span id='card-buttons'>
+									<span id='wheel-buttons'>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-  										<button type="button" class="btn app-btn-secondary" onclick="spinWheel()">Spin (15k)</button>
-                                            <button type="button" class="btn app-btn-secondary" onclick="wonSpin()">Won (-300k)</button>
-                                    </div><span id="cards-tip" class="pl-3"></span></span>
+  										    <button type="button" class="btn app-btn-secondary" id="btn-spin" onclick="spinWheel()">Spin (15k)</button>
+                                            <button type="button" class="btn app-btn-secondary" id="btn-won" onclick="wonSpin()">Won (-500k)</button>
+                                    </div><span id="wheel-tip" class="pl-3"></span></span>
                                 </div><!--//app-card-footer-->
                             </div>
                         </div><!--//app-card-body-->
                     </div>
 
                 </div><!--//col-->
-                    <div class="col-12 col-lg-6">
-                        <div class="app-card app-card-chart shadow-sm">
-                            <div class="app-card-header p-3">
-                                <div class="row justify-content-between align-items-center">
-                                    <div class="col-auto">
-                                        <h4 class="app-card-title">Manage Card</h4>
-                                    </div><!--//col-->
-                                    <div class="col-auto">
-                                        <div class="card-header-action">
-                                        </div><!--//card-header-actions-->
-                                    </div><!--//col-->
-                                </div><!--//row-->
-                            </div><!--//app-card-header-->
-                            <div class="app-card-body" style="height:260px;width: 100%">
-                                <div class="app-card app-card-basic align-items-start shadow-sm">
-                                    <div class="app-card-body px-4" style="width: 100%">
-                                        <div class="pt-3">
-                                            <label for="card-ID" class="form-label"><b>Card ID</b></label>
-                                            <input type="number" class="form-control" id="card-ID" value="0">
+                <div class="col-12 col-lg-6">
+                    <div class="app-card app-card-chart shadow-sm">
+                        <div class="app-card-header p-3">
+                            <div class="row justify-content-between align-items-center">
+                                <div class="col-auto">
+                                    <h4 class="app-card-title">Manage Card</h4>
+                                </div><!--//col-->
+                                <div class="col-auto">
+                                    <div class="card-header-action">
+                                    </div><!--//card-header-actions-->
+                                </div><!--//col-->
+                            </div><!--//row-->
+                        </div><!--//app-card-header-->
+                        <div class="app-card-body" style="height:260px;width: 100%">
+                            <div class="app-card app-card-basic align-items-start shadow-sm">
+                                <div class="app-card-body px-4" style="width: 100%">
+                                    <div class="pt-3">
+                                        <label for="card-ID" class="form-label"><b>Card ID</b></label>
+                                        <input type="number" class="form-control" id="card-ID" value="0">
+                                    </div>
+                                    <div class="pt-2">
+                                        <b>Card Owner:</b> <span id="manage-card-owner">No card loaded</span> <br/>
+                                        <b>Card Balance: </b> <span id="manage-card-balance">No card loaded</span> <br/>
+                                        <b>Card VIP:</b> <span id="manage-card-VIP">No card loaded</span> <br/>
+                                        <b>Card Expire:</b> <span id="manage-card-expire">No card loaded</span>
+                                    </div>
+                                </div><!--//app-card-body-->
+                                <div class="app-card-footer p-4 pt-2 mt-auto">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="manage-amount" placeholder="Amount"
+                                               aria-label="Amount">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn app-btn-secondary" onclick="deposit()">
+                                                Deposit
+                                            </button>
+                                            <button type="button" class="btn app-btn-secondary" onclick="withdraw()">
+                                                Withdraw
+                                            </button>
+                                            <button type="button" class="btn app-btn-secondary" onclick="makeVip()">Make
+                                                VIP (60k)
+                                            </button>
                                         </div>
-                                        <div class="pt-2">
-                                            <b>Card Owner:</b> <span id="manage-card-owner">No card loaded</span> <br />
-                                            <b>Card Balance: </b> <span id="manage-card-balance">No card loaded</span> <br />
-                                            <b>Card VIP:</b> <span id="manage-card-VIP">No card loaded</span> <br />
-                                            <b>Card Expire:</b> <span id="manage-card-expire">No card loaded</span>
-                                        </div>
-                                    </div><!--//app-card-body-->
-                                    <div class="app-card-footer p-4 pt-2 mt-auto">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="manage-amount" placeholder="Amount" aria-label="Amount">
-                                            <div class="btn-group">
-  										        <button type="button" class="btn app-btn-secondary" onclick="deposit()">Deposit</button>
-                                                <button type="button" class="btn app-btn-secondary" onclick="withdraw()">Withdraw</button>
-                                                <button type="button" class="btn app-btn-secondary" onclick="makeVip()">Make VIP (60k)</button>
-                                            </div>
-                                    </div><span id="manage-card-tip" class="pl-3"></span>
-                                    </div><!--//app-card-footer-->
-                                </div>
-                            </div><!--//app-card-body-->
-                        </div>
-                    </div><!--//col-->
+                                    </div>
+                                    <span id="manage-card-tip" class="pl-3"></span>
+                                </div><!--//app-card-footer-->
+                            </div>
+                        </div><!--//app-card-body-->
+                    </div>
+                </div><!--//col-->
             </div>
         </div>
         <!--//container-fluid-->
@@ -179,7 +198,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="../src/js/casino/cards.js"></script>
 
 <script>
-    includeHTML().then(() => {app(); load()});
+    includeHTML().then(() => {
+        app();
+        load()
+    });
 </script>
 </body>
 

@@ -39,13 +39,13 @@ class NewOrderRequest extends RequestType {
             }))
             console.log(e)
         }
-        let personal = await utils.getEmployeeShiftStats(conn, client.user_id)
+        let personal = await utils.getEmployeeShiftStats(client, conn, client.user_id)
         ws.send(JSON.stringify({
             type: 'SHIFT_PERSONAL_STATS',
             data: personal
         }))
 
-        let global = await utils.getGlobalShiftStats(conn)
+        let global = await utils.getGlobalShiftStats(client, conn)
         let items = await conn.query('SELECT * FROM stock')
         for (let item of incoming.data){
             let itm = items.find(a => a.item_id == item.id)

@@ -8,7 +8,7 @@ class EndShiftRequest extends RequestType {
         const conn = require("../sales").getDatabase(client.store);
         let a = await conn.query(`SELECT * FROM shifts WHERE shift_ended = 0`)
         let current_shift = a[0];
-        let global = await utils.getGlobalShiftStats(conn, a[0].shift_id);
+        let global = await utils.getGlobalShiftStats(client, conn, a[0].shift_id);
 
         if (a[0]) await conn.query(`UPDATE shifts SET shift_ended = '1', ended_by = ?, ended_at = '${utils.mysqlDate(new Date(new Date().getTime() + 1000 * 60 * 60))}',
             stat_orders = ?, stat_items = ?, stat_sales = ?, employee_list = ?, stat_owe = ? WHERE (shift_id = ?);`, [client.user_id, global.orders, global.items, global.total, JSON.stringify(global.employees), global.owed, current_shift.shift_id])

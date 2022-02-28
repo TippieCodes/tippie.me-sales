@@ -13,9 +13,9 @@ function mysqlDate(date) {
         ('00' + date.getUTCSeconds()).slice(-2);
 }
 
-async function getEmployeeShiftStats(conn, employee_id, shift_id) {
+async function getEmployeeShiftStats(client, conn, employee_id, shift_id) {
 
-    let a = (!shift_id) ? await conn.query('SELECT * FROM shifts order by started_at DESC LIMIT 1;') : await conn.query('SELECT * FROM shifts order WHERE order_id = ?', [shift_id])
+    let a = (!shift_id) ? await conn.query('SELECT * FROM shifts order by started_at DESC LIMIT 1;') : await conn.query('SELECT * FROM shifts WHERE shift_id = ?', [shift_id])
     let shiftid = a[0].shift_id
     let personal = {
         total: 0,
@@ -35,10 +35,39 @@ async function getEmployeeShiftStats(conn, employee_id, shift_id) {
             personal.items += items[b].amount
         }
     }
+
+    const Sales = require("./sales");
+    if (Sales.getStore(client.store)["module_casino"] == true) {
+        let logs = await conn.query('SELECT * FROM casino_logs WHERE shift = ? AND employee = ?;', [shiftid, client.user_id])
+        for (const log of logs) {
+            if (log.game === "card") {
+                let data = JSON.parse(log.data)
+                if (data.action === "VIP") {
+                    personal.owe += parseInt(log.owe)
+                    personal.total += parseInt(log.total)
+                } else if (data.action === "register") {
+                    if (isNaN(parseInt(data.data.balance))) continue;
+                    personal.owe += parseInt(data.data.balance)
+                } else if (data.action === "deposit") {
+                    if (isNaN(parseInt(data.data.amount))) continue;
+                    personal.owe += parseInt(data.data.amount)
+                } else if (data.action === "withdraw") {
+                    if (isNaN(parseInt(data.data.amount))) continue;
+                    personal.owe -= parseInt(data.data.amount)
+                }
+            } else if (log.game === "bingo") {
+                personal.owe += parseInt(log.owe)
+                personal.total += (0.2 * parseInt(log.total))
+            } else {
+                personal.owe += parseInt(log.owe);
+                personal.total += parseInt(log.total);
+            }
+        }
+    }
     return personal;
 }
 
-async function getGlobalShiftStats(conn,shift_id) {
+async function getGlobalShiftStats(client, conn,shift_id) {
     let a = (!shift_id) ? await conn.query('SELECT * FROM shifts order by started_at DESC LIMIT 1;') : await conn.query('SELECT * FROM shifts WHERE shift_id = ?;', [shift_id.toString()])
     let shiftid = a[0].shift_id
     let global = {
@@ -59,6 +88,35 @@ async function getGlobalShiftStats(conn,shift_id) {
         global.orders++;
         for (let b = 0; b < items.length; b++) {
             global.items += items[b].amount
+        }
+    }
+
+    const Sales = require("./sales");
+    if (Sales.getStore(client.store)["module_casino"] == true) {
+        let logs = await conn.query('SELECT * FROM casino_logs WHERE shift = ?;', [shift_id])
+        for (const log of logs) {
+            if (log.game === "card") {
+                let data = JSON.parse(log.data)
+                if (data.action === "VIP") {
+                    global.owed += parseInt(log.owe)
+                    global.total += parseInt(log.total)
+                } else if (data.action === "register") {
+                    if (isNaN(parseInt(data.data.balance))) continue;
+                    global.owed += parseInt(data.data.balance)
+                } else if (data.action === "deposit") {
+                    if (isNaN(parseInt(data.data.amount))) continue;
+                    global.owed += parseInt(data.data.amount)
+                } else if (data.action === "withdraw") {
+                    if (isNaN(parseInt(data.data.amount))) continue;
+                    global.owed-= parseInt(data.data.amount)
+                }
+            } else if (log.game === "bingo") {
+                global.owed += parseInt(log.owe)
+                global.total += (0.2* parseInt(log.total))
+            } else {
+                global.owed += parseInt(log.owe);
+                global.total += parseInt(log.total)
+            }
         }
     }
     return global;

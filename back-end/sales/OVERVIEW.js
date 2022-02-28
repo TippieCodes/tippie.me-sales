@@ -31,10 +31,12 @@ class OverviewRequest extends RequestType {
                         if (isNaN(parseInt(data.data.amount))) continue;
                         stats.owe -= parseInt(data.data.amount)
                     }
-                }
-                if (log.game === "bingo") {
+                } else if (log.game === "bingo") {
                     stats.owe += parseInt(log.owe)
                     stats.profit += (0.2 * parseInt(log.total)) - parseInt(log.owe)
+                } else {
+                    stats.owe += parseInt(log.owe);
+                    stats.profit += parseInt(log.total) - parseInt(log.owe);
                 }
             }
         }

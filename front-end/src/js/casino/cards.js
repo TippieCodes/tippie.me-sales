@@ -30,8 +30,23 @@ function page(){
                 $("#cards-tip").text("Card successfully registered and loaded.");
                 setTimeout(function (){$("#cards-tip").text("");},10000)
             }
+        } else if (data.type === "LUCKY_WHEEL") {
+            if (data.data.type === "ERROR"){
+                $("#wheel-tip").text(data.data.message);
+                setTimeout(function (){$("#cards-tip").text("");},10000)
+            } else if (data.data.type === "UPDATE") {
+                $("#total-times-spun").text(data.data.content.total_bought);
+                $("#total-times-won").text(data.data.content.total_won);
+                $("#shift-times-spun").text(data.data.content.shift_bought);
+                $("#shift-times-won").text(data.data.content.shift_won);
+            }
+            $("#btn-spin").prop('disabled',false);
+            $("#btn-won").prop('disabled',false);
+
         }
     }
+
+    ws.send(JSON.stringify({type: "LUCKY_WHEEL", action: "UPDATE"}));
 }
 
 function registerCard(){
@@ -65,10 +80,12 @@ function makeVip(){
 
 function spinWheel(){
     ws.send(JSON.stringify({type: "LUCKY_WHEEL", action:"SPIN"}))
+    $("#btn-spin").prop('disabled',true);
 }
 
 function wonSpin(){
     ws.send(JSON.stringify({type: "LUCKY_WHEEL", action:"WON"}))
+    $("#btn-won").prop('disabled',true);
 }
 
 //endRegion

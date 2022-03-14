@@ -9,7 +9,6 @@ class LastShiftStatsRequest extends RequestType {
         let last_shift = a[0]
         let global = await utils.getGlobalShiftStats(client,conn,last_shift.shift_id)
         let personal = await utils.getEmployeeShiftStats(client, conn, client.user_id, last_shift.shift_id)
-        let shift_orders = await conn.query('SELECT * FROM orders WHERE order_shift = ? ORDER BY order_id DESC', [last_shift.shift_id])
         // for (let i = 0; i < shift_orders.length; i++) {
         //     let order = shift_orders[i];
         //     let items = JSON.parse(order.order_items)
@@ -28,28 +27,30 @@ class LastShiftStatsRequest extends RequestType {
         //     }
         // }
         //
-        // const items = await conn.query('SELECT * FROM stock');
-        // const users = await conn.query('SELECT user_id, user_name FROM users')
-        // for (let order of shift_orders){
-        //     let n = users.find(a => a.user_id == order.order_employee);
-        //     order.name = (n) ? n.user_name : 'n/a'
-        //     order.id = order.order_id;
-        //     order.items = JSON.parse(order.order_items)
-        //     for (let item of order.items){
-        //         let itm = items.find(a => a.item_id == item.id)
-        //         if (itm){
-        //             item.name = itm.item_name;
-        //             item.price = itm.sell_price;
-        //         } else {
-        //             item.name = 'n/a';
-        //             item.price = '...'
-        //         }
-        //     }
-        //     order.total = order.order_total
-        // }
+        let shift_orders = await conn.query('SELECT * FROM orders WHERE order_shift = ? ORDER BY order_id DESC', [last_shift.shift_id])
+        const items = await conn.query('SELECT * FROM stock');
+        const users = await conn.query('SELECT user_id, user_name FROM users')
+        for (let order of shift_orders) {
+            let n = users.find(a => a.user_id == order.order_employee);
+            order.name = (n) ? n.user_name : 'n/a'
+            order.id = order.order_id;
+            order.items = JSON.parse(order.order_items)
+            for (let item of order.items) {
+                let itm = items.find(a => a.item_id == item.id)
+                if (itm) {
+                    item.name = itm.item_name;
+                    item.price = itm.sell_price;
+                } else {
+                    item.name = 'n/a';
+                    item.price = '...'
+                }
+            }
+            order.total = order.order_total
+        }
+
         ws.send(JSON.stringify({
             type: 'RECENT_ORDERS',
-            data:{
+            data: {
                 orders: shift_orders
             }
         }))

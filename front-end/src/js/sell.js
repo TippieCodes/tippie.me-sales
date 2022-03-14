@@ -64,9 +64,10 @@ function page() {
             $(`#${id}`).slideDown();
         } else if (data.type == 'RECENT_ORDERS') {
             let orders = '';
-            for (order of data.data.orders) {
+            for (const order of data.data.orders) {
+                console.log(order)
                 let items = ''
-                for (item of order.items) {
+                for (const item of order.items) {
                     items += `<br />${item.amount}x ${item.name}`
                 }
                 orders += `<div class="app-card-body px-4 pt-0 pb-0" style="width: 100%;border-bottom-color: #e7e9ed;border-bottom-width: 2px;border-bottom-style: solid;height:auto;">

@@ -20,20 +20,16 @@ function page() {
     ws.send(JSON.stringify({type: 'SHIFT'}))
     ws.send(JSON.stringify({type: "OVERVIEW"}))
 
-    if (client.role['permission_sell'] == true) {
+    if (true) {
         $('#alert-area').html(`<div class="app-card alert shadow-sm mb-4 border-left-decoration" role="alert">
   <div class="inner">
  <div class="app-card-body p-3 p-lg-4">
-  <h3 class="mb-3">Update: Multitasking Orders!</h3>
+  <h3 class="mb-3">PSA: New Domain!</h3>
 <div class="row gx-5 gy-3">
        <div class="col-12 col-lg-9">
      
-     <div>It is now possible to have multiple open orders at once in the sell dashboard. You can open a new order tab by clicking on New above the current order box and close it by clicking Close order on the top right of the box.</div>
+     <div>From this point onwards https://sales.tippie.me/ will be replaced with <b>https://shops.schoolrp.net/</b>. The old domain will simply redirect to the new one, so you don't have to change anything, but it's better to use the new domain instead.</div>
  </div><!--//col-->
- <div class="col-12 col-lg-3">
-    <a class="btn app-btn-primary" href="${root_url}sell">Try it out!</a>
-   </div>
- </div><!--//row-->
    </div><!--//app-card-body-->
    
     </div><!--//inner-->

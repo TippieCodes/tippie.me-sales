@@ -49,17 +49,18 @@ const modules = {
     "LAST_SHIFT_STATS" : "CORE",
     "LOGOUT" : "CORE",
     "LUCKY_WHEEL" : "CASINO",
-    "NEW_INVITE" : "CORE",
-    "NEW_ORDER" : "CORE",
-    "OVERVIEW" : "CORE",
-    "REGISTER_CARD" : "CASINO",
-    "SHIFT" : "CORE",
-    "SHIFT_INFO" : "CORE" ,
-    "SHIFT_LIST" : "CORE",
-    "START_SHIFT" : "CORE",
-    "STOCK_LIST" : "CORE",
-    "STORE" : "CORE",
-    "UPDATE_STOCK" : "CORE"
+    "NEW_INVITE": "CORE",
+    "NEW_ORDER": "CORE",
+    "OVERVIEW": "CORE",
+    "REGISTER_CARD": "CASINO",
+    "SHIFT": "CORE",
+    "SHIFT_INFO": "CORE",
+    "SHIFT_LIST": "CORE",
+    "START_SHIFT": "CORE",
+    "STOCK_LIST": "CORE",
+    "STORE": "CORE",
+    "UPDATE_STOCK": "CORE",
+    "PING": "CORE"
 }
 
 const requestTypes = new Enmap();

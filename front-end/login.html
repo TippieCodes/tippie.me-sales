@@ -31,6 +31,7 @@
 				<h2 class="auth-heading text-center mb-4">Log in to <span id="text-1"></span></h2>
 				<div class="mb-4">
 					<select class="form-select form-select-sm" aria-label="Stores" id="store-select">
+						<option disabled selected value> --- select a store ---</option>
 					</select>
 				</div>
 			        <div class="auth-form-container text-left">
@@ -59,7 +60,9 @@
 								</div><!--//extra-->
 							</div><!--//form-group-->
 							<div class="text-center">
-								<button type="submit" class="btn app-btn-primary btn-block theme-btn mx-auto" onclick="login()">Log In</button>
+								<button type="submit" class="btn app-btn-primary btn-block theme-btn mx-auto"
+										onclick="login()" id="login-submit">Log In
+								</button>
 							</div>
 						</div>
 					</div><!--//auth-form-container-->	

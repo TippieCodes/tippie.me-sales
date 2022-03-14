@@ -6,20 +6,31 @@ xhttp.send(null);
 const stores = JSON.parse(xhttp.responseText)
 
 async function login() {
+    $("#login-submit").prop('disabled', true);
     const username = document.getElementById('signin-username').value
     const password = document.getElementById('signin-password').value
     const store = $("#store-select").val()
     const save = document.getElementById("RememberPassword").checked
-
     const xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState === 4) {
+            $("#login-submit").prop('disabled', false);
             let token = xhttp.responseText
             if (token == 'UNAUTHORIZED') {
-                document.getElementById('error-box').innerHTML = 'Login failed! Incorrect password!.'
+                document.getElementById('error-box').innerHTML = 'Login failed! Incorrect password!'
+                shake('login-submit');
+                setTimeout(() => {
+                    document.getElementById('error-box').innerHTML = '';
+                }, 5000)
+            } else if (token == 'UNKNOWN_STORE') {
+                document.getElementById('error-box').innerHTML = 'Login failed! Incorrect store!'
+                shake('login-submit');
+                setTimeout(() => {
+                    document.getElementById('error-box').innerHTML = '';
+                }, 5000)
             } else {
-                window.location.href=vars['auth_url']+"?token=" + token + "&save=" + (save ? "1" : "0") + "&callback="+ window.location.origin + root_url
+                window.location.href = vars['auth_url'] + "?token=" + token + "&save=" + (save ? "1" : "0") + "&callback=" + window.location.origin + root_url
             }
         }
     }

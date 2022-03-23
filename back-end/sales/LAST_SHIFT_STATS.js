@@ -5,9 +5,10 @@ const RequestType = require("../requesttype")
 class LastShiftStatsRequest extends RequestType {
     async onRequest(wss, ws, request, client, data, incoming) {
         if (client.role["permission_shift_stats"] != true) return;
-        const conn = require("../sales").getDatabase(client.store);let a = await conn.query('SELECT * FROM shifts order by started_at DESC LIMIT 1;')
+        const conn = require("../sales").getDatabase(client.store);
+        let a = await conn.query('SELECT * FROM shifts order by started_at DESC LIMIT 1;')
         let last_shift = a[0]
-        let global = await utils.getGlobalShiftStats(client,conn,last_shift.shift_id)
+        let global = await utils.getGlobalShiftStats(client, conn, last_shift.shift_id)
         let personal = await utils.getEmployeeShiftStats(client, conn, client.user_id, last_shift.shift_id)
         // for (let i = 0; i < shift_orders.length; i++) {
         //     let order = shift_orders[i];

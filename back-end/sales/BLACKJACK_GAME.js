@@ -4,7 +4,8 @@ const RequestType = require("../requesttype")
 class BlackjackGameRequest extends RequestType {
     async onRequest(wss, ws, request, client, data, incoming) {
         if (client.role["permission_casino_blackjack"] != true) return;
-        const conn = require("../sales").getDatabase(client.store);let c = await conn.query(`SELECT * FROM casino_blackjack WHERE game_ended IS null LIMIT 1`)
+        const conn = require("../sales").getDatabase(client.store);
+        let c = await conn.query(`SELECT * FROM casino_blackjack WHERE game_ended IS null LIMIT 1`)
         let current_game = c[0];
         let players = JSON.parse(current_game.game_players);
         let total = 0;

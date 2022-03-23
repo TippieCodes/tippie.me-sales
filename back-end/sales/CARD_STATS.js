@@ -4,7 +4,8 @@ const RequestType = require("../requesttype")
 class CardStatsRequest extends RequestType {
     async onRequest(wss, ws, request, client, data, incoming){
         if (client.role["permission_casino_stats"] != true) return;
-        const conn = require("../sales").getDatabase(client.store);let c = await conn.query("SELECT * FROM `casino_cards`")
+        const conn = require("../sales").getDatabase(client.store);
+        let c = await conn.query("SELECT * FROM `casino_cards`")
         let stats = {
             total_cards: 0,
             total_balance: 0,

@@ -5,7 +5,8 @@ const util = require("../utils")
 class BingoEndGameRequest extends RequestType {
     async onRequest(wss, ws, request, client, data, incoming) {
         if (client.role["permission_casino_bingo"] != true) return;
-        const conn = require("../sales").getDatabase(client.store);let a = await conn.query(`SELECT * FROM shifts WHERE shift_ended = 0`)
+        const conn = require("../sales").getDatabase(client.store);
+        let a = await conn.query(`SELECT * FROM shifts WHERE shift_ended = 0`)
         let current_shift = a[0];
         if (!current_shift) {
             ws.send(JSON.stringify({
@@ -30,9 +31,16 @@ class BingoEndGameRequest extends RequestType {
                 new_game_id: current_game[0].game_id
             }
         }))
-        wss.users.filter(user => user.client.store == client.store).forEach(user=> {
-            user.ws.send(JSON.stringify({type: "BINGO_GAME_UPDATE", cards: [],rolled:"" ,prize:0, game_id: current_game[0].game_id}))
+        wss.users.filter(user => user.client.store == client.store).forEach(user => {
+            user.ws.send(JSON.stringify({
+                type: "BINGO_GAME_UPDATE",
+                cards: [],
+                rolled: "",
+                prize: 0,
+                game_id: current_game[0].game_id
+            }))
         })
     }
 }
+
 module.exports = new BingoEndGameRequest("BINGO_END_GAME");

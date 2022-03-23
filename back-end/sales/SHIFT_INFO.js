@@ -5,7 +5,8 @@ const RequestType = require("../requesttype")
 class ShiftInfoRequest extends RequestType {
     async onRequest(wss, ws, request, client, data, incoming) {
         if (client.role["permission_view_shift"] != true) return;
-        const conn = require("../sales").getDatabase(client.store);let response = {
+        const conn = require("../sales").getDatabase(client.store);
+        let response = {
             type: 'SHIFT_INFO',
             data: null
         }

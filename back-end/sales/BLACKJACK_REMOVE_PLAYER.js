@@ -4,14 +4,13 @@ const RequestType = require("../requesttype")
 class BlackJackRemovePlayerRequest extends RequestType {
     async onRequest(wss, ws, request, client, data, incoming) {
         if (client.role["permission_casino_blackjack"] != true) return;
-        const conn = require("../sales").getDatabase(client.store);let a = await conn.query(`SELECT * FROM shifts WHERE shift_ended = 0`)
+        const conn = require("../sales").getDatabase(client.store);
+        let a = await conn.query(`SELECT * FROM shifts WHERE shift_ended = 0`)
         let current_shift = a[0];
         if (!current_shift) {
             ws.send(JSON.stringify({
-                type: "BLACKJACK_REMOVE_PLAYER",
-                data: {
-                    type: "ERROR",
-                    message: "You may not add a player whilst there's no active shift."
+                type: "BLACKJACK_REMOVE_PLAYER", data: {
+                    type: "ERROR", message: "You may not add a player whilst there's no active shift."
                 }
             }))
             return;

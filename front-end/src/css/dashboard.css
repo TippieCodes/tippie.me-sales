@@ -4,4 +4,14 @@
     color: #828d9f;
 }
 
+.app-btn-danger {
+    color: #ff1919 !important;
+    border: 1px solid #ff8c8c !important;
+}
+
+.app-btn-danger:hover {
+    color: #ff1919 !important;
+    border: 1px solid #ff1919 !important;
+}
+
 

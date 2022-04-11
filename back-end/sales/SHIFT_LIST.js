@@ -15,7 +15,6 @@ class ShiftListRequest extends RequestType {
         response.data.shifts = await conn.query('SELECT * FROM shifts');
         let users = await conn.query('SELECT user_id, user_name FROM users')
         for (let shift of response.data.shifts) {
-
             let sn = users.find(a => a.user_id == shift.started_by)
             let en = users.find(a => a.user_id == shift.ended_by)
             shift.started_by_name = (sn) ? sn.user_name : 'n/a'

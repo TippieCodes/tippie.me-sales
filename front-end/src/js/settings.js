@@ -1,5 +1,3 @@
-
-
 function page(){
     ws.onmessage = function (e) {
         const data = JSON.parse(e.data)

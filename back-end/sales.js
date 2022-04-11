@@ -60,7 +60,17 @@ const modules = {
     "STOCK_LIST": "SALES",
     "STORE": "CORE",
     "UPDATE_STOCK": "SALES",
-    "PING": "CORE"
+    "PING": "CORE",
+    "STORE_ADMIN": "ADMIN",
+    "STORE_INFO": "ADMIN",
+    "STORE_LIST": "ADMIN",
+    "STORE_UPDATE": "ADMIN",
+    "STORE_DELETE": "ADMIN",
+    "STORE_CREATE": "ADMIN"
+}
+
+const systemPermissions = {
+    0: /^((?!admin).)*$/
 }
 
 const requestTypes = new Enmap();
@@ -153,19 +163,33 @@ class SalesEndpoint extends Endpoint {
         }
         let result = await conn.query(`SELECT * FROM sessions WHERE session_token = ?;`, [utils.getCookie(request, 'session_token')]);
         if (result[0]) {
-            let expire_date = new Date(result[0].session_expiry)
+            let expire_date = Date.parse(("" + result[0].session_expiry).replace(/GMT\+\d+.*/, "GMT"));
             if (expire_date < Date.now()) {
                 await conn.query(`DELETE FROM sessions WHERE session_id = ?;`, [result[0].session_id])
                 return callback.call(err, client);
             }
             db = this.getDatabase(result[0].session_store)
-            store_id=result[0].session_store;
-            let user = await db.query(`SELECT * FROM users WHERE user_id = ?;`, [result[0].session_user]);
-            if (!user[0] || user[0].disabled == true || user[0].invited == true) {
-                await conn.query(`DELETE FROM sessions WHERE session_id = ?;`, [result[0].session_id])
-                return callback.call(err, client);
+            store_id = result[0].session_store;
+            let user;
+            let role;
+            if (result[0].session_user > 0) {
+                user = await db.query(`SELECT * FROM users WHERE user_id = ?;`, [result[0].session_user]);
+                if (!user[0] || user[0].disabled == true || user[0].invited == true) {
+                    await conn.query(`DELETE FROM sessions WHERE session_id = ?;`, [result[0].session_id])
+                    return callback.call(err, client);
+                }
+                role = stores.get(parseInt(store_id)).roles.find(role => role.role_id == user[0].user_role)
+            } else { // it is a system user
+                role = {...stores.get(parseInt(store_id)).roles[0]};
+                const permissionRegex = systemPermissions[result[0].session_user];
+                for (const [key, value] of Object.entries(role)) {
+                    role[key] = permissionRegex.test(key);
+                }
+                user = [];
+                user[0] = {}
+                user[0].user_name = "System user";
+                user[0].user_owe = 0
             }
-            let role = stores.get(parseInt(store_id)).roles.find(role => role.role_id == user[0].user_role)
             client = {
                 user_id: result[0].session_user,
                 username: user[0].user_name,
@@ -201,7 +225,12 @@ class SalesEndpoint extends Endpoint {
             if (store[`module_${requestType.module.toLowerCase()}`] != true) {
                 ws.send(JSON.stringify({type: "INACTIVE_MODULE"}));
             } else {
-                requestType.onRequest(wss, ws, request, client, data, incoming);
+                try {
+                    requestType.onRequest(wss, ws, request, client, data, incoming);
+                } catch (e) {
+                    console.error("[" + requestType + "]" + e.message);
+                    console.error(e)
+                }
             }
         }
     }
@@ -231,7 +260,7 @@ class SalesEndpoint extends Endpoint {
             let user = await db.query(`SELECT * FROM users WHERE user_name = ?;`, [username]);
             const valid_password = (user[0]) ? await bcrypt.compare(password, user[0].user_password) : false;
             const expiry = new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * ((savepass) ? 31 : 1)));
-            if (valid_password && user[0].disabled == false && user[0].invited == false) {
+            if (valid_password && user[0].disabled == false && user[0].invited == false && user[0].user_id > 0) {
                 let token = Math.floor(new Date().getTime() * Math.random() * 100)
                 await conn.query(`INSERT INTO sessions (session_token, session_user, session_expiry, session_store) VALUES (?,?,?,?);`, [token, user[0].user_id, utils.mysqlDate(expiry), store])
                 res.end(token.toString());
@@ -317,13 +346,17 @@ async function updateStores() {
     for (const store of storesQuery) {
         let db = new Database(store.store_database);
         new_databases.set(parseInt(store.store_id), db)
-        try {store.roles = await db.query("SELECT * FROM roles") } catch (e) {}
+        try {
+            store.roles = await db.query(`SELECT * FROM roles`)
+        } catch (e) {
+            console.error(e)
+        }
         new_stores.set(parseInt(store.store_id), store);
     }
     new_databases.set(0,conn);
     //let old = databases;
     databases = new_databases;
-    stores=new_stores
+    stores = new_stores
     //for (const [id,database] of old) {
     //    if (id === 0) continue;
     //    await database.close();

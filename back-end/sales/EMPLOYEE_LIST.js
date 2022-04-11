@@ -10,7 +10,7 @@ class EmployeeListRequest extends RequestType{
             data: null,
             roles: Sales.getStore(client.store).roles
         }
-        response.data = await conn.query('SELECT user_id,user_name,user_owe,legacy_user,disabled,invited,user_role FROM users');
+        response.data = await conn.query('SELECT user_id,user_name,user_owe,legacy_user,disabled,invited,user_role FROM users WHERE user_id > 0');
         let date = new Date()
         date.setTime(date.getTime() - 3*30*24*60*60*1000)
         let orders = await conn.query(`SELECT order_employee,order_at FROM orders WHERE order_at > '${date.toISOString().split("T")[0]}' ORDER BY order_id DESC;`);

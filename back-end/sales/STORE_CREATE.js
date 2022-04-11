@@ -16,7 +16,7 @@ class StoreCreateRequest extends RequestType {
             }))
             return;
         }
-        await conn.query("INSERT INTO STORES (store_name,store_url_friendly,store_database) VALUES (?, ?, ?)", [incoming.data.name, incoming.data.url, database])
+        await conn.query("INSERT INTO stores (store_name,store_url_friendly,store_database) VALUES (?, ?, ?)", [incoming.data.name, incoming.data.url, database])
 
         const createScript = readFileSync("create-databases.sql")
         const finalScript = createScript.toString().replaceAll("{database}", database)

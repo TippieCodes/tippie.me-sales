@@ -8,15 +8,29 @@ class EmployeeUpdateRequest extends RequestType {
         if (client.role["permission_manage_employees"] != true) return;
         const conn = require("../sales").getDatabase(client.store);
 
+        if (incoming.data.user_id <= 0) {
+            ws.send(JSON.stringify({
+                type: "EMPLOYEE_UPDATE",
+                data: {success: false, message: 'System users cannot be modified'}
+            }));
+            return;
+            or
+        }
         if (incoming.data.type === 'COPY_INVITE') {
             try {
                 let user = await conn.query('SELECT user_password,invited FROM users WHERE user_id = ? LIMIT 1', [incoming.data.user_id])
                 if (user[0]['invited'] != true) {
-                    ws.send(JSON.stringify({type: "EMPLOYEE_UPDATE", data: {success: false, message: 'This employee is not invited.'}}))
+                    ws.send(JSON.stringify({
+                        type: "EMPLOYEE_UPDATE",
+                        data: {success: false, message: 'This employee is not invited.'}
+                    }))
                     return;
                 }
-                ws.send(JSON.stringify({type: "EMPLOYEE_UPDATE", data: {success: true, invite: user[0]['user_password']}}))
-            } catch (e){
+                ws.send(JSON.stringify({
+                    type: "EMPLOYEE_UPDATE",
+                    data: {success: true, invite: user[0]['user_password']}
+                }))
+            } catch (e) {
                 ws.send(JSON.stringify({type: "EMPLOYEE_UPDATE", data: {success: false, message: e.message}}))
             }
         } else if (incoming.data.type === 'PASSWORD_RESET') {

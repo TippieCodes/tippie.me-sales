@@ -14,6 +14,7 @@ async function run() {
     console.log("Getting databases...")
     let storesQuery = await conn.query("SELECT * FROM stores;");
     for (const store of storesQuery) {
+        if (conn.database == store.store_database) continue;
         let db = new Database(store.store_database);
         await runScript(db);
     }

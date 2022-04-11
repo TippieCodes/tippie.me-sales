@@ -65,7 +65,6 @@ function page() {
         } else if (data.type == 'RECENT_ORDERS') {
             let orders = '';
             for (const order of data.data.orders) {
-                console.log(order)
                 let items = ''
                 for (const item of order.items) {
                     items += `<br />${item.amount}x ${item.name}`

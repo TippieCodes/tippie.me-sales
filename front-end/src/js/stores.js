@@ -1,8 +1,57 @@
 let item_list;
 
 function page() {
-    if (client.role["permission_admin_store_create"])
-        $("#new-store").html("<a href=\"javascript:void(0)\" onclick=\"newStore()\">New store</a>");
+    if (client.role["permission_admin_store_create"]) {
+        const create_btn = $("#new-store");
+        create_btn.html("<a href=\"javascript:void(0)\" onclick=\"newStore()\">New store</a>");
+        create_btn.on("click", function (e) {
+            const submit_btn = $("#create-store-submit");
+            submit_btn.prop("disabled", false)
+            submit_btn.text("Change")
+            $("#create-store-database").val("")
+            $("#create-store-name").val("")
+            $("#create-store-url").val("")
+            const form = document.getElementById("create-store-form");
+            document.getElementById('create-store-modal-close').onclick = function () {
+                form.style.display = 'none';
+            }
+            window.onclick = function (event) {
+                if (event.target == form) {
+                    form.style.display = "none";
+                }
+            }
+            form.style.display = 'block'
+            submit_btn.off('click');
+            submit_btn.on("click", function (e) {
+                $("#change-text-submit").prop("disabled", true);
+                ws.onmessage = function (e) {
+                    const data = JSON.parse(e.data);
+                    switch (data.type) {
+                        case "STORE_CREATE":
+                            if (data.data.ok == true) {
+                                submit_btn.text("Store created!")
+                                page()
+                                setTimeout(function () {
+                                    form.style.display = "none";
+                                }, 1500)
+                            } else {
+                                submit_btn.prop("disabled", false);
+                                shake("create-store-submit");
+                                $("#create-store-error").text(data.data.message);
+                            }
+                    }
+                }
+
+                ws.send(JSON.stringify({
+                    type: "STORE_CREATE", data: {
+                        name: $("#create-store-name").val(),
+                        url: $("#create-store-url").val(),
+                        database: $("#create-store-database").val()
+                    }
+                }))
+            });
+        });
+    }
 
     ws.onmessage = function (e) {
         const data = JSON.parse(e.data)

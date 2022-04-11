@@ -14,8 +14,18 @@ class StoreDeleteRequest extends RequestType {
             return;
         }
 
-        await conn.query("DROP DATABASE ?",[result[0].store_database]);
+        if (!/sales-[a-z\-]+/.test(result[0].store_database)) {
+            ws.send(JSON.stringify({
+                type: "STORE_DELETE", data: {
+                    message: "Database name of this store is invalid, please contact Tippie#6666."
+                }
+            }))
+            return;
+        }
+
+        await conn.query("DROP DATABASE `" + result[0].store_database + "`");
         await conn.query("DELETE FROM stores WHERE store_id = ?", [result[0].store_id]);
+        await require("../sales.js").updateStores();
         ws.send(JSON.stringify({
             type: "STORE_DELETE", data: {
                 ok: true

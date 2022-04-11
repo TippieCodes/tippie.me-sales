@@ -25,7 +25,107 @@
 <body class="app">
 <div include-html="src/html/header.html"></div>
 
+<style>
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: auto;
+        /* Stay in place */
+        z-index: 3;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        margin-left: inherit;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        /* background-color: #fefefe; */
+        margin: 15% auto;
+        /* 15% from the top and centered */
+        /* padding: 20px; */
+        border: 0px;
+        /* border: 1px solid #888; */
+        width: fit-content;
+        /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* Add Animation */
+    @keyframes animatetop {
+        from {
+            top: -300px;
+            opacity: 0
+        }
+
+        to {
+            top: 0;
+            opacity: 1
+        }
+    }
+
+    .page-item.active {
+        z-index: 0;
+    }
+</style>
+
 <div class="app-wrapper">
+
+    <div id="create-store-form" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content" style="min-width: 20%">
+            <div class="app-card app-card-settings shadow-sm p-4">
+                <div class="app-card-body">
+                    <div>
+                        <div class="col-auto mb-3">
+                            <label for="create-store-name" class="form-label">Store Name</label>
+                            <input type="text" class="form-control" id="create-store-name" value=""
+                                   required="true">
+                        </div>
+                        <div class="col-auto mb-3">
+                            <label for="create-store-url" class="form-label">Store Url Friendly</label>
+                            <input type="text" class="form-control" id="create-store-url" value=""
+                                   required="true">
+                        </div>
+                        <div class="col-auto mb-3">
+                            <label for="create-store-database" class="form-label">Store Database (must start with <code>sales-</code>
+                                and can only include lowercase letters</label>
+                            <input type="text" class="form-control" id="create-store-database" value=""
+                                   required="true">
+                        </div>
+                        <button type="submit" class="btn app-btn-primary" id='create-store-submit'>Change</button>
+                        <span class='ml-2' id='create-store-error' style="color:red;"></span><span
+                            id='create-store-modal-close' class="close">&times;</span>
+                    </div>
+                </div>
+                <!--//app-card-body-->
+            </div>
+        </div>
+    </div>
 
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">

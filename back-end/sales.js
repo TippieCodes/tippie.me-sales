@@ -64,11 +64,13 @@ const modules = {
     "STORE_ADMIN": "ADMIN",
     "STORE_INFO": "ADMIN",
     "STORE_LIST": "ADMIN",
-    "STORE_UPDATE": "ADMIN"
+    "STORE_UPDATE": "ADMIN",
+    "STORE_DELETE": "ADMIN",
+    "STORE_CREATE": "ADMIN"
 }
 
 const systemPermissions = {
-    0: /.*/
+    0: /^((?!admin).)*$/
 }
 
 const requestTypes = new Enmap();

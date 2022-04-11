@@ -1,4 +1,5 @@
 let store_id;
+let store_name;
 
 function page() {
     if (client.role["permission_admin_store_modify"] != true)
@@ -23,14 +24,40 @@ function page() {
         })
     }
 
-    if (client.role["permission_admin_store_delete"] == true)
-        $("#delete-btn").html(`<a class="btn app-btn-secondary app-btn-danger" href="#">Delete Store</a>`)
+    if (client.role["permission_admin_store_delete"] == true) {
+        const delete_btn = $("#delete-btn");
+        delete_btn.html(`<a class="btn app-btn-secondary app-btn-danger" href="#">Delete Store</a>`);
+        delete_btn.on('click', function (e) {
+            if (prompt("Please type 'I really want to remove the " + store_name + " store from sales' to confirm you want to remove this store. Please note that this action is IRREVERSIBLE.") == "I really want to remove the " + store_name + " store from sales") {
+                ws.onmessage = function (e) {
+                    const data = JSON.parse(e.data);
+                    switch (data.type) {
+                        case 'STORE_DELETE':
+                            if (data.data.ok == true) {
+                                alert("Successfully removed " + store_name + " from sales.")
+                                window.location.href = "../"
+                            } else {
+                                alert("Could not remove " + store_name + " from sales!\n" + data.data.message)
+                            }
+                    }
+                }
+                ws.send(JSON.stringify({
+                    type: "STORE_DELETE", data: {
+                        store: store_id
+                    }
+                }))
+            } else {
+                alert("Okay, " + store_name + " has not been removed.")
+            }
+        });
+    }
 
     ws.onmessage = function (e) {
         const data = JSON.parse(e.data);
         switch (data.type) {
             case 'STORE_INFO':
                 const store = data.data.store;
+                store_name = store["store_name"];
                 $("#info-store-id").text(store["store_id"])
                 $("#info-store-database").text(store["store_database"])
                 $("#info-store-name").text(store["store_name"])
@@ -59,12 +86,13 @@ function page() {
 }
 
 function changeText(title, type) {
-    const form = document.getElementById("change-text-form");
+
     $("#change-text-label-1").text(title)
     const submit_btn = $("#change-text-submit");
     submit_btn.prop("disabled", false)
     submit_btn.text("Change")
     $("#change-text-input-1").val("")
+    const form = document.getElementById("change-text-form");
     document.getElementById('change-text-modal-close').onclick = function () {
         form.style.display = 'none';
     }

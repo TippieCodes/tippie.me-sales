@@ -1,7 +1,7 @@
 const RequestType = require("../requesttype");
 const {readFileSync} = require("fs");
 
-class StoreDeleteRequest extends RequestType {
+class StoreCreateRequest extends RequestType {
     async onRequest(wss, ws, request, client, data, incoming) {
         if (client.role["permission_admin_store_create"] != true) return;
         const conn = require("../sales").getDatabase(0);
@@ -16,17 +16,18 @@ class StoreDeleteRequest extends RequestType {
             }))
             return;
         }
-        await conn.query("INSERT INTO STORES (a,b,c) VALUES (?, ?, ?)", [incoming.data.store]) //TODO: Check what's actually needed here
+        await conn.query("INSERT INTO STORES (store_name,store_url_friendly,store_database) VALUES (?, ?, ?)", [incoming.data.name, incoming.data.url, database])
 
         const createScript = readFileSync("create-databases.sql")
         const finalScript = createScript.toString().replaceAll("{database}", database)
         await conn.query(finalScript)
+        await require("../sales.js").updateStores();
         ws.send(JSON.stringify({
             type: "STORE_CREATE", data: {
                 ok: true
             }
-        }))
+        }));
     }
 }
 
-module.exports = new StoreDeleteRequest("STORE_DELETE");
+module.exports = new StoreCreateRequest("STORE_CREATE");

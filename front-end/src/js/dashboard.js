@@ -223,14 +223,14 @@ function checkPage() {
 
             if (client.role[`permission_${permissions[current]}`] != true && permissions[current] != "none") {
                 $(".container-xl").first().html(`
-                        <h1 class="app-page-title">${current}</h1>
+                        <h1 class="app-page-title">${escapeHtml(current)}</h1>
                 <div class="alert alert-danger" role="alert">
                     <div class="inner">
                     <div class="app-card-body p-3 p-lg-4">
                     <h3 class="mb-3">No permission!</h3>
                 <div class="row gx-5 gy-3">
                     <div class="col-12 col-lg-9">
-                        <div>You don't have the required permission to view this page. Required permission: ${permissions[current]}</div>
+                        <div>You don't have the required permission to view this page. Required permission: ${escapeHtml(permissions[current])}</div>
                     </div><!--//col-->
                 </div><!--//row-->
             </div><!--//app-card-body-->

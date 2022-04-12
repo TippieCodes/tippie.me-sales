@@ -1,8 +1,3 @@
-if (!window.location.hostname.endsWith("sales.tippie.me") && !window.location.hostname == 'localhost'){
-    let sub = window.location.hostname.split(".")[0];
-    window.location.hostname =  (sub != 'sales' ? sub + '.' : '') + "sales.tippie.me";
-}
-
 //Constants
 const root_url = vars['root_url'];
 const root_url_name = root_url.split("/")[1]

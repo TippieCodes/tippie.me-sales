@@ -57,7 +57,7 @@ function setTable(start, amount) {
         <th class="cell">Item Price</th>
         <th class="cell">Amount Sold</th>
         </tr></thead><tbody>`;
-        for (item of item_list[x].order_items) {
+        for (const item of item_list[x].order_items) {
             item_list_items += `<tr>
         <td class=cell>#${item.id}</td>
         <td class=cell>${item.name}</td>
@@ -85,7 +85,6 @@ function setTable(start, amount) {
             pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)" onClick='setTable(0, ${amount})'>1</a></li>`
             pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)">...</a></li>`
             for (let i = a_btn - 5; i < a_btn; i++) {
-                if (i < 0) continue;
                 pagination += `<li class="page-item ${(c_btn - 1 == i) ? 'active' : ''}"><a class="page-link" href="javascript:void(0)" onClick='setTable(${i * (amount)}, ${amount})'>${i + 1}</a></li>`
             }
         } else if (c_btn <= 3) {
@@ -99,7 +98,6 @@ function setTable(start, amount) {
             pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)" onClick='setTable(0, ${amount})'>1</a></li>`
             pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)">...</a></li>`
             for (let i = c_btn - 2; i < c_btn + 1 && i < a_btn; i++) {
-                if (i < 0) continue;
                 pagination += `<li class="page-item ${(c_btn - 1 == i) ? 'active' : ''}"><a class="page-link" href="javascript:void(0)" onClick='setTable(${i * (amount)}, ${amount})'>${i + 1}</a></li>`
             }
             pagination += `<li class="page-item"><a class="page-link" href="javascript:void(0)">...</a></li>`

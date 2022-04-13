@@ -5,9 +5,15 @@
         var expires = "expires=" + d.toUTCString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;SameSite=None; Secure";
     }
+
     const urlParams = new URLSearchParams(window.location.search);
 
     setCookie('session_token', urlParams.get('token'), urlParams.get('save') == true ? 31 : 1);
 
-    window.location.href = urlParams.get('callback')
+    const callback = new URL(urlParams.get('callback'));
+    const allowedHosts = ["sales.tippie.me"] //Edit this to the domain of your website
+
+    if (allowedHosts.includes(callback.hostname)) {
+        window.location.href = callback.href;
+    }
 </script>

@@ -12,10 +12,10 @@
     <link rel="shortcut icon" href="favicon.ico">
 
     <!-- FontAwesome JS-->
-	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+    <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
 
-	<!-- App CSS -->
-	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+    <!-- App CSS -->
+    <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
 
 </head>
 <!-- include vars -->
@@ -24,96 +24,116 @@
 
 <body class="app">
 <div include-html="src/html/header.html"></div>
-	<div class="app-wrapper">
+<div class="app-wrapper">
 
-		<div class="app-content pt-3 p-md-3 p-lg-4">
-			<div class="container-xl">
-				<h1 class="app-page-title">Settings</h1>
-				<hr class="mb-4">
-				<div class="row g-4 settings-section">
-					<div class="col-12 col-md-4">
-						<h3 class="section-title">General</h3>
-						<div class="section-intro">Change your username here.</div>
-					</div>
-					<div class="col-12 col-md-8">
-						<div class="app-card app-card-settings shadow-sm p-4">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+            <h1 class="app-page-title">Settings</h1>
+            <hr class="mb-4">
+            <div class="row g-4 settings-section">
+                <div class="col-12 col-md-4">
+                    <h3 class="section-title">General</h3>
+                    <div class="section-intro">Change your username here.</div>
+                </div>
+                <div class="col-12 col-md-8">
+                    <div class="app-card app-card-settings shadow-sm p-4">
 
-							<div class="app-card-body">
-								<div class="settings-form">
-									<div class="mb-3">
-										<label for="setting-input-username" class="form-label">Username<span class="ml-2" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="This MUST be your minecraft username, if you change it to something else repercussions may be taken. It's your own responsibility to keep this up-to-date."><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <div class="app-card-body">
+                            <div class="settings-form">
+                                <div class="mb-3">
+                                    <label for="setting-input-username" class="form-label">Username<span class="ml-2"
+                                                                                                         data-container="body"
+                                                                                                         data-toggle="popover"
+                                                                                                         data-trigger="hover"
+                                                                                                         data-placement="top"
+                                                                                                         data-content="This MUST be your minecraft username, if you change it to something else repercussions may be taken. It's your own responsibility to keep this up-to-date."><svg
+                                            width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle"
+                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
   <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z"/>
   <circle cx="8" cy="4.5" r="1"/>
 </svg></span></label>
-										<input type="text" class="form-control" id="setting-input-username" value="Lorem Ipsum Ltd." required>
-									</div>
-									<button type="submit" class="btn app-btn-primary" onclick="changeUsername()" disabled>Change Username</button>
-								</div>
-							</div><!--//app-card-body-->
+                                    <input type="text" class="form-control" id="setting-input-username"
+                                           value="Lorem Ipsum Ltd." required>
+                                </div>
+                                <button type="submit" class="btn app-btn-primary" onclick="changeUsername()" disabled>
+                                    Change Username
+                                </button>
+                            </div>
+                        </div><!--//app-card-body-->
 
-						</div><!--//app-card-->
-					</div>
-				</div><!--//row-->
-				<hr class="my-4">
-				<div class="row g-4 settings-section">
-					<div class="col-12 col-md-4">
-						<h3 class="section-title">Password</h3>
-						<div class="section-intro">Change your password here, if you have forgotten your old password DM Tippie#6666 over discord to reset it to a new password. Managers including myself will not be able to see your password at all! The password is hashed twice, once by the client and once by the server.</div>
-					</div>
-					<div class="col-12 col-md-8">
-						<div class="app-card app-card-settings shadow-sm p-4">
+                    </div><!--//app-card-->
+                </div>
+            </div><!--//row-->
+            <hr class="my-4">
+            <div class="row g-4 settings-section">
+                <div class="col-12 col-md-4">
+                    <h3 class="section-title">Password</h3>
+                    <div class="section-intro">Change your password here, if you have forgotten your old password DM
+                        Tippie#6666 over discord to reset it to a new password. Managers including myself will not be
+                        able to see your password at all! The password is hashed twice, once by the client and once by
+                        the server.
+                    </div>
+                </div>
+                <div class="col-12 col-md-8">
+                    <div class="app-card app-card-settings shadow-sm p-4">
 
-							<div class="app-card-body">
-								<div class="settings-form">
-									<div class="mb-3">
-										<label for="setting-input-oldpw" class="form-label">Old Password</label>
-										<input type="password" class="form-control" id="setting-input-oldpw" value="">
-									</div>
-									<div class="mb-3">
-										<label for="setting-input-newpw" class="form-label">New Password</label>
-										<input type="password" class="form-control" id="setting-input-newpw" value="">
-									</div>
-										<button type="submit" id="btn-change-password" class="btn app-btn-primary" onclick="changePassword()">Change Password</button>
-										<span class="ml-2" style="color:red" id="change-password-error-text"></span>
-								</div>
-							</div><!--//app-card-body-->
+                        <div class="app-card-body">
+                            <div class="settings-form">
+                                <div class="mb-3">
+                                    <label for="setting-input-oldpw" class="form-label">Old Password</label>
+                                    <input type="password" class="form-control" id="setting-input-oldpw" value="">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="setting-input-newpw" class="form-label">New Password</label>
+                                    <input type="password" class="form-control" id="setting-input-newpw" value="">
+                                </div>
+                                <button type="submit" id="btn-change-password" class="btn app-btn-primary"
+                                        onclick="changePassword()">Change Password
+                                </button>
+                                <span class="ml-2" style="color:red" id="change-password-error-text"></span>
+                            </div>
+                        </div><!--//app-card-body-->
 
-						</div><!--//app-card-->
-					</div>
-				</div><!--//row-->
-				<hr class="my-4">
-			</div><!--//container-fluid-->
-		<div include-html="src/html/footer.html"></div>
-	</div>
-	</div>
-	<!--//app-wrapper-->
+                    </div><!--//app-card-->
+                </div>
+            </div><!--//row-->
+            <hr class="my-4">
+        </div><!--//container-fluid-->
+        <div include-html="src/html/footer.html"></div>
+    </div>
+</div>
+<!--//app-wrapper-->
 
 
-	<!-- Javascript -->
-	<script src="assets/plugins/popper.min.js"></script>
-	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script
-			src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-			integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-			crossorigin="anonymous"></script>
+<!-- Javascript -->
+<script src="assets/plugins/popper.min.js"></script>
+<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script
+        src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+        crossorigin="anonymous"></script>
 
-	<!-- Charts JS -->
-	<script src="assets/plugins/chart.js/chart.min.js"></script>
+<!-- Charts JS -->
+<script src="assets/plugins/chart.js/chart.min.js"></script>
 
-	<!-- Global JS -->
-	<script src="src/js/global.js"></script>
-	
+<!-- Global JS -->
+<script src="src/js/global.js"></script>
 
-	<!-- Page Specific JS -->
-	<script src="src/js/dashboard.js"></script>
-	<script src="assets/js/app.js"></script>
-	<script src="src/js/settings.js"></script>
 
-	<script>
-		includeHTML().then(() => {app(); load();});
-	</script>
+<!-- Page Specific JS -->
+<script src="src/js/dashboard.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="src/js/settings.js"></script>
+
+<script>
+    includeHTML().then(() => {
+        app();
+        load();
+    });
+</script>
 </body>
 
 </html>

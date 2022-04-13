@@ -12,10 +12,10 @@
     <link rel="shortcut icon" href="favicon.ico">
 
     <!-- FontAwesome JS-->
-	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+    <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
 
-	<!-- App CSS -->
-	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+    <!-- App CSS -->
+    <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
 
 </head>
 <!-- include vars -->
@@ -23,118 +23,121 @@
 
 
 <style>
-	slider{
-		transition-property: all;
-		transition-duration: .5s;
-		transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-	}
+    slider {
+        transition-property: all;
+        transition-duration: .5s;
+        transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    }
 </style>
 <body class="app">
 <div include-html="src/html/header.html"></div>
 
-	<div class="app-wrapper">
+<div class="app-wrapper">
 
-		<div class="app-content pt-3 p-md-3 p-lg-4">
-			<div class="container-xl">
-				<h1 class="app-page-title">Shift #<span id='shift-id'></span></h1>
-                <div class="row g-4 mb-4">
-				    <div class="col-6 col-lg-3">
-					    <div class="app-card app-card-stat shadow-sm h-100">
-						    <div class="app-card-body p-3 p-lg-4">
-							    <h4 class="stats-type mb-1">Total Sales</h4>
-							    <div class="stats-figure" id="stat-total">$...</div>
-						    </div><!--//app-card-body-->
-					    </div><!--//app-card-->
-				    </div><!--//col-->
-				    
-				    <div class="col-6 col-lg-3">
-					    <div class="app-card app-card-stat shadow-sm h-100">
-						    <div class="app-card-body p-3 p-lg-4">
-							    <h4 class="stats-type mb-1">Total Owe</h4>
-							    <div class="stats-figure"id="stat-owe">$...</div>
-						    </div><!--//app-card-body-->
-					    </div><!--//app-card-->
-				    </div><!--//col-->
-				    <div class="col-6 col-lg-3">
-					    <div class="app-card app-card-stat shadow-sm h-100">
-						    <div class="app-card-body p-3 p-lg-4">
-							    <h4 class="stats-type mb-1">Total Orders</h4>
-							    <div class="stats-figure"id="stat-orders">...</div>
-						    </div><!--//app-card-body-->
-					    </div><!--//app-card-->
-				    </div><!--//col-->
-				    <div class="col-6 col-lg-3">
-					    <div class="app-card app-card-stat shadow-sm h-100">
-						    <div class="app-card-body p-3 p-lg-4">
-							    <h4 class="stats-type mb-1">Total Items Sold</h4>
-							    <div class="stats-figure" id="stat-items">...</div>
-						    </div><!--//app-card-body-->
-					    </div><!--//app-card-->
-				    </div><!--//col-->
-			    </div>
-				<h1 class="app-page-title">Orders</h1>
-				<div class="app-card app-card-progress-list h-100 shadow-sm mb-4">
-                    <div class="app-card-header p-3">
-                        <div class="row justify-content-between align-items-center">
-                            <div class="col-auto">
-                                <h4 class="app-card-title">Orders from this shift</h4>
-                            </div>
-                            <!--//col-->
-                            <div class="col-auto">
-                                <div class="card-header-action" id="">
-                                    <!-- <a href="javascript:void(0)">New item</a> -->
-                                </div>
-                                <!--//card-header-actions-->
-                            </div>
-                            <!--//col-->
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+            <h1 class="app-page-title">Shift #<span id='shift-id'></span></h1>
+            <div class="row g-4 mb-4">
+                <div class="col-6 col-lg-3">
+                    <div class="app-card app-card-stat shadow-sm h-100">
+                        <div class="app-card-body p-3 p-lg-4">
+                            <h4 class="stats-type mb-1">Total Sales</h4>
+                            <div class="stats-figure" id="stat-total">$...</div>
+                        </div><!--//app-card-body-->
+                    </div><!--//app-card-->
+                </div><!--//col-->
+
+                <div class="col-6 col-lg-3">
+                    <div class="app-card app-card-stat shadow-sm h-100">
+                        <div class="app-card-body p-3 p-lg-4">
+                            <h4 class="stats-type mb-1">Total Owe</h4>
+                            <div class="stats-figure" id="stat-owe">$...</div>
+                        </div><!--//app-card-body-->
+                    </div><!--//app-card-->
+                </div><!--//col-->
+                <div class="col-6 col-lg-3">
+                    <div class="app-card app-card-stat shadow-sm h-100">
+                        <div class="app-card-body p-3 p-lg-4">
+                            <h4 class="stats-type mb-1">Total Orders</h4>
+                            <div class="stats-figure" id="stat-orders">...</div>
+                        </div><!--//app-card-body-->
+                    </div><!--//app-card-->
+                </div><!--//col-->
+                <div class="col-6 col-lg-3">
+                    <div class="app-card app-card-stat shadow-sm h-100">
+                        <div class="app-card-body p-3 p-lg-4">
+                            <h4 class="stats-type mb-1">Total Items Sold</h4>
+                            <div class="stats-figure" id="stat-items">...</div>
+                        </div><!--//app-card-body-->
+                    </div><!--//app-card-->
+                </div><!--//col-->
+            </div>
+            <h1 class="app-page-title">Orders</h1>
+            <div class="app-card app-card-progress-list h-100 shadow-sm mb-4">
+                <div class="app-card-header p-3">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-auto">
+                            <h4 class="app-card-title">Orders from this shift</h4>
                         </div>
-                        <!--//row-->
-                    </div>
-                </div>
-                <div class="app-card app-card-progress-list h-100 shadow-sm">
-                    <div class="app-card-body" id='item-list'>
-                    </div>
-                    <!--//app-card-body-->
-                </div>
-                <div class="row g-4 mb-4">
-                    <div class="col-6 col-lg-6">
-                        <div class="justify-content-start pt-3 pl-2" id="amount-showing">
-                            Showing 0 out of 0 entries.
+                        <!--//col-->
+                        <div class="col-auto">
+                            <div class="card-header-action" id="new-item-box">
+                                <!-- <a href="javascript:void(0)">New item</a> -->
+                            </div>
+                            <!--//card-header-actions-->
                         </div>
+                        <!--//col-->
                     </div>
-                    <div class="col-6 col-lg-6" id='pagination'>
-
+                    <!--//row-->
+                </div>
+            </div>
+            <div class="app-card app-card-progress-list h-100 shadow-sm">
+                <div class="app-card-body" id='item-list'>
+                </div>
+                <!--//app-card-body-->
+            </div>
+            <div class="row g-4 mb-4">
+                <div class="col-6 col-lg-6">
+                    <div class="justify-content-start pt-3 pl-2" id="amount-showing">
+                        Showing 0 out of 0 entries.
                     </div>
                 </div>
-			</div>
-			<!--//container-fluid-->
-		</div>
-		<!--//app-content-->
-		<div include-html="src/html/footer.html"></div>
-	</div>
-	<!--//app-wrapper-->
+                <div class="col-6 col-lg-6" id='pagination'>
+
+                </div>
+            </div>
+        </div>
+        <!--//container-fluid-->
+    </div>
+    <!--//app-content-->
+    <div include-html="src/html/footer.html"></div>
+</div>
+<!--//app-wrapper-->
 
 
-	<!-- Javascript -->
-	<script src="assets/plugins/popper.min.js"></script>
-	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Javascript -->
+<script src="assets/plugins/popper.min.js"></script>
+<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<!-- Charts JS -->
+<script src="assets/plugins/chart.js/chart.min.js"></script>
 
-	<!-- Charts JS -->
-	<script src="assets/plugins/chart.js/chart.min.js"></script>
+<!-- Global JS -->
+<script src="src/js/global.js"></script>
 
-	<!-- Global JS -->
-	<script src="src/js/global.js"></script>
-	
 
-	<!-- Page Specific JS -->|
-	<script src="src/js/dashboard.js"></script>
-	<script src="assets/js/app.js"></script>
-	<script src="src/js/shift.js"></script>
+<!-- Page Specific JS -->|
+<script src="src/js/dashboard.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="src/js/shift.js"></script>
 
-	<script>
-		includeHTML().then(() => {app(); load();});
-	</script>
+<script>
+    includeHTML().then(() => {
+        app();
+        load();
+    });
+</script>
 </body>
 
 </html>

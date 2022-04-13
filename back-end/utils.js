@@ -123,7 +123,9 @@ async function getGlobalShiftStats(client, conn,shift_id) {
 }
 
 function passwordCheck(password, username){
-    if (password.length <= 6){
+    if (!(typeof password == "string")) {
+        return 'The password must be a string'
+    } else if (password.length <= 6) {
         return 'Your password must be 6 characters or more'
     } else if (!/[a-z]/.test(password)) {
         return 'Your password must contain at least 1 lowercase letter.'
@@ -132,7 +134,7 @@ function passwordCheck(password, username){
     } else if (!/[0-9]/.test(password)) {
         return 'Your password must contain at least 1 number.'
     } else if (password == username) {
-        return 'Your password must diffrent from your username.'
+        return 'Your password must different from your username.'
     } else {
         return true;
     }

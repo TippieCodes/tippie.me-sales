@@ -35,7 +35,7 @@ function page() {
         } else if (data.type == 'NEW_ORDER') {
             let id = Math.round(Math.random() * 1000)
             let items = ''
-            for (item of data.data.items) {
+            for (const item of data.data.items) {
                 items += `<br />${item.amount}x ${item.name}`
             }
             $('#recent-orders').prepend(`<div class="app-card-body px-4 pt-0 pb-0" id="${id}" style="width: 100%;border-bottom-color: #e7e9ed;border-bottom-width: 2px;border-bottom-style: solid;height:auto;display:none">
@@ -139,7 +139,7 @@ function updateCurrentOrder() {
         $('#order-button').prop('disabled', false)
         $('#order-error-text').text('')
     }
-    for (item of current_order) {
+    for (const item of current_order) {
         let b = stocklist.find(a => a.item_id == item.id)
         let price = item.amount * b.sell_price
         total += price
